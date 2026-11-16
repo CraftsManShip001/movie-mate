@@ -1,0 +1,64 @@
+@import "../styles/tokens.css";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: var(--color-bg);
+  border: 1px solid var(--color-line);
+  padding: var(--space-1) var(--space-3);
+}
+
+.page {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  gap: var(--space-3);
+}
+
+.muted {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+h1 {
+  font-size: var(--text-lg);
+}
+
+h2 {
+  font-size: var(--text-md);
+}

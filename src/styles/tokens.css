@@ -1,0 +1,32 @@
+/*
+ * 디자인 토큰 자리.
+ * 디자인이 확정되면 이 파일의 값만 바꾸거나 파일을 통째로 갈아끼운다.
+ * 컴포넌트 CSS는 색·글꼴·간격을 직접 쓰지 말고 여기 변수만 참조한다.
+ */
+:root {
+  --color-bg: #ffffff;
+  --color-fg: #000000;
+  --color-muted: #555555;
+  --color-line: #000000;
+  --color-line-weak: #cccccc;
+  --color-selected-bg: #000000;
+  --color-selected-fg: #ffffff;
+  --color-disabled: #bbbbbb;
+  --color-error: #b00020;
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-sm: 13px;
+  --text-md: 15px;
+  --text-lg: 20px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+
+  --content-max: 960px;
+  --seat-size: 18px;
+}

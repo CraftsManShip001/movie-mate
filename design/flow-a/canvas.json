@@ -1,0 +1,26 @@
+{
+ "v": 3,
+ "title": "movie mate 디자인",
+ "boards": {
+  "FlowA1R2.dc.html": {
+   "x": 0,
+   "y": 35476,
+   "w": 7520,
+   "h": 2012,
+   "title": "흐름 A 수정 2 · 티켓은 지나가는 장면",
+   "is_interactive": true
+  },
+  "FlowA_States.dc.html": {
+   "x": 0,
+   "y": 37608,
+   "w": 4520,
+   "h": 2012,
+   "title": "흐름 A · 나머지 상태 화면",
+   "is_interactive": true
+  }
+ },
+ "order": [
+  "FlowA1R2.dc.html",
+  "FlowA_States.dc.html"
+ ]
+}

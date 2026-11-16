@@ -1,0 +1,73 @@
+.scroller {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.map {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: max-content;
+  padding-bottom: var(--space-2);
+}
+
+.screen {
+  text-align: center;
+  border-bottom: 2px solid var(--color-line);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-4);
+}
+
+.row {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.label {
+  width: var(--seat-size);
+  font-size: 11px;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.seat,
+.empty {
+  width: var(--seat-size);
+  height: var(--seat-size);
+  flex: none;
+}
+
+.seat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-line);
+  font-size: 9px;
+  text-decoration: none;
+}
+
+a.seat:hover,
+a.seat:focus-visible,
+.selected {
+  background: var(--color-selected-bg);
+  color: var(--color-selected-fg);
+}
+
+.wheelchair {
+  border-style: dashed;
+}
+
+.blocked {
+  border-color: var(--color-disabled);
+  color: var(--color-disabled);
+}
+
+.aisle {
+  width: calc(var(--seat-size) * 0.8);
+  flex: none;
+}
+
+.crossAisle {
+  height: calc(var(--seat-size) * 0.8);
+}
