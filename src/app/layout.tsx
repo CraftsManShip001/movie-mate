@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
-import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+import { fontVariables } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -15,13 +14,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ko">
-      <body>
-        <header className="page">
-          <Link href="/">movie mate</Link>
-        </header>
-        {children}
-      </body>
+    <html lang="ko" className={fontVariables}>
+      <body>{children}</body>
     </html>
   );
 }

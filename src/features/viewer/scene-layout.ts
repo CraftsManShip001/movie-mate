@@ -8,6 +8,9 @@ import type { Auditorium, Seat } from "@/lib/domain/types";
 
 export type Tuple3 = [number, number, number];
 
+/** 3D 뷰어의 가로 시야각. 세로 화면(모바일)에서도 옆이 너무 좁지 않게 가로 기준으로 맞춘다. 3번 화면 작은 시야도 같은 값을 쓴다. */
+export const HORIZONTAL_FOV_DEG = 90;
+
 export interface Box {
   position: Tuple3;
   scale: Tuple3;

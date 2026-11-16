@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "the-night-orbit",
+  "sample": true,
+  "notes": "가상의 예시 영화다. 실제 영화가 아니다. 포스터는 직접 그린 SVG 예시이며 posterUrl만 바꾸면 다른 이미지로 교체된다.",
+  "title": "밤의 궤도",
+  "titleEn": "THE NIGHT ORBIT",
+  "year": 2026,
+  "rating": "12세 이상",
+  "runtimeMin": 172,
+  "posterUrl": "/posters/the-night-orbit.svg"
+}

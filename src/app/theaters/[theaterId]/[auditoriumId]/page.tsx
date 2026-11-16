@@ -1,42 +1,39 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SeatMap } from "@/features/seat-map/SeatMap";
+import { Suspense } from "react";
+import { SeatPicker, SeatPickerSkeleton } from "@/features/seat-picker/SeatPicker";
 import { getAllAuditoriums, getAuditorium, getTheater } from "@/lib/data/registry";
-import { listSourcedValues } from "@/lib/domain/validation";
-import { aspectLabel, formatLabel } from "@/lib/labels";
+import { getMovie, getSchedule, screenNameForAuditorium } from "@/lib/data/showtimes";
 
 export function generateStaticParams() {
   return getAllAuditoriums().map((a) => ({ theaterId: a.theaterId, auditoriumId: a.id }));
 }
 
-export default async function AuditoriumPage({ params }: PageProps<"/theaters/[theaterId]/[auditoriumId]">) {
-  const { theaterId, auditoriumId } = await params;
+/** 3 · 좌석. 주소 값(params)은 Suspense 안에서 읽는다(Cache Components). */
+export default function AuditoriumPage({ params }: PageProps<"/theaters/[theaterId]/[auditoriumId]">) {
+  return (
+    <Suspense fallback={<SeatPickerSkeleton title="" backHref="/" />}>
+      {params.then(({ theaterId, auditoriumId }) => (
+        <AuditoriumContent theaterId={theaterId} auditoriumId={auditoriumId} />
+      ))}
+    </Suspense>
+  );
+}
+
+function AuditoriumContent({ theaterId, auditoriumId }: { theaterId: string; auditoriumId: string }) {
   const theater = getTheater(theaterId);
   const auditorium = getAuditorium(theaterId, auditoriumId);
   if (!theater || !auditorium) notFound();
 
-  const sourced = listSourcedValues(auditorium);
-  const estimatedCount = sourced.filter((e) => e.source === "estimated").length;
+  const screenName = screenNameForAuditorium(theater.id, auditorium.id) ?? auditorium.name;
+  const title = `${theater.chain} ${theater.branch} · ${screenName}`;
+  const schedule = getSchedule(theater.id);
+  const movie = schedule ? getMovie(schedule.movieId) : undefined;
+  const backHref = `/theaters/${theater.id}`;
 
+  // 쿼리(날짜·시각·고른 자리)는 브라우저에서 읽으므로 그 부분만 Suspense로 감싼다
   return (
-    <main className="page">
-      <Link href={`/theaters/${theater.id}`}>
-        {theater.chain} {theater.branch}
-      </Link>
-      <h1>{auditorium.name}</h1>
-      <p className="muted">
-        {formatLabel(auditorium.format)} · 스크린 {(auditorium.screen.width.value / 1000).toFixed(1)}m ×{" "}
-        {(auditorium.screen.height.value / 1000).toFixed(1)}m ({aspectLabel(auditorium.screen.aspectRatio.value)})
-      </p>
-      {auditorium.sample ? <p className="muted">샘플 데이터입니다. 실제 상영관과 치수가 다릅니다.</p> : null}
-      <p className="muted">
-        치수 {sourced.length}개 중 추정값 {estimatedCount}개
-      </p>
-      <h2>좌석을 고르세요</h2>
-      <SeatMap
-        auditorium={auditorium}
-        seatHref={(seat) => `/theaters/${theater.id}/${auditorium.id}/seats/${seat.id}`}
-      />
-    </main>
+    <Suspense fallback={<SeatPickerSkeleton title={title} backHref={backHref} />}>
+      <SeatPicker theaterId={theater.id} title={title} movieTitle={movie?.title ?? ""} auditorium={auditorium} />
+    </Suspense>
   );
 }

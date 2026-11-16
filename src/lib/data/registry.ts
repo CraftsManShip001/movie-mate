@@ -11,12 +11,13 @@
  */
 import yongsanTheater from "@data/theaters/cgv-yongsan-ipark-mall/theater.json";
 import yongsanSampleImax from "@data/theaters/cgv-yongsan-ipark-mall/auditoriums/sample-imax.json";
+import yongsanSample4dx from "@data/theaters/cgv-yongsan-ipark-mall/auditoriums/sample-4dx.json";
 
 import type { Auditorium, Theater } from "@/lib/domain/types";
 import { validateAuditorium, validateTheater } from "@/lib/domain/validation";
 
 const THEATER_FILES: unknown[] = [yongsanTheater];
-const AUDITORIUM_FILES: unknown[] = [yongsanSampleImax];
+const AUDITORIUM_FILES: unknown[] = [yongsanSampleImax, yongsanSample4dx];
 
 function loadTheater(json: unknown): Theater {
   const theater = json as Theater;

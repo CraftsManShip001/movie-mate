@@ -1,25 +1,68 @@
 /*
- * 디자인 토큰 자리.
- * 디자인이 확정되면 이 파일의 값만 바꾸거나 파일을 통째로 갈아끼운다.
- * 컴포넌트 CSS는 색·글꼴·간격을 직접 쓰지 말고 여기 변수만 참조한다.
+ * 디자인 토큰. 값의 원본은 design/DESIGN.md (흐름 A).
+ * 컴포넌트 CSS는 색·글꼴·크기를 직접 쓰지 말고 여기 변수만 참조한다.
+ * 글꼴 변수(--font-noto-sans-kr 등)는 src/app/fonts.ts 에서 next/font가 <html>에 붙인다.
  */
 :root {
+  /* 1~3번 화면 */
   --color-bg: #ffffff;
-  --color-fg: #000000;
-  --color-muted: #555555;
-  --color-line: #000000;
-  --color-line-weak: #cccccc;
-  --color-selected-bg: #000000;
-  --color-selected-fg: #ffffff;
-  --color-disabled: #bbbbbb;
-  --color-error: #b00020;
+  --color-ink: #141414;
+  --color-sub: #6e6e73;
+  --color-hair: #d9d9dc;
+  --color-btn: #f2f2f3;
+  --color-seat: #dddde1;
+  --color-accent: #e5432f;
 
-  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* 4·5번 어두운 화면 (다크 모드와 상관없이 항상 어둡다) */
+  --color-stage: #0c0c0d;
+  --color-stage-fg: #f4f4f5;
+  --color-stage-sub: #a4a4ab;
+  --color-stage-text: #c9c9ce;
+  --color-stage-btn: rgba(255, 255, 255, 0.14);
+  --color-stage-control: rgba(44, 44, 47, 0.88);
+  --color-stage-btn-solid: #1f1f22;
+  --color-stage-panel: rgba(12, 12, 13, 0.72);
+  --color-stage-line: #3a3a3f;
+  --color-stage-seat: #33333a;
+  --color-stage-seat-label: #9a9aa0;
+  --color-stage-accent: #ff5b45;
+  --color-kiosk: #19191b;
+  --color-kiosk-line: #2a2a2d;
+  --color-kiosk-slot: #050505;
 
+  /* 티켓 */
+  --color-paper: #e9e1d3;
+  --color-paper-ink: #2b2620;
+  --color-paper-sub: #857a6a;
+  --color-paper-line: #cfc4b2;
+  --color-poster-band: #120d0a;
+  --color-poster-line: #c8612a;
+  --color-poster-text: #e9ddcb;
+  --color-poster-sub: #9c8e80;
+
+  /* 글꼴 */
+  --font-sans: var(--font-noto-sans-kr), -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-ticket-title: var(--font-hahmlet), var(--font-noto-sans-kr), serif;
+  --font-mono: var(--font-ibm-plex-mono), var(--font-noto-sans-kr), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-seat: var(--font-bebas-neue), var(--font-noto-sans-kr), sans-serif;
+
+  /* 글자 크기 */
+  --text-display: 40px;
+  --text-title: 28px;
+  --text-lg: 22px;
+  --text-md: 16px;
   --text-sm: 13px;
-  --text-md: 15px;
-  --text-lg: 20px;
+  --text-xs: 11px;
+
+  /* 틀 */
+  --header-h: 72px;
+  --cta-w: 320px;
+  --cta-h: 56px;
+  --radius-sm: 12px;
+  --radius-md: 14px;
+  --radius-lg: 16px;
+  --frame-max: 1440px;
+  --gutter: 64px;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -27,6 +70,23 @@
   --space-4: 16px;
   --space-6: 24px;
 
+  /* 예전 이름 (좌석 에디터 /editor 가 쓴다) */
+  --color-fg: var(--color-ink);
+  --color-muted: var(--color-sub);
+  --color-line: var(--color-ink);
+  --color-line-weak: var(--color-hair);
+  --color-selected-bg: var(--color-ink);
+  --color-selected-fg: #ffffff;
+  --color-disabled: #bbbbbb;
+  --color-error: var(--color-accent);
   --content-max: 960px;
   --seat-size: 18px;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --gutter: 20px;
+    --text-display: 28px;
+    --text-title: 22px;
+  }
 }

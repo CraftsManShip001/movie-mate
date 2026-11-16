@@ -1,0 +1,123 @@
+.face {
+  position: relative;
+  width: 250px;
+  height: 520px;
+}
+
+.shape {
+  display: block;
+}
+
+.face > .shape {
+  position: absolute;
+  inset: 0;
+}
+
+.monoText {
+  font-family: var(--font-mono);
+}
+
+.paper {
+  position: relative;
+  height: 100%;
+  padding: 30px 22px;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-paper-ink);
+}
+
+.paperTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.35;
+  letter-spacing: 2px;
+  color: var(--color-paper-sub);
+}
+
+.paperTitle {
+  margin-top: 22px;
+  font-family: var(--font-ticket-title);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.paperTitleEn {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--color-paper-sub);
+}
+
+.paperSeat {
+  margin-top: 22px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-top: 2px solid var(--color-paper-ink);
+  border-bottom: 2px solid var(--color-paper-ink);
+  padding: 10px 0;
+}
+
+.paperSeatLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  line-height: 1.4;
+}
+
+.paperSeatCode {
+  font-family: var(--font-seat);
+  font-size: 64px;
+  line-height: 0.85;
+}
+
+.paperRows {
+  margin-top: 8px;
+}
+
+.paperRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--color-paper-line);
+}
+
+.paperRow dt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  color: var(--color-paper-sub);
+}
+
+.paperRow dd {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.paperFoot {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.35;
+  letter-spacing: 2px;
+  color: var(--color-paper-sub);
+}
+
+.barcode {
+  display: block;
+  color: var(--color-paper-ink);
+}

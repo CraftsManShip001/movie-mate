@@ -1,141 +1,202 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
-import {
-  DEFAULT_STATURE_CM,
-  MAX_STATURE_CM,
-  MIN_STATURE_CM,
-  seatedEyeHeightM,
-} from "@/lib/domain/anthropometry";
-import { eyePosition, findSeat, rowFloorY, screenRect, seatInFront } from "@/lib/domain/geometry";
-import { computeViewMetrics, cValue, frontHeadOcclusionRatio } from "@/lib/domain/metrics";
-import type { Auditorium } from "@/lib/domain/types";
+import { ChevronLeft, ChevronRight } from "@/features/flow/Frame";
+import { readShowQuery, showQueryString } from "@/features/flow/show-query";
+import { SeatGrid } from "@/features/seat-map/SeatGrid";
+import { TicketPoster } from "@/features/ticket/Ticket";
+import { buildTicketInfo } from "@/features/ticket/ticket-info";
+import { eyePosition, findSeat } from "@/lib/domain/geometry";
+import type { Auditorium, Seat } from "@/lib/domain/types";
+import { seatName } from "@/lib/format";
+import { bookingLink } from "@/lib/labels";
+import type { Movie } from "@/lib/showtimes/types";
+import { SceneErrorBoundary } from "./SceneErrorBoundary";
 import type { ScreenVideoStatus } from "./screen-texture";
 import styles from "./SeatViewer.module.css";
-import { useStature } from "./useStature";
+import { useSeatView } from "./useSeatView";
 import { SCREEN_VIDEO_CREDIT, SCREEN_VIDEO_URL } from "./video-source";
 
 const Scene = dynamic(() => import("./Scene"), {
   ssr: false,
-  loading: () => <div className={styles.placeholder}>3D 장면을 불러오는 중</div>,
+  loading: () => <div className={styles.placeholder}>시야를 불러오고 있어요</div>,
 });
 
-const VIDEO_STATUS_TEXT: Record<ScreenVideoStatus, string> = {
-  loading: "영상 불러오는 중 (테스트 패턴 표시)",
-  playing: "영상 재생 중",
-  blocked: "자동재생이 막혔습니다",
-  fallback: "영상을 쓸 수 없어 테스트 패턴을 표시합니다",
-};
-
 interface SeatViewerProps {
+  theaterId: string;
+  theaterName: string;
+  chain: string;
+  screenName: string;
   auditorium: Auditorium;
   seatId: string;
+  movie: Movie;
 }
 
-export function SeatViewer({ auditorium, seatId }: SeatViewerProps) {
+/** 5 · 시야. 3D 시야가 화면 전체를 채우고 그 위에 정보·조작을 얹는다. */
+export function SeatViewer({ theaterId, theaterName, chain, screenName, auditorium, seatId, movie }: SeatViewerProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const show = readShowQuery(searchParams);
   const seat = useMemo(() => findSeat(auditorium, seatId), [auditorium, seatId]);
-  const [stature, setStature] = useStature();
+  const { stature, numbers } = useSeatView(auditorium, seat);
   const [showHeads, setShowHeads] = useState(true);
+  const [panelOpen, setPanelOpen] = useState(true);
   const [videoStatus, setVideoStatus] = useState<ScreenVideoStatus>("loading");
   const [playRequest, setPlayRequest] = useState(0);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const onVideoStatus = useCallback((status: ScreenVideoStatus) => setVideoStatus(status), []);
+  const eye = useMemo(() => (seat ? eyePosition(auditorium, seat, stature) : null), [auditorium, seat, stature]);
 
-  const view = useMemo(() => {
-    if (!seat) return null;
-    const screen = screenRect(auditorium);
-    const eye = eyePosition(auditorium, seat, stature);
-    const metrics = computeViewMetrics(eye, screen);
-    const front = seatInFront(auditorium, seat);
-    const frontEye = front ? eyePosition(auditorium, front, DEFAULT_STATURE_CM) : null;
-    return {
-      eye,
-      metrics,
-      eyeAboveFloor: eye.y - rowFloorY(auditorium, seat.rowIndex),
-      cValueM: frontEye ? cValue(eye, frontEye, screen) : null,
-      occlusion: frontEye ? frontHeadOcclusionRatio(eye, frontEye, screen) : null,
-    };
-  }, [auditorium, seat, stature]);
+  const booking = bookingLink(chain);
+  const base = `/theaters/${theaterId}/${auditorium.id}`;
+  const backHref = `${base}${showQueryString(show, seat ? { seat: seat.id } : {})}`;
 
-  if (!seat || !view) return <p>좌석을 찾을 수 없습니다.</p>;
-  const { metrics } = view;
+  if (!seat || !eye) return null;
+
+  const info = buildTicketInfo({ movie, theaterName, screenName, seat, date: show.date, time: show.time, numbers });
+  const pickSeat = (next: Seat) => {
+    if (next.id === seat.id) return;
+    router.replace(`${base}/seats/${next.id}${showQueryString(show)}`, { scroll: false });
+  };
+  const retry = () => {
+    setFailed(false);
+    setAttempt((n) => n + 1);
+  };
+
+  const errorView = (
+    <div className={styles.error} role="alert">
+      <p className={styles.errorTitle}>시야를 불러오지 못했어요</p>
+      <p className={styles.errorBody}>잠시 뒤 다시 시도해 주세요. 계속 안 되면 다른 기기에서 열어 보세요</p>
+      <div className={styles.errorActions}>
+        <button type="button" className={styles.retry} onClick={retry}>
+          다시 시도
+        </button>
+        <a href={booking.href} target="_blank" rel="noopener noreferrer" className={styles.errorBooking}>
+          {booking.label}
+        </a>
+      </div>
+    </div>
+  );
 
   return (
-    <div className={styles.viewer}>
-      <div className={styles.canvas}>
-        <Scene
-          auditorium={auditorium}
-          seat={seat}
-          eye={view.eye}
-          showHeads={showHeads}
-          videoUrl={SCREEN_VIDEO_URL}
-          playRequest={playRequest}
-          onVideoStatus={onVideoStatus}
-        />
+    <div className={styles.stage}>
+      {failed ? (
+        errorView
+      ) : (
+        <div className={styles.canvas}>
+          <SceneErrorBoundary key={attempt} fallback={null} onError={() => setFailed(true)}>
+            <Scene
+              auditorium={auditorium}
+              seat={seat}
+              eye={eye}
+              showHeads={showHeads}
+              videoUrl={SCREEN_VIDEO_URL}
+              playRequest={playRequest}
+              onVideoStatus={onVideoStatus}
+            />
+          </SceneErrorBoundary>
+        </div>
+      )}
+
+      <div className={styles.top}>
+        <div className={styles.titleBar}>
+          <Link href={backHref} className={styles.back} aria-label="뒤로">
+            <ChevronLeft />
+          </Link>
+          <h1 className={styles.title}>
+            {screenName} · {seatName(seat)}
+          </h1>
+        </div>
+        {failed ? null : (
+          <a href={booking.href} target="_blank" rel="noopener noreferrer" className={styles.booking}>
+            {booking.label}
+            <ChevronRight />
+          </a>
+        )}
       </div>
-      <p className="muted">화면을 드래그해서 둘러보세요.</p>
 
-      <section className={styles.controls}>
-        <label className={styles.field}>
-          <span>
-            키 {stature}cm (앉은 눈높이 {Math.round(seatedEyeHeightM(stature) * 100)}cm)
-          </span>
-          <input
-            type="range"
-            min={MIN_STATURE_CM}
-            max={MAX_STATURE_CM}
-            step={1}
-            value={stature}
-            onChange={(e) => setStature(Number(e.target.value))}
-          />
-        </label>
-        <button type="button" onClick={() => setStature(DEFAULT_STATURE_CM)}>
-          평균 키로
-        </button>
-        <label className={styles.toggle}>
-          <input type="checkbox" checked={showHeads} onChange={(e) => setShowHeads(e.target.checked)} />
-          앞사람 머리
-        </label>
-      </section>
+      {failed ? null : (
+        <div className={styles.bottom}>
+          <div className={styles.left}>
+            {numbers ? (
+              <dl className={styles.numbers}>
+                <div>
+                  <dt>시야각</dt>
+                  <dd>{numbers.fov}</dd>
+                </div>
+                <div>
+                  <dt>올려보기</dt>
+                  <dd>{numbers.up}</dd>
+                </div>
+                <div>
+                  <dt>스크린까지</dt>
+                  <dd>{numbers.dist}</dd>
+                </div>
+              </dl>
+            ) : null}
+            <p className={styles.credit}>
+              {auditorium.sample ? "샘플 상영관이라 실제와 달라요 · " : ""}
+              {SCREEN_VIDEO_CREDIT}
+            </p>
+          </div>
 
-      <dl className={styles.metrics}>
-        <dt>수평 시야각</dt>
-        <dd>{metrics.horizontalFovDeg.toFixed(1)}°</dd>
-        <dt>올려보는 목 각도</dt>
-        <dd>
-          {metrics.neckElevationDeg.toFixed(1)}° (스크린 윗변 {metrics.screenTopElevationDeg.toFixed(1)}°)
-        </dd>
-        <dt>스크린까지 거리</dt>
-        <dd>
-          {metrics.distanceToScreenM.toFixed(1)}m (중심까지 {metrics.distanceToScreenCenterM.toFixed(1)}m)
-        </dd>
-        <dt>눈높이</dt>
-        <dd>좌석 바닥에서 {view.eyeAboveFloor.toFixed(2)}m</dd>
-        {view.cValueM !== null && view.occlusion !== null ? (
-          <>
-            <dt>앞사람 시선 여유(C값)</dt>
-            <dd>
-              {Math.round(view.cValueM * 1000)}mm · 스크린 하단 {Math.round(view.occlusion * 100)}% 가림
-            </dd>
-          </>
-        ) : null}
-      </dl>
-
-      <p className="muted">
-        {VIDEO_STATUS_TEXT[videoStatus]}
-        {videoStatus === "blocked" ? (
-          <>
-            {" "}
-            <button type="button" onClick={() => setPlayRequest((n) => n + 1)}>
-              영상 재생
-            </button>
-          </>
-        ) : null}
-      </p>
-      {auditorium.estimated ? (
-        <p className="muted">단차, 스크린 하단 높이 등 일부 치수는 추정값이라 실제와 다를 수 있습니다.</p>
-      ) : null}
-      <p className="muted">{SCREEN_VIDEO_CREDIT}</p>
+          <div className={styles.right}>
+            {panelOpen ? (
+              <section id="seat-ticket-panel" className={styles.panel} aria-label="내 티켓과 좌석표">
+                <div className={styles.ticketRow}>
+                  <div className={styles.miniTicket}>
+                    <TicketPoster
+                      width={84}
+                      posterUrl={info.posterUrl}
+                      bandDate={info.bandDate}
+                      bandTheater={`${theaterName} · ${screenName}`}
+                      alt={`${movie.title} 티켓`}
+                    />
+                  </div>
+                  <div className={styles.ticketText}>
+                    <span className={styles.ticketNo}>No. {info.ticketNo}</span>
+                    <span className={styles.ticketSeat}>{info.seatCode}</span>
+                    <span className={styles.ticketLine}>
+                      {movie.title}
+                      {show.time ? ` · ${show.time}` : ""}
+                    </span>
+                    <span className={styles.ticketLine}>
+                      {theaterName} {screenName}
+                    </span>
+                  </div>
+                </div>
+                <div className={styles.divider} />
+                <div className={styles.miniMap}>
+                  <SeatGrid auditorium={auditorium} selectedSeatId={seat.id} onSelect={pickSeat} tone="dark" maxSeat={11} />
+                </div>
+              </section>
+            ) : null}
+            <div className={styles.controls}>
+              {videoStatus === "blocked" ? (
+                <button type="button" className={styles.control} onClick={() => setPlayRequest((n) => n + 1)}>
+                  영상 재생
+                </button>
+              ) : null}
+              <button type="button" className={styles.control} aria-pressed={!showHeads} onClick={() => setShowHeads((v) => !v)}>
+                {showHeads ? "앞사람 끄기" : "앞사람 켜기"}
+              </button>
+              <button
+                type="button"
+                className={styles.control}
+                aria-expanded={panelOpen}
+                aria-controls="seat-ticket-panel"
+                onClick={() => setPanelOpen((v) => !v)}
+              >
+                {panelOpen ? "좌석·티켓 숨기기" : "좌석·티켓 보기"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,218 @@
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px var(--gutter) 24px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.movie {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  min-width: 0;
+}
+
+.poster {
+  width: 56px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex: none;
+  display: block;
+  background: var(--color-btn);
+}
+
+.movieText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.movieTitle {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.movieMeta {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.dates {
+  display: flex;
+  gap: 8px;
+}
+
+.date {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+  border: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.date[aria-pressed="true"] {
+  background: var(--color-ink);
+  color: #ffffff;
+}
+
+.dateLabel {
+  font-size: var(--text-sm);
+  line-height: 1.2;
+  opacity: 0.6;
+}
+
+.date[aria-pressed="true"] .dateLabel {
+  opacity: 1;
+}
+
+.dateDay {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.group {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--color-hair);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.groupHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.groupName {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
+.screenName {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.screenMeta {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.noPreview {
+  flex: none;
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.time {
+  width: 150px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hair);
+  background: var(--color-bg);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.time[aria-pressed="true"] {
+  border: 2px solid var(--color-ink);
+  padding: 13px 15px;
+}
+
+.timeStart {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.timeSub,
+.timeFew {
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--color-sub);
+}
+
+.timeFew {
+  color: var(--color-accent);
+}
+
+.empty {
+  border-top: 1px solid var(--color-hair);
+}
+
+@media (max-width: 960px) {
+  .top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .date {
+    width: auto;
+    height: 60px;
+    border-radius: var(--radius-md);
+  }
+
+  .groupHead {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .time {
+    width: calc((100% - 20px) / 3);
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .time {
+    width: calc((100% - 10px) / 2);
+  }
+}
