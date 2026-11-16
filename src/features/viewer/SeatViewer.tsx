@@ -15,6 +15,7 @@ import { seatName } from "@/lib/format";
 import { bookingLink } from "@/lib/labels";
 import type { Movie } from "@/lib/showtimes/types";
 import { SceneErrorBoundary } from "./SceneErrorBoundary";
+import { StatureControl } from "./StatureControl";
 import type { ScreenVideoStatus } from "./screen-texture";
 import styles from "./SeatViewer.module.css";
 import { useSeatView } from "./useSeatView";
@@ -181,6 +182,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                   영상 재생
                 </button>
               ) : null}
+              <StatureControl />
               <button type="button" className={styles.control} aria-pressed={!showHeads} onClick={() => setShowHeads((v) => !v)}>
                 {showHeads ? "앞사람 끄기" : "앞사람 켜기"}
               </button>
