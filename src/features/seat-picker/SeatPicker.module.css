@@ -1,0 +1,114 @@
+.layout {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.map {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 40px;
+}
+
+.panel {
+  width: 400px;
+  flex: none;
+  border-left: 1px solid var(--color-hair);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.caption {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+  min-height: 1.5em;
+}
+
+.seatName {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.preview {
+  width: 100%;
+  max-width: 320px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.previewEmpty {
+  aspect-ratio: 16 / 9;
+  background: var(--color-btn);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.numbers {
+  display: flex;
+  gap: 24px;
+}
+
+.numbers > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.numbers dd {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.numbers dt {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.note {
+  margin-top: auto;
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.skeleton {
+  border-radius: 8px;
+  background: var(--color-btn);
+}
+
+@media (max-width: 960px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .map {
+    padding: 28px var(--gutter);
+  }
+
+  .panel {
+    width: 100%;
+    border-left: 0;
+    border-top: 1px solid var(--color-hair);
+    padding: 24px var(--gutter) 32px;
+    gap: 14px;
+  }
+
+  .seatName {
+    font-size: var(--text-title);
+  }
+}

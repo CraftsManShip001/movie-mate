@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 1,
+  "theaterId": "cgv-yongsan-ipark-mall",
+  "movieId": "the-night-orbit",
+  "sample": true,
+  "notes": "가상의 샘플 상영 시간표다. day는 오늘로부터 며칠 뒤인지(0 = 오늘)를 뜻한다. 실제 시간표 연동 전까지 쓴다. auditoriumId가 null인 관은 시야 미리보기가 없다.",
+  "screens": [
+    {
+      "id": "imax",
+      "name": "IMAX관",
+      "format": "IMAX 레이저",
+      "subtitle": "자막",
+      "aspectRatio": 1.43,
+      "seatCount": 592,
+      "auditoriumId": "sample-imax"
+    },
+    {
+      "id": "4dx",
+      "name": "4DX관",
+      "format": "4DX",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 120,
+      "auditoriumId": "sample-4dx"
+    },
+    {
+      "id": "3",
+      "name": "3관",
+      "format": "2D",
+      "subtitle": "자막",
+      "aspectRatio": 2.39,
+      "seatCount": 172,
+      "auditoriumId": null
+    }
+  ],
+  "showings": [
+    {
+      "day": 0,
+      "screenId": "imax",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 88
+    },
+    {
+      "day": 0,
+      "screenId": "imax",
+      "start": "13:40",
+      "end": "16:32",
+      "seatsLeft": 212
+    },
+    {
+      "day": 0,
+      "screenId": "imax",
+      "start": "17:00",
+      "end": "19:52",
+      "seatsLeft": 31
+    },
+    {
+      "day": 0,
+      "screenId": "imax",
+      "start": "20:20",
+      "end": "23:12",
+      "seatsLeft": 405
+    },
+    {
+      "day": 0,
+      "screenId": "4dx",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 14
+    },
+    {
+      "day": 0,
+      "screenId": "4dx",
+      "start": "18:10",
+      "end": "21:02",
+      "seatsLeft": 63
+    },
+    {
+      "day": 0,
+      "screenId": "3",
+      "start": "12:10",
+      "end": "15:02",
+      "seatsLeft": 140
+    },
+    {
+      "day": 0,
+      "screenId": "3",
+      "start": "15:30",
+      "end": "18:22",
+      "seatsLeft": 96
+    },
+    {
+      "day": 0,
+      "screenId": "3",
+      "start": "21:00",
+      "end": "23:52",
+      "seatsLeft": 158
+    },
+    {
+      "day": 1,
+      "screenId": "imax",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 80
+    },
+    {
+      "day": 1,
+      "screenId": "imax",
+      "start": "13:40",
+      "end": "16:32",
+      "seatsLeft": 124
+    },
+    {
+      "day": 1,
+      "screenId": "imax",
+      "start": "17:00",
+      "end": "19:52",
+      "seatsLeft": 47
+    },
+    {
+      "day": 1,
+      "screenId": "imax",
+      "start": "20:20",
+      "end": "23:12",
+      "seatsLeft": 177
+    },
+    {
+      "day": 1,
+      "screenId": "4dx",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 18
+    },
+    {
+      "day": 1,
+      "screenId": "4dx",
+      "start": "18:10",
+      "end": "21:02",
+      "seatsLeft": 62
+    },
+    {
+      "day": 1,
+      "screenId": "3",
+      "start": "12:10",
+      "end": "15:02",
+      "seatsLeft": 57
+    },
+    {
+      "day": 1,
+      "screenId": "3",
+      "start": "15:30",
+      "end": "18:22",
+      "seatsLeft": 121
+    },
+    {
+      "day": 1,
+      "screenId": "3",
+      "start": "21:00",
+      "end": "23:52",
+      "seatsLeft": 58
+    },
+    {
+      "day": 2,
+      "screenId": "imax",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 98
+    },
+    {
+      "day": 2,
+      "screenId": "imax",
+      "start": "13:40",
+      "end": "16:32",
+      "seatsLeft": 91
+    },
+    {
+      "day": 2,
+      "screenId": "imax",
+      "start": "17:00",
+      "end": "19:52",
+      "seatsLeft": 14
+    },
+    {
+      "day": 2,
+      "screenId": "imax",
+      "start": "20:20",
+      "end": "23:12",
+      "seatsLeft": 448
+    },
+    {
+      "day": 2,
+      "screenId": "4dx",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 26
+    },
+    {
+      "day": 2,
+      "screenId": "4dx",
+      "start": "18:10",
+      "end": "21:02",
+      "seatsLeft": 33
+    },
+    {
+      "day": 2,
+      "screenId": "3",
+      "start": "12:10",
+      "end": "15:02",
+      "seatsLeft": 101
+    },
+    {
+      "day": 2,
+      "screenId": "3",
+      "start": "15:30",
+      "end": "18:22",
+      "seatsLeft": 143
+    },
+    {
+      "day": 2,
+      "screenId": "3",
+      "start": "21:00",
+      "end": "23:52",
+      "seatsLeft": 172
+    },
+    {
+      "day": 4,
+      "screenId": "imax",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 122
+    },
+    {
+      "day": 4,
+      "screenId": "imax",
+      "start": "13:40",
+      "end": "16:32",
+      "seatsLeft": 223
+    },
+    {
+      "day": 4,
+      "screenId": "imax",
+      "start": "17:00",
+      "end": "19:52",
+      "seatsLeft": 66
+    },
+    {
+      "day": 4,
+      "screenId": "imax",
+      "start": "20:20",
+      "end": "23:12",
+      "seatsLeft": 157
+    },
+    {
+      "day": 4,
+      "screenId": "4dx",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 27
+    },
+    {
+      "day": 4,
+      "screenId": "4dx",
+      "start": "18:10",
+      "end": "21:02",
+      "seatsLeft": 53
+    },
+    {
+      "day": 4,
+      "screenId": "3",
+      "start": "12:10",
+      "end": "15:02",
+      "seatsLeft": 80
+    },
+    {
+      "day": 4,
+      "screenId": "3",
+      "start": "15:30",
+      "end": "18:22",
+      "seatsLeft": 50
+    },
+    {
+      "day": 4,
+      "screenId": "3",
+      "start": "21:00",
+      "end": "23:52",
+      "seatsLeft": 140
+    },
+    {
+      "day": 5,
+      "screenId": "imax",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 162
+    },
+    {
+      "day": 5,
+      "screenId": "imax",
+      "start": "13:40",
+      "end": "16:32",
+      "seatsLeft": 136
+    },
+    {
+      "day": 5,
+      "screenId": "imax",
+      "start": "17:00",
+      "end": "19:52",
+      "seatsLeft": 43
+    },
+    {
+      "day": 5,
+      "screenId": "imax",
+      "start": "20:20",
+      "end": "23:12",
+      "seatsLeft": 592
+    },
+    {
+      "day": 5,
+      "screenId": "4dx",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 14
+    },
+    {
+      "day": 5,
+      "screenId": "4dx",
+      "start": "18:10",
+      "end": "21:02",
+      "seatsLeft": 84
+    },
+    {
+      "day": 6,
+      "screenId": "imax",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 36
+    },
+    {
+      "day": 6,
+      "screenId": "imax",
+      "start": "13:40",
+      "end": "16:32",
+      "seatsLeft": 87
+    },
+    {
+      "day": 6,
+      "screenId": "imax",
+      "start": "17:00",
+      "end": "19:52",
+      "seatsLeft": 21
+    },
+    {
+      "day": 6,
+      "screenId": "imax",
+      "start": "20:20",
+      "end": "23:12",
+      "seatsLeft": 592
+    },
+    {
+      "day": 6,
+      "screenId": "4dx",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 15
+    },
+    {
+      "day": 6,
+      "screenId": "4dx",
+      "start": "18:10",
+      "end": "21:02",
+      "seatsLeft": 56
+    },
+    {
+      "day": 6,
+      "screenId": "3",
+      "start": "12:10",
+      "end": "15:02",
+      "seatsLeft": 172
+    },
+    {
+      "day": 6,
+      "screenId": "3",
+      "start": "15:30",
+      "end": "18:22",
+      "seatsLeft": 111
+    },
+    {
+      "day": 6,
+      "screenId": "3",
+      "start": "21:00",
+      "end": "23:52",
+      "seatsLeft": 137
+    }
+  ]
+}

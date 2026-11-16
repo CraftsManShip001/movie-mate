@@ -1,21 +1,22 @@
-import Link from "next/link";
-import { getTheaters } from "@/lib/data/registry";
+import { TheaterPicker, type ChainOption } from "@/features/theater-picker/TheaterPicker";
+import { getAuditoriums, getTheaters } from "@/lib/data/registry";
+import { CHAINS, formatLabel } from "@/lib/labels";
 
+/** 1 · 영화관. 시야 데이터(상영관)가 하나라도 있는 극장만 "시야를 볼 수 있는 극장"으로 보여 준다. */
 export default function HomePage() {
   const theaters = getTheaters();
-  return (
-    <main className="page">
-      <h1>극장</h1>
-      <ul className="list">
-        {theaters.map((theater) => (
-          <li key={theater.id}>
-            <Link href={`/theaters/${theater.id}`}>
-              {theater.chain} {theater.branch}
-            </Link>
-            <p className="muted">{theater.address}</p>
-          </li>
-        ))}
-      </ul>
-    </main>
-  );
+  const chains: ChainOption[] = CHAINS.map((chain) => ({
+    name: chain,
+    theaters: theaters
+      .filter((t) => t.chain === chain)
+      .map((t) => ({ theater: t, auditoriums: getAuditoriums(t.id) }))
+      .filter(({ auditoriums }) => auditoriums.length > 0)
+      .map(({ theater, auditoriums }) => ({
+        id: theater.id,
+        name: `${theater.chain} ${theater.branch}`,
+        formats: [...new Set(auditoriums.map((a) => formatLabel(a.format)))].join(" · "),
+      })),
+  }));
+
+  return <TheaterPicker chains={chains} />;
 }

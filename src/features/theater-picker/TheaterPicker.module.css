@@ -1,0 +1,169 @@
+.layout {
+  flex: 1;
+  display: flex;
+  gap: 80px;
+  padding: 56px 80px;
+}
+
+.side {
+  width: 400px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.title {
+  font-size: var(--text-display);
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+
+.chains {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.chain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 76px;
+  padding: 0 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-hair);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  text-align: left;
+}
+
+.chain[aria-pressed="true"] {
+  border: 2px solid var(--color-ink);
+  background: var(--color-ink);
+  color: #ffffff;
+}
+
+.chainName {
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.chainCount {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.chain[aria-pressed="true"] .chainCount {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.list {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.listEmpty {
+  border-top: 1px solid var(--color-ink);
+}
+
+.listHead {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--color-ink);
+}
+
+.listChain {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.listCaption {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.rows {
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  height: 60px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-hair);
+  background: none;
+  text-align: left;
+  color: var(--color-ink);
+}
+
+.rowName {
+  font-size: var(--text-md);
+  font-weight: 400;
+}
+
+.row[aria-pressed="true"] .rowName {
+  font-weight: 700;
+}
+
+.rowMeta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+@media (max-width: 960px) {
+  .layout {
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px var(--gutter);
+  }
+
+  .side {
+    width: 100%;
+  }
+
+  .title {
+    margin-bottom: 10px;
+  }
+
+  .chains {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .chain {
+    height: 64px;
+    padding: 0 14px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .chainName {
+    font-size: 17px;
+  }
+
+  .chainCount {
+    font-size: 12px;
+  }
+}

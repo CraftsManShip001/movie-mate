@@ -5,7 +5,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { BackSide, Object3D, PerspectiveCamera, type InstancedMesh } from "three";
 import { screenRect } from "@/lib/domain/geometry";
 import type { Auditorium, Seat, Vec3 } from "@/lib/domain/types";
-import { frontHeadBoxes, riserBoxes, roomBox, seatBoxes, type Box } from "./scene-layout";
+import { frontHeadBoxes, HORIZONTAL_FOV_DEG, riserBoxes, roomBox, seatBoxes, type Box } from "./scene-layout";
 import { useScreenTexture, type ScreenVideoStatus } from "./screen-texture";
 
 export interface SceneProps {
@@ -96,8 +96,6 @@ function InstancedBoxes({ boxes, color, shape = "box" }: { boxes: Box[]; color: 
 const MAX_PITCH = (80 * Math.PI) / 180;
 const MAX_YAW = (120 * Math.PI) / 180;
 const DRAG_SPEED = 0.005;
-/** 화면 가로 시야각. 세로 화면(모바일)에서도 옆이 너무 좁지 않게 가로 기준으로 맞춘다. */
-const HORIZONTAL_FOV_DEG = 90;
 const MAX_VERTICAL_FOV_DEG = 100;
 
 /**
