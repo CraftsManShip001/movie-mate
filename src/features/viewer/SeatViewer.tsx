@@ -47,6 +47,8 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const [panelOpen, setPanelOpen] = useState(true);
   const [videoStatus, setVideoStatus] = useState<ScreenVideoStatus>("loading");
   const [playRequest, setPlayRequest] = useState(0);
+  const [recenterRequest, setRecenterRequest] = useState(0);
+  const [turnedAway, setTurnedAway] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const onVideoStatus = useCallback((status: ScreenVideoStatus) => setVideoStatus(status), []);
@@ -98,6 +100,8 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
               videoUrl={SCREEN_VIDEO_URL}
               playRequest={playRequest}
               onVideoStatus={onVideoStatus}
+              recenterRequest={recenterRequest}
+              onTurnedAwayChange={setTurnedAway}
             />
           </SceneErrorBoundary>
         </div>
@@ -177,6 +181,11 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
               </section>
             ) : null}
             <div className={styles.controls}>
+              {turnedAway ? (
+                <button type="button" className={styles.control} onClick={() => setRecenterRequest((n) => n + 1)}>
+                  스크린 보기
+                </button>
+              ) : null}
               {videoStatus === "blocked" ? (
                 <button type="button" className={styles.control} onClick={() => setPlayRequest((n) => n + 1)}>
                   영상 재생

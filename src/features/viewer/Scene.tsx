@@ -16,6 +16,10 @@ export interface SceneProps {
   videoUrl: string;
   playRequest: number;
   onVideoStatus: (status: ScreenVideoStatus) => void;
+  /** 값이 바뀔 때마다 스크린 쪽으로 고개를 되돌린다 */
+  recenterRequest: number;
+  /** 스크린에서 고개를 많이 돌렸는지(true) 알려 준다 */
+  onTurnedAwayChange: (turnedAway: boolean) => void;
 }
 
 /** 3D 시야 장면. three.js는 브라우저 전용이므로 next/dynamic(ssr: false)으로만 불러온다. */
@@ -31,7 +35,17 @@ export default function Scene(props: SceneProps) {
   );
 }
 
-function SceneContents({ auditorium, seat, eye, showHeads, videoUrl, playRequest, onVideoStatus }: SceneProps) {
+function SceneContents({
+  auditorium,
+  seat,
+  eye,
+  showHeads,
+  videoUrl,
+  playRequest,
+  onVideoStatus,
+  recenterRequest,
+  onTurnedAwayChange,
+}: SceneProps) {
   const screen = screenRect(auditorium);
   const room = useMemo(() => roomBox(auditorium), [auditorium]);
   const risers = useMemo(() => riserBoxes(auditorium), [auditorium]);
@@ -63,7 +77,12 @@ function SceneContents({ auditorium, seat, eye, showHeads, videoUrl, playRequest
         <meshBasicMaterial map={texture} toneMapped={false} />
       </mesh>
 
-      <SeatCamera eye={eye} target={{ x: 0, y: screen.centerY, z: 0 }} aimKey={seat.id} />
+      <SeatCamera
+        eye={eye}
+        target={{ x: 0, y: screen.centerY, z: 0 }}
+        aimKey={`${seat.id}:${recenterRequest}`}
+        onTurnedAwayChange={onTurnedAwayChange}
+      />
     </>
   );
 }
@@ -94,21 +113,40 @@ function InstancedBoxes({ boxes, color, shape = "box" }: { boxes: Box[]; color: 
 }
 
 const MAX_PITCH = (80 * Math.PI) / 180;
-const MAX_YAW = (120 * Math.PI) / 180;
 const DRAG_SPEED = 0.005;
+/** 스크린 방향에서 이만큼 넘게 돌리면 "스크린 보기" 버튼을 띄운다 */
+const TURNED_AWAY = (60 * Math.PI) / 180;
 const MAX_VERTICAL_FOV_DEG = 100;
 
 /**
  * 좌석 위치에 고정된 카메라. 위치는 눈 위치로 고정하고, 드래그로 고개만 돌린다.
+ * 좌우는 제한 없이 한 바퀴 돌 수 있고, 위아래는 ±80°까지다.
  * OrbitControls를 쓰지 않는 이유: 궤도 회전은 카메라 위치가 바뀌어 "그 좌석에서 보는 시야"가 아니게 된다.
  */
-function SeatCamera({ eye, target, aimKey }: { eye: Vec3; target: Vec3; aimKey: string }) {
+function SeatCamera({
+  eye,
+  target,
+  aimKey,
+  onTurnedAwayChange,
+}: {
+  eye: Vec3;
+  target: Vec3;
+  aimKey: string;
+  onTurnedAwayChange: (turnedAway: boolean) => void;
+}) {
   const camera = useThree((state) => state.camera);
   const gl = useThree((state) => state.gl);
   const size = useThree((state) => state.size);
   const getState = useThree((state) => state.get);
   const yaw = useRef(0);
   const pitch = useRef(0);
+  /** 스크린 중심을 바라보는 yaw. 고개를 얼마나 돌렸는지 잴 때 기준 */
+  const homeYaw = useRef(0);
+  const turnedAway = useRef(false);
+  const reportTurn = useRef(onTurnedAwayChange);
+  useEffect(() => {
+    reportTurn.current = onTurnedAwayChange;
+  }, [onTurnedAwayChange]);
 
   // 좌석이 바뀌면 스크린 중심을 바라보게 초기화
   useLayoutEffect(() => {
@@ -116,8 +154,13 @@ function SeatCamera({ eye, target, aimKey }: { eye: Vec3; target: Vec3; aimKey: 
     const dy = target.y - eye.y;
     const dz = target.z - eye.z;
     yaw.current = Math.atan2(-dx, -dz);
+    homeYaw.current = yaw.current;
     pitch.current = Math.atan2(dy, Math.hypot(dx, dz));
     camera.rotation.set(pitch.current, yaw.current, 0, "YXZ");
+    if (turnedAway.current) {
+      turnedAway.current = false;
+      reportTurn.current(false);
+    }
     // eye·target 변경(키 슬라이더)에는 고개 방향을 유지하려고 aimKey만 본다
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aimKey]);
@@ -146,10 +189,15 @@ function SeatCamera({ eye, target, aimKey }: { eye: Vec3; target: Vec3; aimKey: 
     };
     const move = (e: PointerEvent) => {
       if (!last) return;
-      yaw.current = clamp(yaw.current + (e.clientX - last.x) * DRAG_SPEED, -MAX_YAW, MAX_YAW);
+      yaw.current = wrapAngle(yaw.current + (e.clientX - last.x) * DRAG_SPEED);
       pitch.current = clamp(pitch.current + (e.clientY - last.y) * DRAG_SPEED, -MAX_PITCH, MAX_PITCH);
       last = { x: e.clientX, y: e.clientY };
       camera.rotation.set(pitch.current, yaw.current, 0, "YXZ");
+      const away = Math.abs(wrapAngle(yaw.current - homeYaw.current)) > TURNED_AWAY;
+      if (away !== turnedAway.current) {
+        turnedAway.current = away;
+        reportTurn.current(away);
+      }
     };
     const up = (e: PointerEvent) => {
       last = null;
@@ -172,4 +220,9 @@ function SeatCamera({ eye, target, aimKey }: { eye: Vec3; target: Vec3; aimKey: 
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
+}
+
+/** 각도를 -π ~ π 로 맞춘다 */
+function wrapAngle(angle: number): number {
+  return Math.atan2(Math.sin(angle), Math.cos(angle));
 }
