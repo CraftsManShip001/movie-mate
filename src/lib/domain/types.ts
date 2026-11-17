@@ -135,6 +135,12 @@ export interface Auditorium {
   sample: boolean;
   /** true면 값 중 하나 이상이 estimated. validate 단계에서 실제 값과 맞는지 확인한다. */
   estimated: boolean;
+  /**
+   * 좌석 번호 매기는 방식. 없으면 "count".
+   * - "count": 열마다 왼쪽부터 좌석만 세어 1, 2, 3...
+   * - "column": 칸 번호 + 1. 빈 칸도 번호를 차지한다(CGV 예매 화면 방식).
+   */
+  seatNumbering?: "count" | "column";
   notes?: string;
   room: AuditoriumRoom;
   screen: AuditoriumScreen;

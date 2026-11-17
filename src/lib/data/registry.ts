@@ -5,19 +5,24 @@
  * 정적 import라서 서버·클라이언트 어디서든 같은 데이터를 쓰고, Vercel 배포에도 파일 추적 문제가 없다.
  *
  * 새 극장·상영관을 추가하면:
- * 1. data/theaters/<theaterId>/theater.json 과 auditoriums/<auditoriumId>.json 을 만든다.
- * 2. 아래 import 와 THEATER_FILES / AUDITORIUM_FILES 에 한 줄씩 추가한다.
+ * 1. data/theaters/<theaterId>/theater.json 을 만든다.
+ * 2. 상영관은 둘 중 하나로 넣는다.
+ *    - 치수를 아는 상영관: auditoriums/<auditoriumId>.json (완성된 Auditorium)
+ *    - 좌석표만 있는 상영관: seatmaps/<auditoriumId>.json (SeatMapInput). 불러올 때 estimateAuditorium 으로 크기를 추정한다.
+ * 3. 아래 import 와 THEATER_FILES / AUDITORIUM_FILES / SEATMAP_FILES 에 한 줄씩 추가한다.
  * (등록을 빠뜨리면 registry.test.ts 가 실패한다.)
  */
 import yongsanTheater from "@data/theaters/cgv-yongsan-ipark-mall/theater.json";
-import yongsanSampleImax from "@data/theaters/cgv-yongsan-ipark-mall/auditoriums/sample-imax.json";
 import yongsanSample4dx from "@data/theaters/cgv-yongsan-ipark-mall/auditoriums/sample-4dx.json";
+import yongsanImaxSeatMap from "@data/theaters/cgv-yongsan-ipark-mall/seatmaps/imax.json";
 
+import { estimateAuditorium, type SeatMapInput } from "@/lib/domain/estimate";
 import type { Auditorium, Theater } from "@/lib/domain/types";
 import { validateAuditorium, validateTheater } from "@/lib/domain/validation";
 
 const THEATER_FILES: unknown[] = [yongsanTheater];
-const AUDITORIUM_FILES: unknown[] = [yongsanSampleImax, yongsanSample4dx];
+const AUDITORIUM_FILES: unknown[] = [yongsanSample4dx];
+const SEATMAP_FILES: unknown[] = [yongsanImaxSeatMap];
 
 function loadTheater(json: unknown): Theater {
   const theater = json as Theater;
@@ -38,7 +43,10 @@ function loadAuditorium(json: unknown): Auditorium {
 }
 
 const theaters: Theater[] = THEATER_FILES.map(loadTheater);
-const auditoriums: Auditorium[] = AUDITORIUM_FILES.map(loadAuditorium);
+const auditoriums: Auditorium[] = [
+  ...AUDITORIUM_FILES.map(loadAuditorium),
+  ...SEATMAP_FILES.map((json) => loadAuditorium(estimateAuditorium(json as SeatMapInput))),
+];
 
 for (const theater of theaters) {
   for (const auditoriumId of theater.auditoriumIds) {
