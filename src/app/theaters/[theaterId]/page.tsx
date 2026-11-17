@@ -4,7 +4,7 @@ import { Suspense, type ComponentProps } from "react";
 import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { ShowtimePicker } from "@/features/showtimes/ShowtimePicker";
 import { getTheater, getTheaters } from "@/lib/data/registry";
-import { getMovie, getSchedule } from "@/lib/data/showtimes";
+import { getShowtimesWithMovie } from "@/lib/data/now-showing";
 import { nowInSeoul } from "@/lib/format";
 
 export function generateStaticParams() {
@@ -22,14 +22,13 @@ export default function TheaterPage({ params }: PageProps<"/theaters/[theaterId]
   );
 }
 
-function TheaterContent({ theaterId }: { theaterId: string }) {
+async function TheaterContent({ theaterId }: { theaterId: string }) {
   const theater = getTheater(theaterId);
   if (!theater) notFound();
   const name = `${theater.chain} ${theater.branch}`;
-  const schedule = getSchedule(theater.id);
-  const movie = schedule ? getMovie(schedule.movieId) : undefined;
+  const showtimes = await getShowtimesWithMovie(theater.id);
 
-  if (!schedule || !movie) {
+  if (!showtimes) {
     return (
       <Frame header={<FrameHeader title={name} backHref="/" />}>
         <div className={frameStyles.empty}>
@@ -50,8 +49,8 @@ function TheaterContent({ theaterId }: { theaterId: string }) {
     <Suspense fallback={fallback}>
       <ShowtimesToday
         theater={{ id: theater.id, name, chain: theater.chain }}
-        schedule={schedule}
-        movie={movie}
+        schedule={showtimes.schedule}
+        movie={showtimes.movie}
       />
     </Suspense>
   );

@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { SeatPicker, SeatPickerSkeleton } from "@/features/seat-picker/SeatPicker";
 import { getAllAuditoriums, getAuditorium, getTheater } from "@/lib/data/registry";
-import { getMovie, getSchedule, screenNameForAuditorium } from "@/lib/data/showtimes";
+import { getShowtimesWithMovie } from "@/lib/data/now-showing";
+import { screenNameForAuditorium } from "@/lib/data/showtimes";
 
 export function generateStaticParams() {
   return getAllAuditoriums().map((a) => ({ theaterId: a.theaterId, auditoriumId: a.id }));
@@ -19,15 +20,14 @@ export default function AuditoriumPage({ params }: PageProps<"/theaters/[theater
   );
 }
 
-function AuditoriumContent({ theaterId, auditoriumId }: { theaterId: string; auditoriumId: string }) {
+async function AuditoriumContent({ theaterId, auditoriumId }: { theaterId: string; auditoriumId: string }) {
   const theater = getTheater(theaterId);
   const auditorium = getAuditorium(theaterId, auditoriumId);
   if (!theater || !auditorium) notFound();
 
   const screenName = screenNameForAuditorium(theater.id, auditorium.id) ?? auditorium.name;
   const title = `${theater.chain} ${theater.branch} · ${screenName}`;
-  const schedule = getSchedule(theater.id);
-  const movie = schedule ? getMovie(schedule.movieId) : undefined;
+  const movie = (await getShowtimesWithMovie(theater.id))?.movie;
   const backHref = `/theaters/${theater.id}`;
 
   // 쿼리(날짜·시각·고른 자리)는 브라우저에서 읽으므로 그 부분만 Suspense로 감싼다

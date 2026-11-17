@@ -26,6 +26,21 @@ function toIso(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
+/** 840 → "14:00". 자정을 넘기면 24 이상으로 쓴다. */
+export function fromMinutes(minutes: number): string {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
+
+/** 영화가 바뀌면 끝나는 시각을 상영 시간에 맞춰 다시 계산한다 (시작 + 상영 시간). */
+export function withRuntime(schedule: Schedule, runtimeMin: number): Schedule {
+  return {
+    ...schedule,
+    showings: schedule.showings.map((s) => ({ ...s, end: fromMinutes(toMinutes(s.start) + runtimeMin) })),
+  };
+}
+
 export function addDays(iso: string, days: number): string {
   const date = parseIso(iso);
   date.setUTCDate(date.getUTCDate() + days);

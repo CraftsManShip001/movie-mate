@@ -4,10 +4,12 @@ import {
   buildDateStrip,
   daysBetween,
   findNextShowDay,
+  fromMinutes,
   groupShowingsByScreen,
   isFewSeatsLeft,
   screenMeta,
   toMinutes,
+  withRuntime,
 } from "./schedule";
 import type { Schedule } from "./types";
 
@@ -96,3 +98,12 @@ describe("screenMeta", () => {
     expect(screenMeta(schedule.screens[1])).toBe("4DX · 자막 · 1.90:1 · 120석");
   });
 });
+
+describe("withRuntime", () => {
+  it("끝나는 시각을 시작 + 상영 시간으로 다시 계산한다", () => {
+    const next = withRuntime(schedule, 166);
+    expect(next.showings[0].end).toBe(fromMinutes(toMinutes(next.showings[0].start) + 166));
+    expect(fromMinutes(23 * 60 + 30 + 166)).toBe("26:16");
+  });
+});
+
