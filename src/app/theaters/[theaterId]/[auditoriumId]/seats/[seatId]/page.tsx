@@ -18,8 +18,8 @@ export default function SeatPage({ params }: PageProps<"/theaters/[theaterId]/[a
   );
 }
 
-function SeatView({ theaterId, auditoriumId, seatId }: { theaterId: string; auditoriumId: string; seatId: string }) {
-  const context = getSeatContext(theaterId, auditoriumId, seatId);
+async function SeatView({ theaterId, auditoriumId, seatId }: { theaterId: string; auditoriumId: string; seatId: string }) {
+  const context = await getSeatContext(theaterId, auditoriumId, seatId);
   if (!context) notFound();
 
   return (

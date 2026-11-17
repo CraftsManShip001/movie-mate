@@ -135,7 +135,7 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
             <div className={styles.movieText}>
               <span className={styles.movieTitle}>{movie.title}</span>
               <span className={styles.movieMeta}>
-                {movie.rating} · {movie.runtimeMin}분
+                {movie.rating} · {movie.runtimeMin}분{movie.source === "tmdb" ? " · 정보 TMDB" : ""}
               </span>
             </div>
           </div>
