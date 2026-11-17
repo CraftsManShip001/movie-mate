@@ -5,9 +5,9 @@
   "branch": "용산아이파크몰",
   "address": "서울특별시 용산구 한강대로23길 55 아이파크몰 6층",
   "auditoriumIds": [
-    "sample-imax",
+    "imax",
     "sample-4dx"
   ],
   "sample": false,
-  "notes": "극장 정보는 공개 정보 기준. 상영관 데이터는 아직 샘플뿐이다."
+  "notes": "극장 정보는 공개 정보 기준. IMAX관은 예매 화면 좌석표로 크기를 추정했고, 4DX관은 아직 샘플이다."
 }

@@ -83,7 +83,11 @@ export function SeatPicker({ theaterId, title, movieTitle, auditorium }: SeatPic
             </div>
           )}
           {numbers ? <ViewNumbersRow numbers={numbers} /> : null}
-          {auditorium.sample ? <p className={styles.note}>샘플 상영관이라 실제 치수와 달라요</p> : null}
+          {auditorium.sample ? (
+            <p className={styles.note}>샘플 상영관이라 실제 치수와 달라요</p>
+          ) : auditorium.estimated ? (
+            <p className={styles.note}>좌석표로 추정한 크기라 실제와 조금 다를 수 있어요</p>
+          ) : null}
         </aside>
       </div>
     </Frame>

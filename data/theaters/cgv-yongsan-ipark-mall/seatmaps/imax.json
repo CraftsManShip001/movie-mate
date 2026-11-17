@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "imax",
+  "theaterId": "cgv-yongsan-ipark-mall",
+  "name": "IMAX관",
+  "format": "imax",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-17 (일반석 618 + 장애인석 6 = 624석)",
+  "seatNumbering": "column",
+  "screen": {
+    "width": 31000,
+    "note": "폭은 CGV 공개 수치 31m (CJ뉴스룸 등 언론 보도). 높이는 1.43:1로 계산했다. 공개 높이 22.4m를 그대로 쓰면 화면비가 1.38이 되어 IMAX 1.43:1 표시와 맞지 않는다."
+  },
+  "aspectRatio": 1.43,
+  "notes": "가로 통로 위치는 예매 화면에 나오지 않아 넣지 않았다.",
+  "rows": [
+    { "label": "A", "cells": "...sssssssssssss..www..www.sssss.sssssssssssss..." },
+    { "label": "B", "cells": "...sssssssssssss.sssssssssssssss.sssssssssssss..." },
+    { "label": "C", "cells": "...sssssssssssss.sssssssssssssss.sssssssssssss..." },
+    { "label": "D", "cells": "...sssssssssssss.sssssssssssssss.sssssssssssss..." },
+    { "label": "E", "cells": "...sssssssssssss.ssssssssssssss..sssssssssssss..." },
+    { "label": "F", "cells": "...ssssssssssss..ssssssssssssss..ssssssssssss...." },
+    { "label": "G", "cells": "...ssssssssssss..ssssssssssssss..ssssssssssss...." },
+    { "label": "H", "cells": "...ssssssssssss..ssssssssssssss..ssssssssssss...." },
+    { "label": "I", "cells": "ss.ssssssssssss..ssssssssssssss..ssssssssssss..ss" },
+    { "label": "J", "cells": "ss.ssssssssssss..ssssssssssssss..ssssssssssss..ss" },
+    { "label": "K", "cells": "ss.ssssssssssss..ssssssssssssss..ssssssssssss..ss" },
+    { "label": "L", "cells": "ss.ssssssssssss..ssssssssssssss..ssssssssssss..ss" },
+    { "label": "M", "cells": "ss.ssssssssssss..ssssssssssssss..ssssssssssss..ss" },
+    { "label": "N", "cells": "ss.ssssssssssss..ssssssssssssss..ssssssssssss..ss" },
+    { "label": "O", "cells": "ss.ssssssssssss..ssssssssssssss..ssssssssssss..ss" },
+    { "label": "P", "cells": "ss.ssssss..............................ssssss..ss" }
+  ]
+}

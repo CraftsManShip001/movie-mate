@@ -140,7 +140,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
               </dl>
             ) : null}
             <p className={styles.credit}>
-              {auditorium.sample ? "샘플 상영관이라 실제와 달라요 · " : ""}
+              {auditorium.sample ? "샘플 상영관이라 실제와 달라요 · " : auditorium.estimated ? "좌석표로 추정한 크기예요 · " : ""}
               {SCREEN_VIDEO_CREDIT}
             </p>
           </div>

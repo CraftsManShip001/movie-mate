@@ -11,8 +11,8 @@
       "format": "IMAX 레이저",
       "subtitle": "자막",
       "aspectRatio": 1.43,
-      "seatCount": 592,
-      "auditoriumId": "sample-imax"
+      "seatCount": 624,
+      "auditoriumId": "imax"
     },
     {
       "id": "4dx",
