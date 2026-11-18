@@ -91,6 +91,23 @@ describe("data/theaters", () => {
     }
   });
 
+  it("롯데시네마 서울 지점 좌석 수가 지점 안내의 총 좌석 수와 같다", () => {
+    // 2026-11-18 롯데시네마 지점 상세의 총 좌석 수. 강동은 상영이 없어 좌석표를 못 본 3개 관을 뺀 값이다.
+    const totals: Record<string, number> = {
+      "lotte-avenuel": 710, "lotte-yeongdeungpo": 1328, "lotte-nowon": 934, "lotte-konkuk-univ": 1813,
+      "lotte-hongik-univ": 730, "lotte-sillim": 841, "lotte-cheongnyangni": 1733, "lotte-gimpo-airport": 2127,
+      "lotte-seoul-natl-univ": 687, "lotte-gasan-digital": 1054, "lotte-yongsan": 889, "lotte-sindorim": 560,
+      "lotte-world-tower": 4180, "lotte-doksan": 1606, "lotte-eunpyeong": 1336, "lotte-dogok": 847,
+      "lotte-sindaebang": 533, "lotte-gangdong": 1186, "lotte-jungnang": 973, "lotte-gayang": 444, "lotte-suyu": 852,
+    };
+    const lotte = getTheaters().filter((t) => t.chain === "롯데시네마");
+    expect(lotte.map((t) => t.id).sort()).toEqual(Object.keys(totals).sort());
+    for (const theater of lotte) {
+      const seats = getAuditoriums(theater.id).reduce((sum, a) => sum + listSeats(a).length, 0);
+      expect(seats, theater.id).toBe(totals[theater.id]);
+    }
+  });
+
   it("샘플 상영관은 sample·estimated 표시가 있다", () => {
     const samples = getAllAuditoriums().filter((a) => a.id.startsWith("sample-"));
     expect(samples.length).toBeGreaterThan(0);

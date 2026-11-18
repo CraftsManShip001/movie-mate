@@ -6,13 +6,12 @@
  */
 import nightOrbit from "@data/movies/the-night-orbit.json";
 import yongsanSchedule from "@data/showtimes/cgv-yongsan-ipark-mall.json";
-import lotteYeongdeungpoSchedule from "@data/showtimes/lotte-yeongdeungpo.json";
-import lotteYongsanSchedule from "@data/showtimes/lotte-yongsan.json";
 
 import type { Movie, Schedule } from "@/lib/showtimes/types";
+import { LOTTE_SCHEDULE_FILES } from "./lotte.generated";
 
 const MOVIE_FILES = [nightOrbit] as Movie[];
-const SCHEDULE_FILES = [yongsanSchedule, lotteYeongdeungpoSchedule, lotteYongsanSchedule] as Schedule[];
+const SCHEDULE_FILES = [yongsanSchedule, ...LOTTE_SCHEDULE_FILES] as Schedule[];
 
 export function getMovies(): Movie[] {
   return MOVIE_FILES;

@@ -4,6 +4,7 @@ const FORMAT_LABELS: Record<string, string> = {
   standard: "일반",
   imax: "IMAX",
   "4dx": "4DX",
+  mx4d: "MX4D",
   screenx: "ScreenX",
   "dolby-cinema": "Dolby Cinema",
   premium: "프리미엄",

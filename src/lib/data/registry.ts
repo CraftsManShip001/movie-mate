@@ -10,55 +10,21 @@
  *    - 치수를 아는 상영관: auditoriums/<auditoriumId>.json (완성된 Auditorium)
  *    - 좌석표만 있는 상영관: seatmaps/<auditoriumId>.json (SeatMapInput). 불러올 때 estimateAuditorium 으로 크기를 추정한다.
  * 3. 아래 import 와 THEATER_FILES / AUDITORIUM_FILES / SEATMAP_FILES 에 한 줄씩 추가한다.
+ *    (롯데시네마 서울 지점은 생성 파일 lotte.generated.ts 에 모여 있다.)
  * (등록을 빠뜨리면 registry.test.ts 가 실패한다.)
  */
 import yongsanTheater from "@data/theaters/cgv-yongsan-ipark-mall/theater.json";
 import yongsanSample4dx from "@data/theaters/cgv-yongsan-ipark-mall/auditoriums/sample-4dx.json";
 import yongsanImaxSeatMap from "@data/theaters/cgv-yongsan-ipark-mall/seatmaps/imax.json";
 
-import lotteYeongdeungpoTheater from "@data/theaters/lotte-yeongdeungpo/theater.json";
-import lotteYeongdeungpo1 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-1.json";
-import lotteYeongdeungpo2 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-2.json";
-import lotteYeongdeungpo3 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-3.json";
-import lotteYeongdeungpo4 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-4.json";
-import lotteYeongdeungpo5 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-5.json";
-import lotteYeongdeungpo6 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-6.json";
-import lotteYeongdeungpo7 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-7.json";
-
-import lotteYongsanTheater from "@data/theaters/lotte-yongsan/theater.json";
-import lotteYongsan1 from "@data/theaters/lotte-yongsan/seatmaps/hall-1.json";
-import lotteYongsan2 from "@data/theaters/lotte-yongsan/seatmaps/hall-2.json";
-import lotteYongsan3 from "@data/theaters/lotte-yongsan/seatmaps/hall-3.json";
-import lotteYongsan4 from "@data/theaters/lotte-yongsan/seatmaps/hall-4.json";
-import lotteYongsan5 from "@data/theaters/lotte-yongsan/seatmaps/hall-5.json";
-import lotteYongsan6 from "@data/theaters/lotte-yongsan/seatmaps/hall-6.json";
-import lotteYongsan7 from "@data/theaters/lotte-yongsan/seatmaps/hall-7.json";
-import lotteYongsan8 from "@data/theaters/lotte-yongsan/seatmaps/hall-8.json";
-
+import { LOTTE_SEATMAP_FILES, LOTTE_THEATER_FILES } from "./lotte.generated";
 import { estimateAuditorium, type SeatMapInput } from "@/lib/domain/estimate";
 import type { Auditorium, Theater } from "@/lib/domain/types";
 import { validateAuditorium, validateTheater } from "@/lib/domain/validation";
 
-const THEATER_FILES: unknown[] = [yongsanTheater, lotteYeongdeungpoTheater, lotteYongsanTheater];
+const THEATER_FILES: unknown[] = [yongsanTheater, ...LOTTE_THEATER_FILES];
 const AUDITORIUM_FILES: unknown[] = [yongsanSample4dx];
-const SEATMAP_FILES: unknown[] = [
-  yongsanImaxSeatMap,
-  lotteYeongdeungpo1,
-  lotteYeongdeungpo2,
-  lotteYeongdeungpo3,
-  lotteYeongdeungpo4,
-  lotteYeongdeungpo5,
-  lotteYeongdeungpo6,
-  lotteYeongdeungpo7,
-  lotteYongsan1,
-  lotteYongsan2,
-  lotteYongsan3,
-  lotteYongsan4,
-  lotteYongsan5,
-  lotteYongsan6,
-  lotteYongsan7,
-  lotteYongsan8,
-];
+const SEATMAP_FILES: unknown[] = [yongsanImaxSeatMap, ...LOTTE_SEATMAP_FILES];
 
 function loadTheater(json: unknown): Theater {
   const theater = json as Theater;

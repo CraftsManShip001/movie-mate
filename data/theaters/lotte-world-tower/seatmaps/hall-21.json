@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-21",
+  "theaterId": "lotte-world-tower",
+  "name": "21관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (295석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "screen": {
+    "width": 34000,
+    "height": 13800,
+    "note": "롯데시네마 발표 수치 (수퍼플렉스 G, 2014 기네스 세계 최대 스크린)"
+  },
+  "notes": "수퍼플렉스(대형 스크린) 상영관. 스크린 크기는 공개 수치를 썼고, 화면비는 그 폭과 높이로 계산했다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "....ssss....ssssss...ssssss..ssssss....ssss...."
+    },
+    {
+      "label": "B",
+      "cells": "..ssssss..ssssssss..ssssssss.ssssssss..ssssss.."
+    },
+    {
+      "label": "C",
+      "cells": "ssssssss.sssssssss.sssssssss.sssssssss.ssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssssss.sssssssss.sssssssss.sssssssss.ssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssssss.sssssssss.sssssssss.sssssssss.ssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssssss...ssssss....ssssss...ssssss...ssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssssss...ssssss....ssssss...ssssss...ssssssss"
+    },
+    {
+      "label": "H",
+      "cells": "...www......ssss......ssss.....ssss....sss....."
+    },
+    {
+      "label": "I",
+      "cells": "....ss...ss...ss...ss..ss....ss..ss.ss...ss...."
+    }
+  ],
+  "crossAisleAfterRows": [
+    5,
+    6,
+    7
+  ]
+}

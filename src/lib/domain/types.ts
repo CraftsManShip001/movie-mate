@@ -44,6 +44,7 @@ export type AuditoriumFormat =
   | "standard"
   | "imax"
   | "4dx"
+  | "mx4d"
   | "screenx"
   | "dolby-cinema"
   | "premium"

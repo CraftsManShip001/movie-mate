@@ -50,6 +50,8 @@ export const STANDARDS = {
     standard: { seatWidth: 560, rowSpacing: 1050, firstRowRatio: 0.5, minRiser: 300, screenBottom: 900 },
     imax: { seatWidth: 560, rowSpacing: 1100, firstRowRatio: 0.35, minRiser: 450, screenBottom: 700 },
     "4dx": { seatWidth: 650, rowSpacing: 1300, firstRowRatio: 0.5, minRiser: 450, screenBottom: 900 },
+    // 롯데시네마 수퍼 MX4D: 4DX와 같은 모션 시트라 같은 값을 쓴다
+    mx4d: { seatWidth: 650, rowSpacing: 1300, firstRowRatio: 0.5, minRiser: 450, screenBottom: 900 },
     screenx: { seatWidth: 560, rowSpacing: 1050, firstRowRatio: 0.5, minRiser: 300, screenBottom: 900 },
     "dolby-cinema": { seatWidth: 700, rowSpacing: 1400, firstRowRatio: 0.45, minRiser: 450, screenBottom: 900 },
     premium: { seatWidth: 800, rowSpacing: 1600, firstRowRatio: 0.45, minRiser: 400, screenBottom: 900 },

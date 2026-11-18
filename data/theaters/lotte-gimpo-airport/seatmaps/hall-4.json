@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "lotte-gimpo-airport",
+  "name": "4관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (192석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "광음시네마(사운드 특화) 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssssssss...ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssssss...ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssss..ww...ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.................."
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssssssss....."
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssssssss....."
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssssssss....."
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssssssss....."
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssssssss....."
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssssssss.sss."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssssssssssss.sss."
+    },
+    {
+      "label": "L",
+      "cells": "ssss.sssssssssss..sss."
+    }
+  ],
+  "crossAisleAfterRows": [
+    2
+  ]
+}

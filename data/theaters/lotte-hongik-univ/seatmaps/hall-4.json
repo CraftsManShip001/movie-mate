@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "lotte-hongik-univ",
+  "name": "4관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (187석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "광음시네마(사운드 특화) 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "sssssssss..ww.ss..."
+    },
+    {
+      "label": "B",
+      "cells": "sssssssssssss.ss..."
+    },
+    {
+      "label": "C",
+      "cells": "sssssssssssss.ss..."
+    },
+    {
+      "label": "D",
+      "cells": "sssssssssssss.ss..."
+    },
+    {
+      "label": "E",
+      "cells": "sssssssssssss.ss..."
+    },
+    {
+      "label": "F",
+      "cells": "sssssssssssss.ss..."
+    },
+    {
+      "label": "G",
+      "cells": "sssssssssssss.ss..."
+    },
+    {
+      "label": "H",
+      "cells": "sssssssssssss.ss..."
+    },
+    {
+      "label": "I",
+      "cells": "sssssssssssss.ss..."
+    },
+    {
+      "label": "J",
+      "cells": "sssssssssssss.sssss"
+    },
+    {
+      "label": "K",
+      "cells": "sssssssssssss.sssss"
+    },
+    {
+      "label": "L",
+      "cells": "sssssssssssss.sssss"
+    }
+  ]
+}
