@@ -37,6 +37,10 @@
   margin-bottom: 24px;
   padding-left: calc(16px + var(--gap));
   color: var(--line);
+  /* 스크린 SVG의 기본 폭(760)이 좌석표 폭을 늘리지 않게 한다. 폭은 좌석 줄이 정하고, 스크린은 그 폭에 맞춰 좌석 가운데에 온다. */
+  width: 0;
+  min-width: 100%;
+  box-sizing: border-box;
 }
 
 .screenCurve {
