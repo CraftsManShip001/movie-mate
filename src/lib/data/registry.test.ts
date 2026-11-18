@@ -6,6 +6,40 @@ import { getAllAuditoriums, getAuditorium, getAuditoriums, getTheaters } from ".
 
 const DATA_DIR = path.resolve(__dirname, "../../../data/theaters");
 
+/** 2026-11-18 롯데시네마 예매 화면 좌석 미리보기에 나온 좌석 번호. "A:1-14,16-19" = A1~A14, A16~A19 */
+const LOTTE_SEAT_NUMBERS: Record<string, string> = {
+  "lotte-yeongdeungpo/hall-1": "A:1-14,16-19 B-L:1-19",
+  "lotte-yeongdeungpo/hall-2": "A:4-14,16-19 B-G:4-19 H-L:1-19",
+  "lotte-yeongdeungpo/hall-3": "A:1-13,15-18 B-L:1-18",
+  "lotte-yeongdeungpo/hall-4": "A:1-7,9-12 B-K:1-12",
+  "lotte-yeongdeungpo/hall-5": "A:4-10 B-L:1-10",
+  "lotte-yeongdeungpo/hall-6": "A:2-4,6-19 B-L:1-19",
+  "lotte-yeongdeungpo/hall-7": "A:1-4,6-16 B-G:1-16 H-L:1-19",
+  "lotte-yongsan/hall-1": "A:12 B-C:1-14 D-H:1-12 I:13-14",
+  "lotte-yongsan/hall-2": "A:3 B-C:1-14 D-G:3-14 H:1-2",
+  "lotte-yongsan/hall-3": "A:10 B:1-10 C-F:3-12 G:1-2",
+  "lotte-yongsan/hall-4": "A:10-11 B:1-11 C-D:1-13 E:1-12 F-G:1-13",
+  "lotte-yongsan/hall-5": "A:10-11 B-D:1-13 E:1-12 F-G:1-13",
+  "lotte-yongsan/hall-6": "A:3 B-D:3-16 E:3-14 F:3-11 G:1-2",
+  "lotte-yongsan/hall-7": "A-M:1-16 N:3-16",
+  "lotte-yongsan/hall-8": "A-M:1-16 N:1-14",
+};
+
+function expandSeatNumbers(spec: string): string[] {
+  return spec.split(" ").flatMap((part) => {
+    const [labels, ranges] = part.split(":");
+    const [from, to = from] = labels.split("-");
+    const rowLabels = Array.from({ length: to.charCodeAt(0) - from.charCodeAt(0) + 1 }, (_, i) =>
+      String.fromCharCode(from.charCodeAt(0) + i),
+    );
+    const numbers = ranges.split(",").flatMap((range) => {
+      const [a, b = a] = range.split("-").map(Number);
+      return Array.from({ length: b - a + 1 }, (_, i) => a + i);
+    });
+    return rowLabels.flatMap((label) => numbers.map((n) => `${label}${n}`));
+  });
+}
+
 describe("data/theaters", () => {
   it("폴더의 모든 JSON이 registry에 등록돼 있다", () => {
     const theaterIds = readdirSync(DATA_DIR, { withFileTypes: true })
@@ -44,6 +78,16 @@ describe("data/theaters", () => {
     for (const theater of getTheaters()) {
       const json = JSON.parse(readFileSync(path.join(DATA_DIR, theater.id, "theater.json"), "utf8"));
       expect(json.id).toBe(theater.id);
+    }
+  });
+
+  it("롯데시네마 상영관 좌석 번호가 예매 화면과 같다", () => {
+    for (const [key, spec] of Object.entries(LOTTE_SEAT_NUMBERS)) {
+      const [theaterId, auditoriumId] = key.split("/");
+      const auditorium = getAuditorium(theaterId, auditoriumId);
+      expect(auditorium, key).toBeDefined();
+      const actual = listSeats(auditorium!).map((s) => s.id).sort();
+      expect(actual, key).toEqual(expandSeatNumbers(spec).sort());
     }
   });
 

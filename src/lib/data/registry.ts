@@ -16,13 +16,49 @@ import yongsanTheater from "@data/theaters/cgv-yongsan-ipark-mall/theater.json";
 import yongsanSample4dx from "@data/theaters/cgv-yongsan-ipark-mall/auditoriums/sample-4dx.json";
 import yongsanImaxSeatMap from "@data/theaters/cgv-yongsan-ipark-mall/seatmaps/imax.json";
 
+import lotteYeongdeungpoTheater from "@data/theaters/lotte-yeongdeungpo/theater.json";
+import lotteYeongdeungpo1 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-1.json";
+import lotteYeongdeungpo2 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-2.json";
+import lotteYeongdeungpo3 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-3.json";
+import lotteYeongdeungpo4 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-4.json";
+import lotteYeongdeungpo5 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-5.json";
+import lotteYeongdeungpo6 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-6.json";
+import lotteYeongdeungpo7 from "@data/theaters/lotte-yeongdeungpo/seatmaps/hall-7.json";
+
+import lotteYongsanTheater from "@data/theaters/lotte-yongsan/theater.json";
+import lotteYongsan1 from "@data/theaters/lotte-yongsan/seatmaps/hall-1.json";
+import lotteYongsan2 from "@data/theaters/lotte-yongsan/seatmaps/hall-2.json";
+import lotteYongsan3 from "@data/theaters/lotte-yongsan/seatmaps/hall-3.json";
+import lotteYongsan4 from "@data/theaters/lotte-yongsan/seatmaps/hall-4.json";
+import lotteYongsan5 from "@data/theaters/lotte-yongsan/seatmaps/hall-5.json";
+import lotteYongsan6 from "@data/theaters/lotte-yongsan/seatmaps/hall-6.json";
+import lotteYongsan7 from "@data/theaters/lotte-yongsan/seatmaps/hall-7.json";
+import lotteYongsan8 from "@data/theaters/lotte-yongsan/seatmaps/hall-8.json";
+
 import { estimateAuditorium, type SeatMapInput } from "@/lib/domain/estimate";
 import type { Auditorium, Theater } from "@/lib/domain/types";
 import { validateAuditorium, validateTheater } from "@/lib/domain/validation";
 
-const THEATER_FILES: unknown[] = [yongsanTheater];
+const THEATER_FILES: unknown[] = [yongsanTheater, lotteYeongdeungpoTheater, lotteYongsanTheater];
 const AUDITORIUM_FILES: unknown[] = [yongsanSample4dx];
-const SEATMAP_FILES: unknown[] = [yongsanImaxSeatMap];
+const SEATMAP_FILES: unknown[] = [
+  yongsanImaxSeatMap,
+  lotteYeongdeungpo1,
+  lotteYeongdeungpo2,
+  lotteYeongdeungpo3,
+  lotteYeongdeungpo4,
+  lotteYeongdeungpo5,
+  lotteYeongdeungpo6,
+  lotteYeongdeungpo7,
+  lotteYongsan1,
+  lotteYongsan2,
+  lotteYongsan3,
+  lotteYongsan4,
+  lotteYongsan5,
+  lotteYongsan6,
+  lotteYongsan7,
+  lotteYongsan8,
+];
 
 function loadTheater(json: unknown): Theater {
   const theater = json as Theater;

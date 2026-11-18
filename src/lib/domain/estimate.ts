@@ -53,6 +53,8 @@ export const STANDARDS = {
     screenx: { seatWidth: 560, rowSpacing: 1050, firstRowRatio: 0.5, minRiser: 300, screenBottom: 900 },
     "dolby-cinema": { seatWidth: 700, rowSpacing: 1400, firstRowRatio: 0.45, minRiser: 450, screenBottom: 900 },
     premium: { seatWidth: 800, rowSpacing: 1600, firstRowRatio: 0.45, minRiser: 400, screenBottom: 900 },
+    // 전동 리클라이너: 다리 받침을 펴도 뒷줄 통로가 남도록 열 간격을 넓게 잡는다
+    recliner: { seatWidth: 800, rowSpacing: 1700, firstRowRatio: 0.5, minRiser: 400, screenBottom: 900 },
   } satisfies Record<string, FormatStandard>,
   /** 세로 통로 폭 */
   aisleWidth: 1100,

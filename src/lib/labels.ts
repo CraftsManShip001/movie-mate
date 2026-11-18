@@ -7,6 +7,7 @@ const FORMAT_LABELS: Record<string, string> = {
   screenx: "ScreenX",
   "dolby-cinema": "Dolby Cinema",
   premium: "프리미엄",
+  recliner: "리클라이너",
 };
 
 export function formatLabel(format: AuditoriumFormat): string {

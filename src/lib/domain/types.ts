@@ -47,6 +47,7 @@ export type AuditoriumFormat =
   | "screenx"
   | "dolby-cinema"
   | "premium"
+  | "recliner"
   | (string & {});
 
 /**

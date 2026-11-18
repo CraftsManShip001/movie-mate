@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-7",
+  "theaterId": "lotte-yongsan",
+  "name": "7관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 화면 좌석 미리보기, 2026-11-18 (222석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "일반 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1도 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "B",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "H",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "I",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "J",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "K",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "L",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "M",
+      "cells": "ss.ssssssssssssss"
+    },
+    {
+      "label": "N",
+      "cells": "...wwwwssssssssss"
+    }
+  ]
+}

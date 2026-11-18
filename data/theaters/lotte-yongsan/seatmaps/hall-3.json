@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "lotte-yongsan",
+  "name": "3관",
+  "format": "recliner",
+  "seatMapSource": "롯데시네마 예매 화면 좌석 미리보기, 2026-11-18 (53석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1도 추정값이다. 가로 통로는 좌석 미리보기의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..........w..."
+    },
+    {
+      "label": "B",
+      "cells": "ss.ssssssss..."
+    },
+    {
+      "label": "C",
+      "cells": "...ssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "...ssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "...ssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "...ssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "ss............"
+    }
+  ],
+  "crossAisleAfterRows": [
+    1
+  ]
+}

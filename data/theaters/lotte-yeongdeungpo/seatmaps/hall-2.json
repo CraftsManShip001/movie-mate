@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "lotte-yeongdeungpo",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 화면 좌석 미리보기, 2026-11-18 (206석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "일반 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1도 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": ".....ssssssswwww...ssss"
+    },
+    {
+      "label": "B",
+      "cells": ".....ssssssssssss..ssss"
+    },
+    {
+      "label": "C",
+      "cells": ".....ssssssssssss..ssss"
+    },
+    {
+      "label": "D",
+      "cells": ".....ssssssssssss..ssss"
+    },
+    {
+      "label": "E",
+      "cells": ".....ssssssssssss..ssss"
+    },
+    {
+      "label": "F",
+      "cells": ".....ssssssssssss..ssss"
+    },
+    {
+      "label": "G",
+      "cells": ".....ssssssssssss..ssss"
+    },
+    {
+      "label": "H",
+      "cells": "sss..ssssssssssss..ssss"
+    },
+    {
+      "label": "I",
+      "cells": "sss..ssssssssssss..ssss"
+    },
+    {
+      "label": "J",
+      "cells": "sss..ssssssssssss..ssss"
+    },
+    {
+      "label": "K",
+      "cells": "sss..ssssssssssss..ssss"
+    },
+    {
+      "label": "L",
+      "cells": "sss..ssssssssssss..ssss"
+    }
+  ]
+}
