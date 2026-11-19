@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "cgv-pyeongchon",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (161석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ww............."
+    },
+    {
+      "label": "B",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.sssssss.sss."
+    },
+    {
+      "label": "G",
+      "cells": "ssss............."
+    },
+    {
+      "label": "H",
+      "cells": "ssss.sssssss.s..."
+    },
+    {
+      "label": "I",
+      "cells": "ssss.sssssss.s..."
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sssssss.s..."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssss.sssssss.ssss"
+    }
+  ]
+}

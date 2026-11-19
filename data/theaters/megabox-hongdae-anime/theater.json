@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-hongdae-anime",
+  "chain": "메가박스",
+  "branch": "홍대(아니메)",
+  "address": "서울특별시 마포구 양화로 147, (동교동) 아일렉스 7층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

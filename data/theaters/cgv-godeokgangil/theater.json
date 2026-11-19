@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-godeokgangil",
+  "chain": "CGV",
+  "branch": "고덕강일",
+  "address": "서울특별시 강동구 고덕비즈밸리로 51, 3층 301호 (고덕동)",
+  "auditoriumIds": [
+    "s001",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "s006",
+    "hall-7",
+    "hall-8"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

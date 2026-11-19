@@ -27,7 +27,7 @@ export const CHAINS = ["CGV", "메가박스", "롯데시네마"] as const;
  */
 const BOOKING_URLS: Record<string, string> = {
   CGV: "https://www.cgv.co.kr",
-  메가박스: "https://www.megabox.co.kr",
+  메가박스: "https://www.megabox.co.kr/booking",
   롯데시네마: "https://www.lottecinema.co.kr/NLCHS/Ticketing",
 };
 

@@ -11,7 +11,8 @@ import { cacheLife } from "next/cache";
 import { LOTTE_LIVE } from "@/lib/data/lotte.generated";
 import { getSchedule } from "@/lib/data/showtimes";
 import { addDays } from "@/lib/showtimes/schedule";
-import type { Movie, Schedule } from "@/lib/showtimes/types";
+import type { Schedule } from "@/lib/showtimes/types";
+import type { LiveShow } from "./types";
 import { buildLotteSchedule, parseBookedSeats, type LottePlayItem, type LotteSeatsResponse } from "./lotte-parse";
 
 const ENDPOINT = "https://www.lottecinema.co.kr/LCWS/Ticketing/TicketingData.aspx";
@@ -94,16 +95,6 @@ export async function getLotteSchedule(theaterId: string, todayIso: string): Pro
   }
 }
 
-export interface LotteShow {
-  movie: Movie;
-  start: string;
-  end: string;
-  seatsLeft: number;
-  /** 팔린 좌석 id. 받지 못하면 null */
-  booked: string[] | null;
-  /** 팔린 좌석을 받아 온 시각(ISO) */
-  fetchedAt: string | null;
-}
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -115,11 +106,12 @@ export async function getLotteShow(
   theaterId: string,
   auditoriumId: string,
   dateIso: string,
-  seq: number,
+  seqText: string,
   { withSeats = true }: { withSeats?: boolean } = {},
-): Promise<LotteShow | null> {
+): Promise<LiveShow | null> {
   const mapping = LOTTE_LIVE[theaterId];
-  if (!mapping || !DATE.test(dateIso) || !Number.isInteger(seq) || seq < 0) return null;
+  if (!mapping || !DATE.test(dateIso) || !/^\d{1,3}$/.test(seqText)) return null;
+  const seq = Number(seqText);
   const sid = Object.keys(mapping.screens).find((key) => mapping.screens[key] === auditoriumId);
   if (!sid) return null;
   try {
@@ -145,6 +137,7 @@ export async function getLotteShow(
       });
     }
     return {
+      source: "롯데시네마",
       movie,
       start: showing.start,
       end: showing.end,

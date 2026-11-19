@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-changwon",
+  "chain": "메가박스",
+  "branch": "창원",
+  "address": "경상남도 창원시 성산구 용지로 58, (중앙동) 메가플렉스 8층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

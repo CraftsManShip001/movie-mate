@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "theaterId": "cgv-drive-in-yongin-keuraeksaideu",
+  "movieId": "the-night-orbit",
+  "sample": true,
+  "notes": "관 목록과 좌석 수는 실제 값이고, 상영 시각과 남은 좌석은 가상의 샘플이다. day는 오늘로부터 며칠 뒤인지(0 = 오늘)를 뜻한다.",
+  "screens": [
+    {
+      "id": "s001",
+      "name": "자동차상영관",
+      "format": "2D",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 200,
+      "auditoriumId": "s001"
+    }
+  ],
+  "showings": [
+    {
+      "day": 0,
+      "screenId": "s001",
+      "start": "10:15",
+      "end": "13:07",
+      "seatsLeft": 101
+    },
+    {
+      "day": 0,
+      "screenId": "s001",
+      "start": "13:37",
+      "end": "16:29",
+      "seatsLeft": 119
+    },
+    {
+      "day": 0,
+      "screenId": "s001",
+      "start": "17:09",
+      "end": "20:01",
+      "seatsLeft": 118
+    },
+    {
+      "day": 0,
+      "screenId": "s001",
+      "start": "20:26",
+      "end": "23:18",
+      "seatsLeft": 76
+    },
+    {
+      "day": 1,
+      "screenId": "s001",
+      "start": "09:30",
+      "end": "12:22",
+      "seatsLeft": 94
+    },
+    {
+      "day": 1,
+      "screenId": "s001",
+      "start": "12:57",
+      "end": "15:49",
+      "seatsLeft": 77
+    },
+    {
+      "day": 1,
+      "screenId": "s001",
+      "start": "16:29",
+      "end": "19:21",
+      "seatsLeft": 145
+    },
+    {
+      "day": 1,
+      "screenId": "s001",
+      "start": "19:41",
+      "end": "22:33",
+      "seatsLeft": 176
+    },
+    {
+      "day": 2,
+      "screenId": "s001",
+      "start": "09:30",
+      "end": "12:22",
+      "seatsLeft": 147
+    },
+    {
+      "day": 2,
+      "screenId": "s001",
+      "start": "12:57",
+      "end": "15:49",
+      "seatsLeft": 111
+    },
+    {
+      "day": 2,
+      "screenId": "s001",
+      "start": "16:09",
+      "end": "19:01",
+      "seatsLeft": 162
+    },
+    {
+      "day": 2,
+      "screenId": "s001",
+      "start": "19:41",
+      "end": "22:33",
+      "seatsLeft": 143
+    },
+    {
+      "day": 3,
+      "screenId": "s001",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 59
+    },
+    {
+      "day": 3,
+      "screenId": "s001",
+      "start": "13:37",
+      "end": "16:29",
+      "seatsLeft": 104
+    },
+    {
+      "day": 3,
+      "screenId": "s001",
+      "start": "16:59",
+      "end": "19:51",
+      "seatsLeft": 155
+    },
+    {
+      "day": 3,
+      "screenId": "s001",
+      "start": "20:21",
+      "end": "23:13",
+      "seatsLeft": 108
+    },
+    {
+      "day": 4,
+      "screenId": "s001",
+      "start": "10:25",
+      "end": "13:17",
+      "seatsLeft": 49
+    },
+    {
+      "day": 4,
+      "screenId": "s001",
+      "start": "13:47",
+      "end": "16:39",
+      "seatsLeft": 42
+    },
+    {
+      "day": 4,
+      "screenId": "s001",
+      "start": "17:09",
+      "end": "20:01",
+      "seatsLeft": 108
+    },
+    {
+      "day": 4,
+      "screenId": "s001",
+      "start": "20:21",
+      "end": "23:13",
+      "seatsLeft": 24
+    },
+    {
+      "day": 5,
+      "screenId": "s001",
+      "start": "09:30",
+      "end": "12:22",
+      "seatsLeft": 177
+    },
+    {
+      "day": 5,
+      "screenId": "s001",
+      "start": "12:57",
+      "end": "15:49",
+      "seatsLeft": 166
+    },
+    {
+      "day": 5,
+      "screenId": "s001",
+      "start": "16:19",
+      "end": "19:11",
+      "seatsLeft": 197
+    },
+    {
+      "day": 5,
+      "screenId": "s001",
+      "start": "19:46",
+      "end": "22:38",
+      "seatsLeft": 100
+    },
+    {
+      "day": 6,
+      "screenId": "s001",
+      "start": "11:20",
+      "end": "14:12",
+      "seatsLeft": 32
+    },
+    {
+      "day": 6,
+      "screenId": "s001",
+      "start": "14:42",
+      "end": "17:34",
+      "seatsLeft": 197
+    },
+    {
+      "day": 6,
+      "screenId": "s001",
+      "start": "17:59",
+      "end": "20:51",
+      "seatsLeft": 170
+    },
+    {
+      "day": 6,
+      "screenId": "s001",
+      "start": "21:16",
+      "end": "24:08",
+      "seatsLeft": 90
+    }
+  ]
+}

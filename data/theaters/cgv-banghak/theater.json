@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-banghak",
+  "chain": "CGV",
+  "branch": "방학",
+  "address": "서울특별시 도봉구 도봉로 684 모비우스스퀘어 8층",
+  "auditoriumIds": [
+    "s001",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

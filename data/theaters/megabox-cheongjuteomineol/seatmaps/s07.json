@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "s07",
+  "theaterId": "megabox-cheongjuteomineol",
+  "name": "DOLBY VISION+ATMOS관 (7층)",
+  "format": "standard",
+  "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (138석)",
+  "aspectRatio": 1.9,
+  "notes": "Dolby Vision+Atmos 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssssssss.ww.."
+    }
+  ]
+}

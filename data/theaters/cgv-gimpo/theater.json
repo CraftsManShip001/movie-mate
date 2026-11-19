@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-gimpo",
+  "chain": "CGV",
+  "branch": "김포",
+  "address": "경기도 김포시 풍무로 128 5층 (풍무동, 김포풍무웰라움퍼펙트시티 5층)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-pyeongtaek",
+  "chain": "CGV",
+  "branch": "평택",
+  "address": "경기도 평택시 평택로 51 31필지 민자역사 8,9층 (평택동)",
+  "auditoriumIds": [
+    "s001",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "s006",
+    "hall-7"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

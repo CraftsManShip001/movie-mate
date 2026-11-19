@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-koekseu",
+  "chain": "메가박스",
+  "branch": "코엑스",
+  "address": "서울특별시 강남구 봉은사로524, (삼성동) 코엑스몰 지하2층",
+  "auditoriumIds": [
+    "s01",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7",
+    "hall-8",
+    "s09",
+    "hall-10",
+    "hall-11",
+    "s12",
+    "s13",
+    "s14",
+    "s15",
+    "s16",
+    "s17",
+    "s18"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

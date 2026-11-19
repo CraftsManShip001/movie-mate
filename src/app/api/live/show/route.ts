@@ -1,5 +1,6 @@
 import { type NextRequest } from "next/server";
-import { getLotteShow } from "@/lib/live/lotte";
+import { getLiveShow } from "@/lib/live";
+import { nowInSeoul } from "@/lib/format";
 
 /**
  * 3번 화면이 고른 상영의 영화와 팔린 좌석을 묻는다.
@@ -11,8 +12,8 @@ export async function GET(request: NextRequest) {
   const theater = params.get("theater") ?? "";
   const auditorium = params.get("auditorium") ?? "";
   const date = params.get("date") ?? "";
-  const seq = Number(params.get("seq"));
-  const show = await getLotteShow(theater, auditorium, date, seq);
+  const seq = params.get("seq") ?? "";
+  const show = await getLiveShow(theater, auditorium, date, seq, nowInSeoul(new Date()).todayIso);
   if (!show) return Response.json({ show: null }, { status: 404 });
   return Response.json({ show }, { headers: { "Cache-Control": "private, max-age=30" } });
 }

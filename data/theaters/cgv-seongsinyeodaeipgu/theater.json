@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-seongsinyeodaeipgu",
+  "chain": "CGV",
+  "branch": "성신여대입구",
+  "address": "서울특별시 성북구 동소문로 106, 10~12층(동선동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-4",
+    "hall-5",
+    "hall-2"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

@@ -11,7 +11,7 @@ export interface Movie {
    * 어디서 온 정보인지. 없으면 data/movies 의 직접 쓴 값.
    * "tmdb"·"lotte"면 화면에 출처를 남긴다.
    */
-  source?: "local" | "tmdb" | "lotte";
+  source?: "local" | "tmdb" | "lotte" | "megabox";
   notes?: string;
   title: string;
   /** 티켓에 쓰는 영문 제목. 예: "THE NIGHT ORBIT" */
@@ -57,8 +57,8 @@ export interface Showing {
   seatsLeft: number;
   /** 실제 시간표에서만: 이 상영의 영화 id(movies 안의 id) */
   movieId?: string;
-  /** 실제 시간표에서만: 영화관 예매 API의 회차 번호. 팔린 좌석을 받을 때 쓴다. */
-  seq?: number;
+  /** 실제 시간표에서만: 영화관 예매 API의 회차 번호(롯데 회차·메가박스 상영 일정 번호). 팔린 좌석을 받을 때 쓴다. */
+  seq?: string;
 }
 
 export interface Schedule {
@@ -75,5 +75,5 @@ export interface Schedule {
    */
   movies?: Movie[];
   /** 실제 시간표에서만: 어디서 언제 받아 왔는지 */
-  live?: { source: "롯데시네마"; fetchedAt: string };
+  live?: { source: "롯데시네마" | "메가박스"; fetchedAt: string };
 }

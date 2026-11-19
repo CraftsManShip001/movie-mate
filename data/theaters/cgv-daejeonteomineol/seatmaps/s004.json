@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "id": "s004",
+  "theaterId": "cgv-daejeonteomineol",
+  "name": "SCREENX관",
+  "format": "screenx",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (230석)",
+  "aspectRatio": 1.9,
+  "notes": "SCREENX 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": ".ss.sswww..sssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "B",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "C",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "D",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "E",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "F",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "G",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "H",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "I",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "J",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "K",
+      "cells": ".ss.ssssssssssss.ss",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "label": "L",
+      "cells": "sss.ssssssssssss.ss"
+    },
+    {
+      "label": "M",
+      "cells": "sss.ssssssssssss.ss"
+    },
+    {
+      "label": "N",
+      "cells": "sss.ssssssssssss.ss"
+    },
+    {
+      "label": "O",
+      "cells": "sss..............ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        16,
+        17
+      ]
+    }
+  ]
+}

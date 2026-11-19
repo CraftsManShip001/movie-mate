@@ -146,7 +146,7 @@ export function buildLotteSchedule(input: {
         end: fromMinutes(end),
         seatsLeft: item.BookingSeatCount,
         movieId,
-        seq: item.PlaySequence,
+        seq: String(item.PlaySequence),
       });
     }
   }

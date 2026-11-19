@@ -67,7 +67,7 @@ describe("buildLotteSchedule", () => {
 
   it("상영마다 영화·회차·남은 좌석을 남기고, 자정 넘은 상영은 24시를 더한다", () => {
     const first = schedule.showings.find((s) => s.day === 0 && s.start === "13:30");
-    expect(first).toMatchObject({ movieId: "25121", seq: 3, seatsLeft: 183, end: "15:09" });
+    expect(first).toMatchObject({ movieId: "25121", seq: "3", seatsLeft: 183, end: "15:09" });
     expect(schedule.showings.find((s) => s.start === "24:20")?.end).toBe("26:00");
     expect(schedule.showings.filter((s) => s.day === 1)).toHaveLength(1);
     expect(schedule.live).toEqual({ source: "롯데시네마", fetchedAt: "2026-11-19T05:00:00.000Z" });

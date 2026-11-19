@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "id": "s07",
+  "theaterId": "megabox-hanamseutapildeu",
+  "name": "DOLBY CINEMA",
+  "format": "dolby-cinema",
+  "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (336석)",
+  "aspectRatio": 1.9,
+  "notes": "Dolby Cinema 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "....wwss.sssssssssssss.ssww....",
+      "numbers": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "..ssssss.sssssssssssss.ssssss..",
+      "numbers": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ]
+    },
+    {
+      "label": "C",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssssssss.sssssssssssss.ssssssss"
+    }
+  ]
+}

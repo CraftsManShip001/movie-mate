@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "cgv-junggye",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (214석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss...wwssssss.ssss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssssssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssssssssss.ssss"
+    }
+  ]
+}

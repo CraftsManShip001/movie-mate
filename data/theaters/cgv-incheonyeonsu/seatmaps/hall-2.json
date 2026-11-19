@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "cgv-incheonyeonsu",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (216석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "wwww.sssssss.ss..."
+    },
+    {
+      "label": "B",
+      "cells": "ssss.sssssss.ss..."
+    },
+    {
+      "label": "C",
+      "cells": "ssss.sssssss.ss..."
+    },
+    {
+      "label": "D",
+      "cells": "ssss.sssssss.ss..."
+    },
+    {
+      "label": "E",
+      "cells": "ssss.sssssss.ss..."
+    },
+    {
+      "label": "F",
+      "cells": "ssss.sssssss.ss..."
+    },
+    {
+      "label": "G",
+      "cells": "ssss.sssssss.ss..."
+    },
+    {
+      "label": "H",
+      "cells": "ssss.sssssss.ss..."
+    },
+    {
+      "label": "I",
+      "cells": "ssss.sssssss.sssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sssssss.sssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.sssssss.sssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.sssssss.sssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssss.sssssss.sssss"
+    },
+    {
+      "label": "N",
+      "cells": "ssss.sssssss.sssss"
+    },
+    {
+      "label": "O",
+      "cells": "ssss.sssssss.sssss"
+    }
+  ]
+}

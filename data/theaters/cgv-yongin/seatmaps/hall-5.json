@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "cgv-yongin",
+  "name": "5관 (라운지체어)",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (56석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.ss.ss.ws"
+    },
+    {
+      "label": "B",
+      "cells": "ss.ss.ss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ss.ss.ss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "ss.ss......"
+    },
+    {
+      "label": "E",
+      "cells": "ss.ss.ss..."
+    },
+    {
+      "label": "F",
+      "cells": "ss.ss.ss..."
+    },
+    {
+      "label": "G",
+      "cells": "ss.ss.ss.ss"
+    },
+    {
+      "label": "H",
+      "cells": "ss.ss.ss.ss"
+    }
+  ]
+}

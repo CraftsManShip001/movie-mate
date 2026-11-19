@@ -12,7 +12,7 @@ import { findSeat } from "@/lib/domain/geometry";
 import type { Auditorium, Seat } from "@/lib/domain/types";
 import { asOfLabel, formatMonthDay, seatName } from "@/lib/format";
 import { bookingLink } from "@/lib/labels";
-import type { LotteShow } from "@/lib/live/lotte";
+import type { LiveShow } from "@/lib/live/types";
 import styles from "./SeatPicker.module.css";
 
 interface SeatPickerProps {
@@ -23,23 +23,23 @@ interface SeatPickerProps {
   auditorium: Auditorium;
   /** 영화관 브랜드. 예매 링크에 쓴다. */
   chain: string;
-  /** 실제 시간표(롯데시네마)가 있는 극장인지. 그러면 고른 회차의 영화와 팔린 좌석을 받아 온다. */
+  /** 실제 시간표(롯데시네마·메가박스)가 있는 극장인지. 그러면 고른 회차의 영화와 팔린 좌석을 받아 온다. */
   live: boolean;
 }
 
-type LiveState = { key: string; show: LotteShow | null } | null;
+type LiveState = { key: string; show: LiveShow | null } | null;
 
 /** 고른 회차의 영화와 팔린 좌석을 서버(/api/live/show)에 묻는다 */
-function useLiveShow(theaterId: string, auditoriumId: string, date: string | null, seq: number | null | undefined, enabled: boolean) {
+function useLiveShow(theaterId: string, auditoriumId: string, date: string | null, seq: string | null | undefined, enabled: boolean) {
   const key = enabled && date && seq != null ? `${theaterId}/${auditoriumId}/${date}/${seq}` : null;
   const [state, setState] = useState<LiveState>(null);
   useEffect(() => {
     if (!key || !date || seq == null) return;
     const controller = new AbortController();
-    const query = new URLSearchParams({ theater: theaterId, auditorium: auditoriumId, date, seq: String(seq) });
+    const query = new URLSearchParams({ theater: theaterId, auditorium: auditoriumId, date, seq });
     fetch(`/api/live/show?${query}`, { signal: controller.signal })
       .then((response) => (response.ok ? response.json() : { show: null }))
-      .then((data: { show: LotteShow | null }) => setState({ key, show: data.show }))
+      .then((data: { show: LiveShow | null }) => setState({ key, show: data.show }))
       .catch(() => {
         if (!controller.signal.aborted) setState({ key, show: null });
       });
@@ -141,7 +141,7 @@ export function SeatPicker({ theaterId, title, movieTitle, auditorium, chain, li
               {liveShow.loading
                 ? "팔린 자리를 불러오고 있어요"
                 : liveShow.show?.booked
-                  ? `팔린 자리 ${liveShow.show.booked.length}석 · 롯데시네마 ${asOfLabel(liveShow.show.fetchedAt)}`
+                  ? `팔린 자리 ${liveShow.show.booked.length}석 · ${liveShow.show.source} ${asOfLabel(liveShow.show.fetchedAt)}`
                   : "팔린 자리를 불러오지 못했어요"}
             </p>
           ) : null}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "cgv-gwangjusangmu",
+  "name": "5관 (리클라이너)",
+  "format": "recliner",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (153석)",
+  "aspectRatio": 1.9,
+  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssssssssssww...."
+    },
+    {
+      "label": "B",
+      "cells": "ssss.sssssssssssssss..."
+    },
+    {
+      "label": "C",
+      "cells": "ssss.sssssssssssssss..."
+    },
+    {
+      "label": "D",
+      "cells": "ssss.sssssssssssssss..."
+    },
+    {
+      "label": "E",
+      "cells": "ssss.sssssssssssssss..."
+    },
+    {
+      "label": "F",
+      "cells": "ssss.sssssssssssssss..."
+    },
+    {
+      "label": "G",
+      "cells": "ssss.sssssssssssssss.ss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.sssssssssssssss..."
+    }
+  ]
+}

@@ -1,17 +1,17 @@
 /**
  * 2번 화면에서 고른 상영(날짜·시각·회차)을 3~5번 화면 주소의 쿼리로 넘긴다.
  * 예: ?date=2026-11-16&time=13:40&seq=3
- * seq는 실제 시간표(롯데시네마)에서만 붙는다. 팔린 좌석과 영화를 다시 찾을 때 쓴다.
+ * seq는 실제 시간표(롯데시네마·메가박스)에서만 붙는다. 팔린 좌석과 영화를 다시 찾을 때 쓴다.
  */
 export interface ShowQuery {
   date: string | null;
   time: string | null;
-  seq?: number | null;
+  seq?: string | null;
 }
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME = /^\d{2}:\d{2}$/;
-const SEQ = /^\d{1,3}$/;
+const SEQ = /^\d{1,20}$/;
 
 export function readShowQuery(params: { get(name: string): string | null }): ShowQuery {
   const date = params.get("date");
@@ -20,7 +20,7 @@ export function readShowQuery(params: { get(name: string): string | null }): Sho
   return {
     date: date && DATE.test(date) ? date : null,
     time: time && TIME.test(time) ? time : null,
-    seq: seq && SEQ.test(seq) ? Number(seq) : null,
+    seq: seq && SEQ.test(seq) ? seq : null,
   };
 }
 

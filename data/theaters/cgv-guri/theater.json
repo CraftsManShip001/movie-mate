@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-guri",
+  "chain": "CGV",
+  "branch": "구리",
+  "address": "경기도 구리시 경춘로 243 2-7층 (인창동, 구리맥스)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

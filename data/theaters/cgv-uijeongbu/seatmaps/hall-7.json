@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-7",
+  "theaterId": "cgv-uijeongbu",
+  "name": "7관[SCREENX] (리클라이너)",
+  "format": "screenx",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (99석)",
+  "aspectRatio": 1.9,
+  "notes": "SCREENX 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.ww.sssssssss.."
+    },
+    {
+      "label": "B",
+      "cells": "ss.ssssssssssss.."
+    },
+    {
+      "label": "C",
+      "cells": "ss.ssssssssssss.."
+    },
+    {
+      "label": "D",
+      "cells": "ss.ssssssssssss.."
+    },
+    {
+      "label": "E",
+      "cells": "ss.ssssssssssss.."
+    },
+    {
+      "label": "F",
+      "cells": "ss.ssssssssssss.."
+    },
+    {
+      "label": "G",
+      "cells": "ss.ssssssssssssss"
+    }
+  ]
+}

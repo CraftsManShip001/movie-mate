@@ -2,7 +2,8 @@ import { getAuditorium, getTheater } from "./registry";
 import { getShowtimesWithMovie } from "./now-showing";
 import { screenNameForAuditorium } from "./showtimes";
 import { findSeat } from "@/lib/domain/geometry";
-import { getLotteShow } from "@/lib/live/lotte";
+import { getLiveShow } from "@/lib/live";
+import { nowInSeoul } from "@/lib/format";
 import { readShowQuery } from "@/features/flow/show-query";
 
 type SearchParams = Record<string, string | string[] | undefined>;
@@ -20,7 +21,7 @@ export async function getSeatContext(theaterId: string, auditoriumId: string, se
   const show = readShowQuery({ get: (name) => (typeof searchParams[name] === "string" ? searchParams[name] : null) });
   const live =
     show.date && show.seq != null
-      ? await getLotteShow(theater.id, auditorium.id, show.date, show.seq, { withSeats: false })
+      ? await getLiveShow(theater.id, auditorium.id, show.date, show.seq, nowInSeoul(new Date()).todayIso, { withSeats: false })
       : null;
   return {
     theater,

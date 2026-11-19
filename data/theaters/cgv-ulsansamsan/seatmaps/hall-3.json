@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "cgv-ulsansamsan",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (282석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "sssss...wwwsssss.ssss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "sssss.ssssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "sssss.ssssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "sssss.ssssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "sssss.ssssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "sssss.ssssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": ".................sss.",
+      "numbers": [
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "label": "H",
+      "cells": "...ss.ssssssssss.ssss",
+      "numbers": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "label": "I",
+      "cells": "...ss.ssssssssss.ssss",
+      "numbers": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "label": "J",
+      "cells": "...ss.ssssssssss.ssss",
+      "numbers": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "label": "K",
+      "cells": "...ss.ssssssssss.ssss",
+      "numbers": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "label": "L",
+      "cells": "...ss.ssssssssss.ssss",
+      "numbers": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "label": "M",
+      "cells": "...ss.ssssssssss.ssss",
+      "numbers": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "label": "N",
+      "cells": "...ss.ssssssssss.sss.",
+      "numbers": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    },
+    {
+      "label": "O",
+      "cells": "sssss.ssssssssss.ssss"
+    },
+    {
+      "label": "P",
+      "cells": "sssss.ssssssssss.ssss"
+    },
+    {
+      "label": "Q",
+      "cells": "sssss.sssssssss..ssss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        16,
+        17,
+        18,
+        19
+      ]
+    }
+  ]
+}

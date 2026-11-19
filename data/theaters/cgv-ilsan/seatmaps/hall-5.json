@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "cgv-ilsan",
+  "name": "5관[SCREENX] (리클라이너)",
+  "format": "screenx",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (90석)",
+  "aspectRatio": 1.9,
+  "notes": "SCREENX 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.sssssss.ssss"
+    }
+  ]
+}

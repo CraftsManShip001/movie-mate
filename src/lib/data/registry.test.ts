@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { listSeats } from "@/lib/domain/geometry";
+import { CHAIN_SEAT_TOTALS } from "./chains.generated";
 import { LOTTE_SEAT_TOTALS } from "./lotte.generated";
 import { getAllAuditoriums, getAuditorium, getAuditoriums, getTheaters } from "./registry";
 import { regionOf } from "@/lib/regions";
@@ -112,13 +113,21 @@ describe("data/theaters", () => {
     }
   });
 
+  it("CGV·메가박스 지점 좌석 수가 예매 좌석 데이터의 좌석 수와 같다", () => {
+    const chains = getTheaters().filter((t) => t.chain === "CGV" || t.chain === "메가박스");
+    expect(chains.map((t) => t.id).sort()).toEqual(Object.keys(CHAIN_SEAT_TOTALS).sort());
+    for (const theater of chains) {
+      const seats = getAuditoriums(theater.id).reduce((sum, a) => sum + listSeats(a).length, 0);
+      expect(seats, theater.id).toBe(CHAIN_SEAT_TOTALS[theater.id]);
+    }
+  });
+
   it("모든 극장 주소에서 지역을 알 수 있다", () => {
     for (const theater of getTheaters()) expect(regionOf(theater.address), theater.id).not.toBeNull();
   });
 
   it("샘플 상영관은 sample·estimated 표시가 있다", () => {
     const samples = getAllAuditoriums().filter((a) => a.id.startsWith("sample-"));
-    expect(samples.length).toBeGreaterThan(0);
     for (const a of samples) {
       expect(a.sample).toBe(true);
       expect(a.estimated).toBe(true);

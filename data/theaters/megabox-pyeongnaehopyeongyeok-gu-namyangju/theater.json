@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-pyeongnaehopyeongyeok-gu-namyangju",
+  "chain": "메가박스",
+  "branch": "평내호평역(구.남양주)",
+  "address": "경기도 남양주시 호평동 늘을2로 26 메인시네마타워",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-5",
+    "hall-6",
+    "hall-7",
+    "hall-8",
+    "hall-9"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

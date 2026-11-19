@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-jeongeup",
+  "chain": "CGV",
+  "branch": "정읍",
+  "address": "전라북도 정읍시 중앙1길 1 (수성동) ",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

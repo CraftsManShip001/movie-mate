@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-geomdan",
+  "chain": "메가박스",
+  "branch": "검단",
+  "address": "인천광역시 검단구 서곶로 788 (당하동) 홀리랜드 4층 메가박스 검단",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

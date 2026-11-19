@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "s002",
+  "theaterId": "cgv-ilsan",
+  "name": "씨네앤포레",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (48석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssssss.ss"
+    },
+    {
+      "label": "B",
+      "cells": "ssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssssss."
+    }
+  ],
+  "crossAisleAfterRows": [
+    4
+  ]
+}

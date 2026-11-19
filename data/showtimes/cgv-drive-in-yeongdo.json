@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "theaterId": "cgv-drive-in-yeongdo",
+  "movieId": "the-night-orbit",
+  "sample": true,
+  "notes": "관 목록과 좌석 수는 실제 값이고, 상영 시각과 남은 좌석은 가상의 샘플이다. day는 오늘로부터 며칠 뒤인지(0 = 오늘)를 뜻한다.",
+  "screens": [
+    {
+      "id": "s001",
+      "name": "자동차상영관",
+      "format": "2D",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 284,
+      "auditoriumId": "s001"
+    }
+  ],
+  "showings": [
+    {
+      "day": 0,
+      "screenId": "s001",
+      "start": "09:40",
+      "end": "12:32",
+      "seatsLeft": 114
+    },
+    {
+      "day": 0,
+      "screenId": "s001",
+      "start": "13:07",
+      "end": "15:59",
+      "seatsLeft": 39
+    },
+    {
+      "day": 0,
+      "screenId": "s001",
+      "start": "16:34",
+      "end": "19:26",
+      "seatsLeft": 39
+    },
+    {
+      "day": 0,
+      "screenId": "s001",
+      "start": "20:01",
+      "end": "22:53",
+      "seatsLeft": 126
+    },
+    {
+      "day": 1,
+      "screenId": "s001",
+      "start": "10:35",
+      "end": "13:27",
+      "seatsLeft": 29
+    },
+    {
+      "day": 1,
+      "screenId": "s001",
+      "start": "13:57",
+      "end": "16:49",
+      "seatsLeft": 187
+    },
+    {
+      "day": 1,
+      "screenId": "s001",
+      "start": "17:24",
+      "end": "20:16",
+      "seatsLeft": 248
+    },
+    {
+      "day": 1,
+      "screenId": "s001",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 42
+    },
+    {
+      "day": 2,
+      "screenId": "s001",
+      "start": "09:40",
+      "end": "12:32",
+      "seatsLeft": 200
+    },
+    {
+      "day": 2,
+      "screenId": "s001",
+      "start": "13:12",
+      "end": "16:04",
+      "seatsLeft": 112
+    },
+    {
+      "day": 2,
+      "screenId": "s001",
+      "start": "16:44",
+      "end": "19:36",
+      "seatsLeft": 143
+    },
+    {
+      "day": 2,
+      "screenId": "s001",
+      "start": "20:06",
+      "end": "22:58",
+      "seatsLeft": 66
+    },
+    {
+      "day": 3,
+      "screenId": "s001",
+      "start": "10:10",
+      "end": "13:02",
+      "seatsLeft": 173
+    },
+    {
+      "day": 3,
+      "screenId": "s001",
+      "start": "13:22",
+      "end": "16:14",
+      "seatsLeft": 155
+    },
+    {
+      "day": 3,
+      "screenId": "s001",
+      "start": "16:39",
+      "end": "19:31",
+      "seatsLeft": 83
+    },
+    {
+      "day": 3,
+      "screenId": "s001",
+      "start": "20:01",
+      "end": "22:53",
+      "seatsLeft": 268
+    },
+    {
+      "day": 4,
+      "screenId": "s001",
+      "start": "10:45",
+      "end": "13:37",
+      "seatsLeft": 67
+    },
+    {
+      "day": 4,
+      "screenId": "s001",
+      "start": "14:02",
+      "end": "16:54",
+      "seatsLeft": 176
+    },
+    {
+      "day": 4,
+      "screenId": "s001",
+      "start": "17:24",
+      "end": "20:16",
+      "seatsLeft": 105
+    },
+    {
+      "day": 4,
+      "screenId": "s001",
+      "start": "20:36",
+      "end": "23:28",
+      "seatsLeft": 123
+    },
+    {
+      "day": 5,
+      "screenId": "s001",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 86
+    },
+    {
+      "day": 5,
+      "screenId": "s001",
+      "start": "13:47",
+      "end": "16:39",
+      "seatsLeft": 214
+    },
+    {
+      "day": 5,
+      "screenId": "s001",
+      "start": "16:59",
+      "end": "19:51",
+      "seatsLeft": 244
+    },
+    {
+      "day": 5,
+      "screenId": "s001",
+      "start": "20:16",
+      "end": "23:08",
+      "seatsLeft": 113
+    },
+    {
+      "day": 6,
+      "screenId": "s001",
+      "start": "11:25",
+      "end": "14:17",
+      "seatsLeft": 63
+    },
+    {
+      "day": 6,
+      "screenId": "s001",
+      "start": "14:52",
+      "end": "17:44",
+      "seatsLeft": 192
+    },
+    {
+      "day": 6,
+      "screenId": "s001",
+      "start": "18:09",
+      "end": "21:01",
+      "seatsLeft": 199
+    },
+    {
+      "day": 6,
+      "screenId": "s001",
+      "start": "21:41",
+      "end": "24:33",
+      "seatsLeft": 47
+    }
+  ]
+}

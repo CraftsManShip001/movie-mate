@@ -5,13 +5,13 @@
  * (등록을 빠뜨리면 showtimes.test.ts 가 실패한다.)
  */
 import nightOrbit from "@data/movies/the-night-orbit.json";
-import yongsanSchedule from "@data/showtimes/cgv-yongsan-ipark-mall.json";
 
 import type { Movie, Schedule } from "@/lib/showtimes/types";
+import { CHAIN_SCHEDULE_FILES } from "./chains.generated";
 import { LOTTE_SCHEDULE_FILES } from "./lotte.generated";
 
 const MOVIE_FILES = [nightOrbit] as Movie[];
-const SCHEDULE_FILES = [yongsanSchedule, ...LOTTE_SCHEDULE_FILES] as Schedule[];
+const SCHEDULE_FILES = [...CHAIN_SCHEDULE_FILES, ...LOTTE_SCHEDULE_FILES] as Schedule[];
 
 export function getMovies(): Movie[] {
   return MOVIE_FILES;

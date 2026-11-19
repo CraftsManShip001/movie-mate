@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-1",
+  "theaterId": "megabox-suwon",
+  "name": "컴포트 1관(프리미어시네마EX)",
+  "format": "standard",
+  "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (297석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssssss.ssssss..www.ss....",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "C",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "F",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "G",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "H",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "I",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "J",
+      "cells": "ssssss.sssssssssss.ss...."
+    },
+    {
+      "label": "K",
+      "cells": "ssssss.sssssssssss.ssssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssssss.sssssssssss.ssssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssssss.sssssssssss.ssssss"
+    },
+    {
+      "label": "N",
+      "cells": "ssssss.ssss...ssss.ssssss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "label": "O",
+      "cells": "ssssss.ssss...ssss.ssssss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    }
+  ]
+}

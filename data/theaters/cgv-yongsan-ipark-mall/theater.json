@@ -3,11 +3,27 @@
   "id": "cgv-yongsan-ipark-mall",
   "chain": "CGV",
   "branch": "용산아이파크몰",
-  "address": "서울특별시 용산구 한강대로23길 55 아이파크몰 6층",
+  "address": "서울특별시 용산구 한강대로23길 55 6층 (한강로3가)",
   "auditoriumIds": [
     "imax",
-    "sample-4dx"
+    "hall-1",
+    "hall-2",
+    "s003",
+    "s004",
+    "hall-5",
+    "hall-6",
+    "hall-7",
+    "hall-11",
+    "hall-12",
+    "hall-13",
+    "hall-14",
+    "hall-15",
+    "hall-16",
+    "hall-17",
+    "hall-18",
+    "s017",
+    "hall-17-024"
   ],
   "sample": false,
-  "notes": "극장 정보는 공개 정보 기준. IMAX관은 예매 화면 좌석표로 크기를 추정했고, 4DX관은 아직 샘플이다."
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
 }

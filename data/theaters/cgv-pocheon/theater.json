@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-pocheon",
+  "chain": "CGV",
+  "branch": "포천",
+  "address": "경기 포천시 소흘읍 호국로 689 ",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

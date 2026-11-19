@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-cheonanpentapoteu",
+  "chain": "CGV",
+  "branch": "천안펜타포트",
+  "address": "충청남도 천안시 서북구 공원로 196 (불당동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "s004",
+    "hall-5",
+    "s006",
+    "hall-7",
+    "hall-9",
+    "hall-10",
+    "hall-11"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

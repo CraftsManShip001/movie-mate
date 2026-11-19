@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-samcheonpo",
+  "chain": "메가박스",
+  "branch": "삼천포",
+  "address": "경상남도 사천시 해안관광로 109-10(실안동), 아르떼 리조트 본관 4층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

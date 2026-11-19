@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-girin",
+  "chain": "CGV",
+  "branch": "기린",
+  "address": "강원도 인제군 기린면 서리 3-1 기린체험문화센터 2층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

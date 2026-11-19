@@ -4,7 +4,7 @@ import { SeatPicker, SeatPickerSkeleton } from "@/features/seat-picker/SeatPicke
 import { getAllAuditoriums, getAuditorium, getTheater } from "@/lib/data/registry";
 import { getShowtimesWithMovie } from "@/lib/data/now-showing";
 import { screenNameForAuditorium } from "@/lib/data/showtimes";
-import { hasLotteLive } from "@/lib/live/lotte";
+import { hasLive } from "@/lib/live";
 
 export function generateStaticParams() {
   return getAllAuditoriums().map((a) => ({ theaterId: a.theaterId, auditoriumId: a.id }));
@@ -40,7 +40,7 @@ async function AuditoriumContent({ theaterId, auditoriumId }: { theaterId: strin
         movieTitle={movie?.title ?? ""}
         auditorium={auditorium}
         chain={theater.chain}
-        live={hasLotteLive(theater.id)}
+        live={hasLive(theater.id)}
       />
     </Suspense>
   );

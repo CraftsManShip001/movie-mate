@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-namyangjuhyeondaeaulretseupeiseuwon",
+  "chain": "메가박스",
+  "branch": "남양주현대아울렛스페이스원",
+  "address": "경기도 남양주시 다산순환로 50, (다산동) 현대프리미엄아울렛 스페이스원 3층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "s05",
+    "hall-6",
+    "hall-7",
+    "hall-8"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

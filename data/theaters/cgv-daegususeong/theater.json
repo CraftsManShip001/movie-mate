@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-daegususeong",
+  "chain": "CGV",
+  "branch": "대구수성",
+  "address": "대구광역시 수성구 지범로 191 (범물동) 동아백화점 수성점 8층 CGV 대구수성",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}
