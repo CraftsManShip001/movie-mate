@@ -50,4 +50,4 @@ src/styles/tokens.css  디자인 토큰 (색은 DESIGN.md, 글꼴은 src/app/fon
 
 ## 스크린 영상
 
-`src/features/viewer/video-source.ts`의 URL 상수 하나로 관리한다. 기본값은 Big Buck Bunny(CC BY 3.0, Blender Foundation)를 Wikimedia Commons에서 스트리밍한다. 재생할 수 없으면 캔버스 테스트 패턴으로 대체된다.
+`src/features/viewer/video-source.ts`의 URL 상수 하나로 관리한다. 기본값은 Spring(2019, CC BY 4.0, Blender Foundation)을 Wikimedia Commons에서 스트리밍한다. 어두운 앞부분과 끝의 자막을 건너뛰도록 재생 구간(`SCREEN_VIDEO_RANGE`)을 정해 두었다. 재생할 수 없으면 캔버스 테스트 패턴으로 대체된다.
