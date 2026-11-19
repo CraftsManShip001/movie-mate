@@ -109,7 +109,12 @@ export function compactSeatMap(rows: SeatRow[]): CompactedGrid {
     keep.push(c);
   }
   return {
-    rows: rows.map((row) => ({ label: row.label, cells: keep.map((c) => row.cells[c]).join("") })),
+    rows: rows.map((row) => ({
+      label: row.label,
+      cells: keep.map((c) => row.cells[c]).join(""),
+      // 빈 세로줄만 지우므로 좌석 순서는 그대로다
+      ...(row.numbers ? { numbers: row.numbers } : {}),
+    })),
     verticalAisles: aisles,
   };
 }

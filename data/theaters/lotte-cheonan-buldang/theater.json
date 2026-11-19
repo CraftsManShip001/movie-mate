@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-cheonan-buldang",
+  "chain": "롯데시네마",
+  "branch": "천안불당",
+  "address": "충청남도 천안시 서북구 불당21로 67-8 (불당동) 7층 (정석프라자 4차)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

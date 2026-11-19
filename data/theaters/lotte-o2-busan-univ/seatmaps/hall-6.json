@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "lotte-o2-busan-univ",
+  "name": "6관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (316석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ssss.ssssssssss.ssss.."
+    },
+    {
+      "label": "B",
+      "cells": "..ssss.ssssssssss.ssss.."
+    },
+    {
+      "label": "C",
+      "cells": "..ssss.ssssssssss.ssss.."
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "J",
+      "cells": ".......ssssssssss......."
+    },
+    {
+      "label": "K",
+      "cells": "....ss.ssssssssss.ss...."
+    },
+    {
+      "label": "L",
+      "cells": "....ss.ssssssssss.ss...."
+    },
+    {
+      "label": "M",
+      "cells": "....ss.ssssssssss.ss...."
+    },
+    {
+      "label": "N",
+      "cells": "....ss.ssssssssss.ss...."
+    },
+    {
+      "label": "O",
+      "cells": "ssssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "P",
+      "cells": "ssssss.ssssssssss...wwww"
+    },
+    {
+      "label": "Q",
+      "cells": "ssssss..............ssss"
+    },
+    {
+      "label": "R",
+      "cells": "ssss................ssss"
+    },
+    {
+      "label": "S",
+      "cells": "ssss...................."
+    }
+  ]
+}

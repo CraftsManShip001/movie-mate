@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "lotte-gunsan-naun",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (154석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.ssssssss.wwww"
+    },
+    {
+      "label": "B",
+      "cells": "ss.ssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ss.ssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ss.ssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ss.ssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": ".s.............."
+    },
+    {
+      "label": "G",
+      "cells": "ss.ssssssss.ss.."
+    },
+    {
+      "label": "H",
+      "cells": "ss.ssssssss.ss.."
+    },
+    {
+      "label": "I",
+      "cells": ".s.ssssssss.ss.."
+    },
+    {
+      "label": "J",
+      "cells": ".s.ssssssss.ss.."
+    },
+    {
+      "label": "K",
+      "cells": ".s.ssssssss.ss.."
+    },
+    {
+      "label": "L",
+      "cells": ".s.ssssssss.ssss"
+    },
+    {
+      "label": "M",
+      "cells": ".s.ssssssss.ssss"
+    }
+  ]
+}

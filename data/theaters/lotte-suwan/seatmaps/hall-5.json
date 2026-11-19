@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "lotte-suwan",
+  "name": "5관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (384석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "광음시네마(사운드 특화) 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssssssss.wwwwww.wwww.ssssssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    },
+    {
+      "label": "H",
+      "cells": "..ssssss.sssssssssss.ssssss.."
+    },
+    {
+      "label": "I",
+      "cells": "..ssssss.sssssssssss.ssssss.."
+    },
+    {
+      "label": "J",
+      "cells": "..ssssss.sssssssssss.ssssss.."
+    },
+    {
+      "label": "K",
+      "cells": "..ssssss.sssssssssss.ssssss.."
+    },
+    {
+      "label": "L",
+      "cells": "..ssssss.sssssssssss.ssssss.."
+    },
+    {
+      "label": "M",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    },
+    {
+      "label": "N",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    },
+    {
+      "label": "O",
+      "cells": "ssssssss.sssssssssss.ssssssss"
+    }
+  ],
+  "crossAisleAfterRows": [
+    6
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "lotte-gwangbok",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (260석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssss.ssssssssssww.wwww"
+    }
+  ]
+}

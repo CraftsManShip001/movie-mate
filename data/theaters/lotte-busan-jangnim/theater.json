@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-busan-jangnim",
+  "chain": "롯데시네마",
+  "branch": "부산장림",
+  "address": "부산광역시 사하구 장림번영로 97 6층 롯데시네마 부산장림",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

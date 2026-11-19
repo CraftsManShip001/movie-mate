@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-9",
+  "theaterId": "lotte-jinju-mbcine",
+  "name": "9관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (268석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "wwwwww.ww..............."
+    },
+    {
+      "label": "B",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssssss.ssssssssssss.ssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssssss..............ssss"
+    },
+    {
+      "label": "N",
+      "cells": "ssssss.ss..............."
+    }
+  ],
+  "crossAisleAfterRows": [
+    12
+  ]
+}

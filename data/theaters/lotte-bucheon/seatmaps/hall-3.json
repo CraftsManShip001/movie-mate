@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "lotte-bucheon",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (133석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "B",
+      "cells": "....ssssssss.www"
+    },
+    {
+      "label": "C",
+      "cells": "....ssssssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "....ssssssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "....ssssssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "....ssssssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "....ssssssssss.."
+    },
+    {
+      "label": "H",
+      "cells": "....ssssssssss.."
+    },
+    {
+      "label": "I",
+      "cells": "....ssssssssssss"
+    },
+    {
+      "label": "J",
+      "cells": "....ssssssssssss"
+    },
+    {
+      "label": "K",
+      "cells": "sss.ssssssssssss"
+    },
+    {
+      "label": "L",
+      "cells": "sss.ssssssssssss"
+    }
+  ]
+}

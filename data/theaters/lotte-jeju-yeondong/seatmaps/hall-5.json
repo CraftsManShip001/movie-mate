@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "lotte-jeju-yeondong",
+  "name": "5관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (215석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "광음시네마(사운드 특화) 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssssss.ssssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.sssss..sss.www..."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-buksuwon",
+  "chain": "롯데시네마",
+  "branch": "북수원(천천동)",
+  "address": "경기도 수원시 장안구 천천로 100 (천천동), 천천동 롯데시네마타워",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

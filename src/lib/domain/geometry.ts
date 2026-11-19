@@ -13,7 +13,7 @@ export function columnCount(auditorium: Auditorium): number {
 
 /**
  * 좌석 행렬에서 좌석만 꺼낸다.
- * 번호는 seatNumbering 에 따라 열마다 왼쪽부터 1, 2, 3...(빈 칸 건너뜀) 또는 칸 번호 + 1.
+ * 번호는 열에 numbers 가 있으면 그 값, 없으면 seatNumbering 에 따라 열마다 왼쪽부터 1, 2, 3...(빈 칸 건너뜀) 또는 칸 번호 + 1.
  */
 export function listSeats(auditorium: Auditorium): Seat[] {
   const byColumn = auditorium.seatNumbering === "column";
@@ -23,7 +23,7 @@ export function listSeats(auditorium: Auditorium): Seat[] {
     [...row.cells].forEach((code, columnIndex) => {
       if (code === ".") return;
       count += 1;
-      const number = byColumn ? columnIndex + 1 : count;
+      const number = row.numbers?.[count - 1] ?? (byColumn ? columnIndex + 1 : count);
       seats.push({
         id: `${row.label}${number}`,
         rowLabel: row.label,

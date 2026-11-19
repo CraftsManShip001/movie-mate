@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-1",
+  "theaterId": "lotte-siheung-janghyeon",
+  "name": "1관",
+  "format": "recliner",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (59석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "w.ssss.ssssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssssss.ssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssss.ssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.ssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.ssssss"
+    }
+  ]
+}

@@ -70,6 +70,11 @@ export interface SeatRow {
    * 예: "..sssss.ssssssssss.sssss.."
    */
   cells: string;
+  /**
+   * 예매 화면의 좌석 번호. 이 열의 좌석(빈 칸이 아닌 칸)마다 왼쪽부터 하나씩.
+   * 번호가 칸 위치와 맞지 않는 상영관(열마다 좌석이 엇갈리거나 번호가 건너뛰는 곳)에만 쓴다. 있으면 seatNumbering 보다 앞선다.
+   */
+  numbers?: number[];
 }
 
 /** 세로 통로: 좌석 행렬의 몇 번째 칸 뒤에 통로가 있는지 */

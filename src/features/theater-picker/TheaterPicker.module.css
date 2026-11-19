@@ -93,6 +93,43 @@
   color: var(--color-sub);
 }
 
+/* 지역: 글자만 있는 탭. 고른 지역은 굵은 글자와 밑줄로 표시한다. */
+.regions {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 22px;
+  border-bottom: 1px solid var(--color-hair);
+}
+
+.region {
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  font-size: var(--text-md);
+  color: var(--color-sub);
+  white-space: nowrap;
+  line-height: 46px;
+}
+
+.region[aria-pressed="true"] {
+  border-bottom-color: var(--color-ink);
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.regionCount {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-sub);
+  font-variant-numeric: tabular-nums;
+}
+
 .rows {
   list-style: none;
 }
@@ -113,8 +150,10 @@
 }
 
 .rowName {
+  flex: none;
   font-size: var(--text-md);
   font-weight: 400;
+  white-space: nowrap;
 }
 
 .row[aria-pressed="true"] .rowName {
@@ -125,8 +164,16 @@
   display: flex;
   gap: 10px;
   align-items: center;
+  min-width: 0;
   font-size: var(--text-sm);
   color: var(--color-sub);
+}
+
+/* 좁은 화면에서는 지점 이름을 한 줄로 두고 형식 목록을 줄인다 */
+.rowMeta > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @media (max-width: 960px) {
@@ -152,7 +199,8 @@
 
   .chain {
     height: 64px;
-    padding: 0 14px;
+    padding: 0 12px;
+    white-space: nowrap;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
@@ -160,10 +208,25 @@
   }
 
   .chainName {
-    font-size: 17px;
+    font-size: 16px;
+    letter-spacing: -0.02em;
   }
 
   .chainCount {
     font-size: 12px;
+  }
+
+  /* 휴대폰: 지역 탭은 한 줄로 두고 옆으로 넘긴다 */
+  .regions {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 0 var(--gutter);
+    column-gap: 18px;
+  }
+
+  .regions::-webkit-scrollbar {
+    display: none;
   }
 }

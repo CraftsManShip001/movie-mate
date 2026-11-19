@@ -29,6 +29,17 @@ describe("listSeats", () => {
     ]);
   });
 
+  it("열에 numbers가 있으면 그 번호를 쓴다", () => {
+    const numbered = { ...hall, rows: hall.rows.map((row, i) => (i === 2 ? { ...row, numbers: [3, 5, 6, 7] } : row)) };
+    const c = listSeats(numbered).filter((s) => s.rowLabel === "C");
+    expect(c.map((s) => [s.id, s.columnIndex])).toEqual([
+      ["C3", 0],
+      ["C5", 1],
+      ["C6", 3],
+      ["C7", 4],
+    ]);
+  });
+
   it("findSeat는 대소문자를 가리지 않는다", () => {
     expect(findSeat(hall, "b3")?.columnIndex).toBe(2);
     expect(findSeat(hall, "Z9")).toBeUndefined();

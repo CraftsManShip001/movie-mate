@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "lotte-paju-unjeong",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (143석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "sss.sssswwww.ss"
+    },
+    {
+      "label": "B",
+      "cells": "sss.ssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "sss.ssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "sss.ssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": ".............ss"
+    },
+    {
+      "label": "F",
+      "cells": "....ssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "....ssssssss.ss"
+    },
+    {
+      "label": "H",
+      "cells": "....ssssssss.ss"
+    },
+    {
+      "label": "I",
+      "cells": "....ssssssss.ss"
+    },
+    {
+      "label": "J",
+      "cells": "....ssssssss.ss"
+    },
+    {
+      "label": "K",
+      "cells": "sss.ssssssss.ss"
+    },
+    {
+      "label": "L",
+      "cells": "sss.ssssssss.ss"
+    },
+    {
+      "label": "M",
+      "cells": "sss.ssssssss.ss"
+    }
+  ]
+}

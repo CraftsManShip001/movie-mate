@@ -121,6 +121,18 @@ export function validateAuditorium(auditorium: Auditorium): string[] {
     if (row.cells.length !== width) {
       errors.push(`rows[${i}](${row.label}) 칸 수 ${row.cells.length}가 첫 열 칸 수 ${width}와 다릅니다.`);
     }
+    if (row.numbers) {
+      const seatCount = [...row.cells].filter((code) => code !== ".").length;
+      if (row.numbers.length !== seatCount) {
+        errors.push(`rows[${i}](${row.label}) numbers 개수 ${row.numbers.length}가 좌석 수 ${seatCount}와 다릅니다.`);
+      }
+      if (!row.numbers.every((n) => Number.isInteger(n) && n > 0)) {
+        errors.push(`rows[${i}](${row.label}) numbers는 1 이상의 정수여야 합니다.`);
+      }
+      if (new Set(row.numbers).size !== row.numbers.length) {
+        errors.push(`rows[${i}](${row.label}) numbers에 같은 번호가 있습니다.`);
+      }
+    }
   });
 
   layout.verticalAisles.forEach((aisle, i) => {

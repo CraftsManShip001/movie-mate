@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-1",
+  "theaterId": "lotte-buksuwon",
+  "name": "1관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (178석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ss.ssssssswww...ss"
+    },
+    {
+      "label": "B",
+      "cells": "..ss.ssssssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "..ss.ssssssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "..ss.ssssssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "..ss.ssssssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "..ss.ssssssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "..ss.ssssssssssss.ss"
+    },
+    {
+      "label": "H",
+      "cells": "..ss.ssssssssssss.ss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssssssss.ss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssssssss.ss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssss..ssssss.ss"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "lotte-daejeon-central",
+  "name": "5관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (150석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "광음시네마(사운드 특화) 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ss..ww.sssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": ".....sssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.sssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.sssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.sss..ssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sss..ssss.ssss"
+    }
+  ]
+}

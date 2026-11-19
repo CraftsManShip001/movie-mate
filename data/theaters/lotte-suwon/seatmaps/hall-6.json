@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "lotte-suwon",
+  "name": "6관",
+  "format": "recliner",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (140석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "수퍼 LED 리클라이너 상영관. LED 스크린이라 화면비 추정이 더 부정확할 수 있다. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "C",
+      "cells": "..ss.ssssssss.ss.."
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssssssss.ssss"
+    }
+  ]
+}

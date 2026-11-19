@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-siheung-janghyeon",
+  "chain": "롯데시네마",
+  "branch": "시흥장현",
+  "address": "경기도 시흥시 장현능곡로 155 (능곡동) 시흥 플랑드르 6F 롯데시네마 시흥장현",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

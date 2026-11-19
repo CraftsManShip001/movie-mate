@@ -4,22 +4,36 @@ import Link from "next/link";
 import { useState } from "react";
 import { ChevronRight, Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { withSubject } from "@/lib/format";
+import { REGIONS, type Region } from "@/lib/regions";
 import styles from "./TheaterPicker.module.css";
 
 export interface ChainOption {
   name: string;
-  theaters: { id: string; name: string; formats: string }[];
+  theaters: { id: string; name: string; region: Region; formats: string }[];
 }
 
 export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
   const firstWithTheaters = chains.find((c) => c.theaters.length > 0) ?? chains[0];
   const [chainName, setChainName] = useState(firstWithTheaters.name);
   const chain = chains.find((c) => c.name === chainName) ?? firstWithTheaters;
+  // 극장이 있는 지역만, 정해진 순서로
+  const regions = REGIONS.map((name) => ({ name, count: chain.theaters.filter((t) => t.region === name).length })).filter(
+    (r) => r.count > 0,
+  );
+  const [regionName, setRegionName] = useState<Region | null>(null);
+  const region = regions.find((r) => r.name === regionName) ?? regions[0];
+  const theaters = region ? chain.theaters.filter((t) => t.region === region.name) : chain.theaters;
   const [picked, setPicked] = useState<string | null>(null);
-  const selected = chain.theaters.find((t) => t.id === picked) ?? chain.theaters[0];
+  const selected = theaters.find((t) => t.id === picked) ?? theaters[0];
 
   const pickChain = (name: string) => {
     setChainName(name);
+    setRegionName(null);
+    setPicked(null);
+  };
+
+  const pickRegion = (name: Region) => {
+    setRegionName(name);
     setPicked(null);
   };
 
@@ -71,8 +85,24 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
               <span className={styles.listChain}>{chain.name}</span>
               <span className={styles.listCaption}>시야를 볼 수 있는 극장</span>
             </div>
+            {regions.length > 1 ? (
+              <div className={styles.regions} role="group" aria-label="지역">
+                {regions.map((r) => (
+                  <button
+                    key={r.name}
+                    type="button"
+                    className={styles.region}
+                    aria-pressed={r.name === region?.name}
+                    onClick={() => pickRegion(r.name)}
+                  >
+                    {r.name}
+                    <span className={styles.regionCount}>{r.count}</span>
+                  </button>
+                ))}
+              </div>
+            ) : null}
             <ul className={styles.rows}>
-              {chain.theaters.map((t) => (
+              {theaters.map((t) => (
                 <li key={t.id}>
                   <button
                     type="button"

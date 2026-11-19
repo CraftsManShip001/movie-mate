@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "lotte-seongnam-jungang",
+  "name": "6관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (265석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "광음시네마(사운드 특화) 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "....ssssssss..wwww.sss"
+    },
+    {
+      "label": "B",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "C",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "D",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "E",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "F",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "G",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "H",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "I",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "J",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "K",
+      "cells": "....ssssssssssssss.sss"
+    },
+    {
+      "label": "L",
+      "cells": "sss.ssssssssssssss.sss"
+    },
+    {
+      "label": "M",
+      "cells": "sss.ssssssssssssss.sss"
+    },
+    {
+      "label": "N",
+      "cells": "sss.ssssssssssssss.sss"
+    },
+    {
+      "label": "O",
+      "cells": "sss.ssssssssssssss.sss"
+    }
+  ]
+}
