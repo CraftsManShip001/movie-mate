@@ -7,11 +7,8 @@ export interface Movie {
   schemaVersion: 1;
   id: string;
   sample: boolean;
-  /**
-   * 어디서 온 정보인지. 없으면 data/movies 의 직접 쓴 값.
-   * "tmdb"·"lotte"면 화면에 출처를 남긴다.
-   */
-  source?: "local" | "tmdb" | "lotte" | "megabox";
+  /** 어디서 온 정보인지. 없으면 data/movies 의 직접 쓴 샘플 값. */
+  source?: "local" | "lotte" | "megabox";
   notes?: string;
   title: string;
   /** 티켓에 쓰는 영문 제목. 예: "THE NIGHT ORBIT" */

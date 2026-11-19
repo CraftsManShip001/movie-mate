@@ -19,7 +19,6 @@ interface SeatPickerProps {
   theaterId: string;
   /** "CGV 용산아이파크몰 · IMAX관" */
   title: string;
-  movieTitle: string;
   auditorium: Auditorium;
   /** 영화관 브랜드. 예매 링크에 쓴다. */
   chain: string;
@@ -50,7 +49,7 @@ function useLiveShow(theaterId: string, auditoriumId: string, date: string | nul
 }
 
 /** 3 · 좌석. 고른 자리는 주소(?seat=J14)에 남겨 4·5번에서 뒤로 왔을 때 그대로 보인다. */
-export function SeatPicker({ theaterId, title, movieTitle, auditorium, chain, live }: SeatPickerProps) {
+export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPickerProps) {
   const searchParams = useSearchParams();
   const show = readShowQuery(searchParams);
   const [seatId, setSeatId] = useState<string | null>(() => searchParams.get("seat"));
@@ -66,9 +65,8 @@ export function SeatPicker({ theaterId, title, movieTitle, auditorium, chain, li
     window.history.replaceState(null, "", showQueryString(show, { seat: next.id }));
   };
 
-  // 실제 시간표 극장은 샘플 영화 제목을 쓰지 않고, 받아 온 영화 제목을 쓴다
-  const shownMovieTitle = live ? (liveShow.show?.movie.title ?? "") : movieTitle;
-  const caption = [shownMovieTitle, show.date ? `${formatMonthDay(show.date)}${show.time ? ` ${show.time}` : ""}` : null]
+  // 영화 제목은 실제 시간표에서 고른 회차일 때만 쓴다(CGV는 관만 고르므로 없다)
+  const caption = [liveShow.show?.movie.title ?? "", show.date ? `${formatMonthDay(show.date)}${show.time ? ` ${show.time}` : ""}` : null]
     .filter(Boolean)
     .join(" · ");
   const base = `/theaters/${theaterId}/${auditorium.id}`;
@@ -99,7 +97,10 @@ export function SeatPicker({ theaterId, title, movieTitle, auditorium, chain, li
               </a>
             ) : null}
             {seat ? (
-              <Link href={`${base}/seats/${seat.id}/ticket${showQueryString(show)}`} className={frameStyles.cta}>
+              <Link
+                href={`${base}/seats/${seat.id}${liveShow.show ? "/ticket" : ""}${showQueryString(show)}`}
+                className={frameStyles.cta}
+              >
                 이 자리에서 보기
               </Link>
             ) : (

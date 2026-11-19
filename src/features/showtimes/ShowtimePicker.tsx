@@ -234,14 +234,9 @@ function Poster({ movie, className }: { movie: Movie; className: string }) {
   return <Image src={movie.posterUrl} alt={`${movie.title} 포스터`} width={56} height={84} unoptimized className={className} />;
 }
 
-/** "15세 이상 · 시간표 롯데시네마 14:02 기준" 또는 "12세 이상 · 128분 · 정보 TMDB" */
+/** "15세 이상 · 98분 · 시간표 메가박스 14:02 기준" */
 function movieMeta(movie: Movie, schedule: Schedule): string {
-  const source =
-    movie.source === "tmdb"
-      ? "정보 TMDB"
-      : schedule.live
-        ? `시간표 ${schedule.live.source} ${asOfLabel(schedule.live.fetchedAt)}`.trim()
-        : null;
+  const source = schedule.live ? `시간표 ${schedule.live.source} ${asOfLabel(schedule.live.fetchedAt)}`.trim() : null;
   return [movie.rating || null, movie.runtimeMin ? `${movie.runtimeMin}분` : null, source].filter(Boolean).join(" · ");
 }
 

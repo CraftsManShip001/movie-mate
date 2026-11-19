@@ -33,7 +33,8 @@ interface SeatViewerProps {
   screenName: string;
   auditorium: Auditorium;
   seatId: string;
-  movie: Movie;
+  /** 실제 회차의 영화. 없으면(CGV 등) 티켓 없이 좌석표만 보여 준다 */
+  movie: Movie | null;
 }
 
 /** 5 · 시야. 3D 시야가 화면 전체를 채우고 그 위에 정보·조작을 얹는다. */
@@ -60,7 +61,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
 
   if (!seat || !eye) return null;
 
-  const info = buildTicketInfo({ movie, theaterName, screenName, seat, date: show.date, time: show.time, numbers });
+  const info = movie && buildTicketInfo({ movie, theaterName, screenName, seat, date: show.date, time: show.time, numbers });
   const pickSeat = (next: Seat) => {
     if (next.id === seat.id) return;
     router.replace(`${base}/seats/${next.id}${showQueryString(show)}`, { scroll: false });
@@ -151,30 +152,34 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
 
           <div className={styles.right}>
             {panelOpen ? (
-              <section id="seat-ticket-panel" className={styles.panel} aria-label="내 티켓과 좌석표">
-                <div className={styles.ticketRow}>
-                  <div className={styles.miniTicket}>
-                    <TicketPoster
-                      width={84}
-                      posterUrl={info.posterUrl}
-                      bandDate={info.bandDate}
-                      bandTheater={`${theaterName} · ${screenName}`}
-                      alt={`${movie.title} 티켓`}
-                    />
-                  </div>
-                  <div className={styles.ticketText}>
-                    <span className={styles.ticketNo}>No. {info.ticketNo}</span>
-                    <span className={styles.ticketSeat}>{info.seatCode}</span>
-                    <span className={styles.ticketLine}>
-                      {movie.title}
-                      {show.time ? ` · ${show.time}` : ""}
-                    </span>
-                    <span className={styles.ticketLine}>
-                      {theaterName} {screenName}
-                    </span>
-                  </div>
-                </div>
-                <div className={styles.divider} />
+              <section id="seat-ticket-panel" className={styles.panel} aria-label={info ? "내 티켓과 좌석표" : "좌석표"}>
+                {movie && info ? (
+                  <>
+                    <div className={styles.ticketRow}>
+                      <div className={styles.miniTicket}>
+                        <TicketPoster
+                          width={84}
+                          posterUrl={info.posterUrl}
+                          bandDate={info.bandDate}
+                          bandTheater={`${theaterName} · ${screenName}`}
+                          alt={`${movie.title} 티켓`}
+                        />
+                      </div>
+                      <div className={styles.ticketText}>
+                        <span className={styles.ticketNo}>No. {info.ticketNo}</span>
+                        <span className={styles.ticketSeat}>{info.seatCode}</span>
+                        <span className={styles.ticketLine}>
+                          {movie.title}
+                          {show.time ? ` · ${show.time}` : ""}
+                        </span>
+                        <span className={styles.ticketLine}>
+                          {theaterName} {screenName}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={styles.divider} />
+                  </>
+                ) : null}
                 <div className={styles.miniMap}>
                   <SeatGrid auditorium={auditorium} selectedSeatId={seat.id} onSelect={pickSeat} tone="dark" maxSeat={11} />
                 </div>
@@ -202,7 +207,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                 aria-controls="seat-ticket-panel"
                 onClick={() => setPanelOpen((v) => !v)}
               >
-                {panelOpen ? "좌석·티켓 숨기기" : "좌석·티켓 보기"}
+                {panelOpen ? (info ? "좌석·티켓 숨기기" : "좌석표 숨기기") : info ? "좌석·티켓 보기" : "좌석표 보기"}
               </button>
             </div>
           </div>

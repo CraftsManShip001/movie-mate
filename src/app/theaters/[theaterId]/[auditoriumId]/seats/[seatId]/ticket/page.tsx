@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 import { TicketScene } from "@/features/ticket/TicketScene";
 import { getSeatContext } from "@/lib/data/flow-context";
@@ -27,6 +27,12 @@ async function Ticket({
 }) {
   const context = await getSeatContext(theaterId, auditoriumId, seatId, query);
   if (!context) notFound();
+  // 영화(실제 회차)가 없으면 티켓 없이 바로 시야로 간다
+  if (!context.movie) {
+    const rest = new URLSearchParams(Object.entries(query).flatMap(([k, v]) => (typeof v === "string" ? [[k, v]] : [])));
+    const qs = rest.toString();
+    redirect(`/theaters/${theaterId}/${auditoriumId}/seats/${encodeURIComponent(seatId)}${qs ? `?${qs}` : ""}`);
+  }
   return (
     <TicketScene
       theaterId={context.theater.id}
