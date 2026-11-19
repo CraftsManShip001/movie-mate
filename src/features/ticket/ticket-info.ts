@@ -17,7 +17,7 @@ export function buildTicketInfo(input: {
     // 날짜를 모르면(주소로 바로 들어온 경우) 좌석만으로 번호를 만든다
     ticketNo: ticketNumber(date ?? "0000-00-00", input.seat).replace(/^000000/, ""),
     movieTitle: movie.title,
-    movieTitleEn: `${movie.titleEn} · ${movie.year}`,
+    movieTitleEn: [movie.titleEn, movie.year].filter(Boolean).join(" · "),
     posterUrl: movie.posterUrl,
     seatCode: seatCode(input.seat),
     theaterName: input.theaterName,

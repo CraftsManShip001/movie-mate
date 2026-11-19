@@ -98,6 +98,11 @@
   background: var(--seat-off);
 }
 
+/* 이 회차에 이미 팔린 자리: 흐리게. 시야는 볼 수 있게 누를 수는 있다. */
+.sold {
+  background: var(--seat-off);
+}
+
 .wheelchair {
   box-shadow: inset 0 0 0 1.5px var(--label);
 }

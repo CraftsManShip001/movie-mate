@@ -16,13 +16,24 @@ interface SeatGridProps {
   minSeat?: number;
   /** 스크린 곡선 표시 */
   showScreen?: boolean;
+  /** 이 회차에 이미 팔린 좌석 id */
+  soldSeatIds?: ReadonlySet<string>;
 }
 
 /**
  * 고를 수 있는 좌석표. 폭에 맞춰 좌석 크기가 줄어든다(컨테이너 쿼리).
  * 위쪽이 스크린, 왼쪽이 관객 기준 왼쪽이다.
  */
-export function SeatGrid({ auditorium, selectedSeatId, onSelect, tone = "light", maxSeat = 24, minSeat = 0, showScreen = false }: SeatGridProps) {
+export function SeatGrid({
+  auditorium,
+  selectedSeatId,
+  onSelect,
+  tone = "light",
+  maxSeat = 24,
+  minSeat = 0,
+  showScreen = false,
+  soldSeatIds,
+}: SeatGridProps) {
   const seats = listSeats(auditorium);
   const seatAt = new Map(seats.map((seat) => [`${seat.rowIndex}:${seat.columnIndex}`, seat]));
   const aisleAfterColumn = new Set(auditorium.layout.verticalAisles.map((a) => a.afterColumn));
@@ -59,8 +70,9 @@ export function SeatGrid({ auditorium, selectedSeatId, onSelect, tone = "light",
                     </Fragment>
                   );
                 }
-                const label = `${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}`;
-                const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : ""].join(" ");
+                const sold = soldSeatIds?.has(seat.id) ?? false;
+                const label = `${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}${sold ? ", 팔린 자리" : ""}`;
+                const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : "", sold ? styles.sold : ""].join(" ");
                 return (
                   <Fragment key={columnIndex}>
                     {onSelect ? (

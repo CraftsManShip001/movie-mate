@@ -5,6 +5,7 @@ import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { ShowtimePicker } from "@/features/showtimes/ShowtimePicker";
 import { getTheater, getTheaters } from "@/lib/data/registry";
 import { getShowtimesWithMovie } from "@/lib/data/now-showing";
+import { getLotteSchedule } from "@/lib/live/lotte";
 import { nowInSeoul } from "@/lib/format";
 
 export function generateStaticParams() {
@@ -56,9 +57,15 @@ async function TheaterContent({ theaterId }: { theaterId: string }) {
   );
 }
 
-/** "오늘"과 지금 시각은 요청 때마다 서울 시간으로 계산한다 */
+/**
+ * "오늘"과 지금 시각은 요청 때마다 서울 시간으로 계산한다.
+ * 롯데시네마 극장은 이때 실제 시간표를 받아 온다(받지 못하면 샘플 시간표).
+ */
 async function ShowtimesToday(props: Omit<ComponentProps<typeof ShowtimePicker>, "todayIso" | "nowMinutes">) {
   await connection();
   const { todayIso, minutes } = nowInSeoul(new Date());
-  return <ShowtimePicker {...props} todayIso={todayIso} nowMinutes={minutes} />;
+  const live = await getLotteSchedule(props.theater.id, todayIso);
+  const schedule = live ?? props.schedule;
+  const movie = live?.movies?.[0] ?? props.movie;
+  return <ShowtimePicker {...props} schedule={schedule} movie={movie} todayIso={todayIso} nowMinutes={minutes} />;
 }

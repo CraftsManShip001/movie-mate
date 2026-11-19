@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { showQueryString } from "@/features/flow/show-query";
-import { formatMonthDay, withTopic } from "@/lib/format";
+import { asOfLabel, formatMonthDay, withTopic } from "@/lib/format";
 import { bookingLink } from "@/lib/labels";
 import {
   addDays,
@@ -36,20 +36,29 @@ interface Picked {
   start: string;
 }
 
-/** 고른 날짜·시간을 주소에 남겨 3번 화면에서 뒤로 왔을 때 그대로 보이게 한다 */
-function readPicked(params: URLSearchParams): { day: number; picked: Picked | null } {
+interface PickState {
+  day: number;
+  /** 실제 시간표에서 고른 영화 id. 샘플 시간표는 null */
+  movieId: string | null;
+  picked: Picked | null;
+}
+
+/** 고른 날짜·영화·시간을 주소에 남겨 3번 화면에서 뒤로 왔을 때 그대로 보이게 한다 */
+function readPicked(params: URLSearchParams): PickState {
   const day = Number(params.get("day") ?? 0);
   const show = params.get("show");
   const [screenId, start] = show ? show.split("@") : [];
   return {
     day: Number.isInteger(day) && day >= 0 && day < DAYS ? day : 0,
+    movieId: params.get("movie"),
     picked: screenId && start ? { screenId, start } : null,
   };
 }
 
-function writePicked(day: number, picked: Picked | null) {
+function writePicked({ day, movieId, picked }: PickState) {
   const params = new URLSearchParams();
   if (day > 0) params.set("day", String(day));
+  if (movieId) params.set("movie", movieId);
   if (picked) params.set("show", `${picked.screenId}@${picked.start}`);
   const query = params.toString();
   window.history.replaceState(null, "", query ? `?${query}` : window.location.pathname);
@@ -60,17 +69,23 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
   const [state, setState] = useState(() => readPicked(searchParams));
   const { day } = state;
 
+  // 실제 시간표는 영화가 여럿이다. 고른 영화의 상영만 남긴다.
+  const movies = schedule.movies ?? null;
+  const currentMovie = (movies && movies.find((m) => m.id === state.movieId)) ?? movies?.[0] ?? movie;
+  const view = movies ? { ...schedule, showings: schedule.showings.filter((s) => s.movieId === currentMovie.id) } : schedule;
+
   const dates = buildDateStrip(todayIso, DAYS);
-  const groups = groupShowingsByScreen(schedule, day, day === 0 ? { notBeforeMinutes: nowMinutes } : {});
+  const groups = groupShowingsByScreen(view, day, day === 0 ? { notBeforeMinutes: nowMinutes } : {});
   const picked = state.picked;
   const pickedGroup = picked ? groups.find((g) => g.screen.id === picked.screenId) : undefined;
   const pickedShowing = pickedGroup?.showings.find((s) => s.start === picked?.start);
   const dateIso = addDays(todayIso, day);
   const booking = bookingLink(theater.chain);
 
-  const update = (next: { day: number; picked: Picked | null }) => {
-    setState(next);
-    writePicked(next.day, next.picked);
+  const update = (next: Partial<PickState>) => {
+    const merged = { ...state, movieId: movies ? currentMovie.id : null, ...next };
+    setState(merged);
+    writePicked(merged);
   };
 
   let bottom = null;
@@ -98,7 +113,7 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
           <div className={frameStyles.actions}>
             {auditoriumId ? (
               <Link
-                href={`/theaters/${theater.id}/${auditoriumId}${showQueryString({ date: dateIso, time: pickedShowing.start })}`}
+                href={`/theaters/${theater.id}/${auditoriumId}${showQueryString({ date: dateIso, time: pickedShowing.start, seq: pickedShowing.seq ?? null })}`}
                 className={frameStyles.cta}
               >
                 이 시간으로 좌석 보기
@@ -122,21 +137,28 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
   return (
     <Frame header={<FrameHeader title={theater.name} backHref="/" />} bottom={bottom}>
       <div className={styles.body}>
+        {movies ? (
+          <div className={styles.movies} role="group" aria-label="영화">
+            {movies.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                className={styles.movieOption}
+                aria-pressed={m.id === currentMovie.id}
+                onClick={() => update({ movieId: m.id, picked: null })}
+              >
+                <Poster movie={m} className={styles.optionPoster} />
+                <span className={styles.optionTitle}>{m.title}</span>
+              </button>
+            ))}
+          </div>
+        ) : null}
         <div className={styles.top}>
           <div className={styles.movie}>
-            <Image
-              src={movie.posterUrl}
-              alt={`${movie.title} 포스터`}
-              width={56}
-              height={84}
-              unoptimized
-              className={styles.poster}
-            />
+            {movies ? null : <Poster movie={currentMovie} className={styles.poster} />}
             <div className={styles.movieText}>
-              <span className={styles.movieTitle}>{movie.title}</span>
-              <span className={styles.movieMeta}>
-                {movie.rating} · {movie.runtimeMin}분{movie.source === "tmdb" ? " · 정보 TMDB" : ""}
-              </span>
+              <span className={styles.movieTitle}>{currentMovie.title}</span>
+              <span className={styles.movieMeta}>{movieMeta(currentMovie, schedule)}</span>
             </div>
           </div>
           <div className={styles.dates} role="group" aria-label="날짜">
@@ -187,7 +209,7 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
                         className={styles.time}
                         aria-pressed={isPicked}
                         aria-label={`${group.screen.name} ${s.start} 시작, ${s.end} 끝, ${s.seatsLeft}석 남음`}
-                        onClick={() => update({ day, picked: { screenId: group.screen.id, start: s.start } })}
+                        onClick={() => update({ picked: { screenId: group.screen.id, start: s.start } })}
                       >
                         <span className={styles.timeStart}>{s.start}</span>
                         <span className={styles.timeSub}>~{s.end}</span>
@@ -200,11 +222,27 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
             ))}
           </div>
         ) : (
-          <EmptyDay schedule={schedule} day={day} todayIso={todayIso} onPickDay={(d) => update({ day: d, picked: null })} />
+          <EmptyDay schedule={view} day={day} todayIso={todayIso} onPickDay={(d) => update({ day: d, picked: null })} />
         )}
       </div>
     </Frame>
   );
+}
+
+function Poster({ movie, className }: { movie: Movie; className: string }) {
+  if (!movie.posterUrl) return <span className={className} aria-hidden="true" />;
+  return <Image src={movie.posterUrl} alt={`${movie.title} 포스터`} width={56} height={84} unoptimized className={className} />;
+}
+
+/** "15세 이상 · 시간표 롯데시네마 14:02 기준" 또는 "12세 이상 · 128분 · 정보 TMDB" */
+function movieMeta(movie: Movie, schedule: Schedule): string {
+  const source =
+    movie.source === "tmdb"
+      ? "정보 TMDB"
+      : schedule.live
+        ? `시간표 ${schedule.live.source} ${asOfLabel(schedule.live.fetchedAt)}`.trim()
+        : null;
+  return [movie.rating || null, movie.runtimeMin ? `${movie.runtimeMin}분` : null, source].filter(Boolean).join(" · ");
 }
 
 function EmptyDay({

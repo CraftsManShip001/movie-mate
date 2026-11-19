@@ -23,7 +23,7 @@ export async function getShowtimesWithMovie(theaterId: string): Promise<Showtime
   const schedule = getSchedule(theaterId);
   const fallback = schedule ? getMovie(schedule.movieId) : undefined;
   if (!schedule || !fallback) return undefined;
-  const live = await nowPlayingMovie(fallback.runtimeMin);
+  const live = await nowPlayingMovie(fallback.runtimeMin ?? 120);
   if (!live) return { schedule, movie: fallback };
-  return { schedule: withRuntime(schedule, live.runtimeMin), movie: live };
+  return { schedule: live.runtimeMin ? withRuntime(schedule, live.runtimeMin) : schedule, movie: live };
 }

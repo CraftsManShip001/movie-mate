@@ -74,6 +74,15 @@ export function ticketNumber(dateIso: string, seat: Pick<Seat, "rowIndex" | "num
 }
 
 /** 서울 시각 기준 오늘 날짜와 지금 시각(분) */
+/** ISO 시각 → 서울 기준 "14:02 기준". 값이 이상하면 빈 문자열 */
+export function asOfLabel(iso: string | null | undefined): string {
+  if (!iso) return "";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  const { minutes } = nowInSeoul(date);
+  return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")} 기준`;
+}
+
 export function nowInSeoul(now: Date): { todayIso: string; minutes: number } {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Seoul",

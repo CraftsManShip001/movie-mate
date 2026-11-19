@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
 import { SeatGrid, SeatGridSkeleton } from "@/features/seat-map/SeatGrid";
@@ -10,7 +10,9 @@ import { SeatPreview } from "@/features/seat-preview/SeatPreview";
 import { useSeatView } from "@/features/viewer/useSeatView";
 import { findSeat } from "@/lib/domain/geometry";
 import type { Auditorium, Seat } from "@/lib/domain/types";
-import { formatMonthDay, seatName } from "@/lib/format";
+import { asOfLabel, formatMonthDay, seatName } from "@/lib/format";
+import { bookingLink } from "@/lib/labels";
+import type { LotteShow } from "@/lib/live/lotte";
 import styles from "./SeatPicker.module.css";
 
 interface SeatPickerProps {
@@ -19,22 +21,54 @@ interface SeatPickerProps {
   title: string;
   movieTitle: string;
   auditorium: Auditorium;
+  /** 영화관 브랜드. 예매 링크에 쓴다. */
+  chain: string;
+  /** 실제 시간표(롯데시네마)가 있는 극장인지. 그러면 고른 회차의 영화와 팔린 좌석을 받아 온다. */
+  live: boolean;
+}
+
+type LiveState = { key: string; show: LotteShow | null } | null;
+
+/** 고른 회차의 영화와 팔린 좌석을 서버(/api/live/show)에 묻는다 */
+function useLiveShow(theaterId: string, auditoriumId: string, date: string | null, seq: number | null | undefined, enabled: boolean) {
+  const key = enabled && date && seq != null ? `${theaterId}/${auditoriumId}/${date}/${seq}` : null;
+  const [state, setState] = useState<LiveState>(null);
+  useEffect(() => {
+    if (!key || !date || seq == null) return;
+    const controller = new AbortController();
+    const query = new URLSearchParams({ theater: theaterId, auditorium: auditoriumId, date, seq: String(seq) });
+    fetch(`/api/live/show?${query}`, { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : { show: null }))
+      .then((data: { show: LotteShow | null }) => setState({ key, show: data.show }))
+      .catch(() => {
+        if (!controller.signal.aborted) setState({ key, show: null });
+      });
+    return () => controller.abort();
+  }, [key, theaterId, auditoriumId, date, seq]);
+  if (!key) return { loading: false, show: null };
+  return { loading: state?.key !== key, show: state?.key === key ? state.show : null };
 }
 
 /** 3 · 좌석. 고른 자리는 주소(?seat=J14)에 남겨 4·5번에서 뒤로 왔을 때 그대로 보인다. */
-export function SeatPicker({ theaterId, title, movieTitle, auditorium }: SeatPickerProps) {
+export function SeatPicker({ theaterId, title, movieTitle, auditorium, chain, live }: SeatPickerProps) {
   const searchParams = useSearchParams();
   const show = readShowQuery(searchParams);
   const [seatId, setSeatId] = useState<string | null>(() => searchParams.get("seat"));
   const seat = useMemo(() => (seatId ? findSeat(auditorium, seatId) : undefined), [auditorium, seatId]);
   const { stature, numbers } = useSeatView(auditorium, seat);
+  const liveShow = useLiveShow(theaterId, auditorium.id, show.date, show.seq, live);
+  const sold = useMemo(() => (liveShow.show?.booked ? new Set(liveShow.show.booked) : undefined), [liveShow.show]);
+  const seatSold = seat ? (sold?.has(seat.id) ?? false) : false;
+  const booking = bookingLink(chain);
 
   const pick = (next: Seat) => {
     setSeatId(next.id);
     window.history.replaceState(null, "", showQueryString(show, { seat: next.id }));
   };
 
-  const caption = [movieTitle, show.date ? `${formatMonthDay(show.date)}${show.time ? ` ${show.time}` : ""}` : null]
+  // 실제 시간표 극장은 샘플 영화 제목을 쓰지 않고, 받아 온 영화 제목을 쓴다
+  const shownMovieTitle = live ? (liveShow.show?.movie.title ?? "") : movieTitle;
+  const caption = [shownMovieTitle, show.date ? `${formatMonthDay(show.date)}${show.time ? ` ${show.time}` : ""}` : null]
     .filter(Boolean)
     .join(" · ");
   const base = `/theaters/${theaterId}/${auditorium.id}`;
@@ -53,6 +87,17 @@ export function SeatPicker({ theaterId, title, movieTitle, auditorium }: SeatPic
             <span className={frameStyles.summaryLabel}>자리를 골라 주세요</span>
           )}
           <div className={frameStyles.actions}>
+            {liveShow.show ? (
+              <a
+                href={booking.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={frameStyles.secondary}
+                aria-label={`${booking.label} (새 창)`}
+              >
+                {chain} 예매
+              </a>
+            ) : null}
             {seat ? (
               <Link href={`${base}/seats/${seat.id}/ticket${showQueryString(show)}`} className={frameStyles.cta}>
                 이 자리에서 보기
@@ -68,7 +113,14 @@ export function SeatPicker({ theaterId, title, movieTitle, auditorium }: SeatPic
     >
       <div className={styles.layout}>
         <div className={styles.map}>
-          <SeatGrid auditorium={auditorium} selectedSeatId={seat?.id ?? null} onSelect={pick} minSeat={12} showScreen />
+          <SeatGrid
+            auditorium={auditorium}
+            selectedSeatId={seat?.id ?? null}
+            onSelect={pick}
+            minSeat={12}
+            showScreen
+            soldSeatIds={sold}
+          />
         </div>
         <aside className={styles.panel} aria-live="polite">
           <span className={styles.caption}>{caption}</span>
@@ -83,6 +135,16 @@ export function SeatPicker({ theaterId, title, movieTitle, auditorium }: SeatPic
             </div>
           )}
           {numbers ? <ViewNumbersRow numbers={numbers} /> : null}
+          {seatSold ? <p className={styles.note}>이 회차에는 이미 팔린 자리예요</p> : null}
+          {live && show.seq != null ? (
+            <p className={styles.note}>
+              {liveShow.loading
+                ? "팔린 자리를 불러오고 있어요"
+                : liveShow.show?.booked
+                  ? `팔린 자리 ${liveShow.show.booked.length}석 · 롯데시네마 ${asOfLabel(liveShow.show.fetchedAt)}`
+                  : "팔린 자리를 불러오지 못했어요"}
+            </p>
+          ) : null}
           {auditorium.sample ? (
             <p className={styles.note}>샘플 상영관이라 실제 치수와 달라요</p>
           ) : auditorium.estimated ? (

@@ -4,6 +4,7 @@ import { SeatPicker, SeatPickerSkeleton } from "@/features/seat-picker/SeatPicke
 import { getAllAuditoriums, getAuditorium, getTheater } from "@/lib/data/registry";
 import { getShowtimesWithMovie } from "@/lib/data/now-showing";
 import { screenNameForAuditorium } from "@/lib/data/showtimes";
+import { hasLotteLive } from "@/lib/live/lotte";
 
 export function generateStaticParams() {
   return getAllAuditoriums().map((a) => ({ theaterId: a.theaterId, auditoriumId: a.id }));
@@ -33,7 +34,14 @@ async function AuditoriumContent({ theaterId, auditoriumId }: { theaterId: strin
   // 쿼리(날짜·시각·고른 자리)는 브라우저에서 읽으므로 그 부분만 Suspense로 감싼다
   return (
     <Suspense fallback={<SeatPickerSkeleton title={title} backHref={backHref} />}>
-      <SeatPicker theaterId={theater.id} title={title} movieTitle={movie?.title ?? ""} auditorium={auditorium} />
+      <SeatPicker
+        theaterId={theater.id}
+        title={title}
+        movieTitle={movie?.title ?? ""}
+        auditorium={auditorium}
+        chain={theater.chain}
+        live={hasLotteLive(theater.id)}
+      />
     </Suspense>
   );
 }
