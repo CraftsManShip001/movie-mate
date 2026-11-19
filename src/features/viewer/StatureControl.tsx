@@ -11,11 +11,15 @@ export function StatureControl() {
   const [open, setOpen] = useState(false);
   const popoverId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      // 슬라이더에 있던 포커스가 사라지지 않도록 버튼으로 돌려놓는다
+      if (rootRef.current?.contains(document.activeElement)) buttonRef.current?.focus();
     };
     const onPointer = (event: PointerEvent) => {
       if (rootRef.current && !rootRef.current.contains(event.target as Node)) setOpen(false);
@@ -60,6 +64,7 @@ export function StatureControl() {
         </div>
       ) : null}
       <button
+        ref={buttonRef}
         type="button"
         className={styles.control}
         aria-expanded={open}

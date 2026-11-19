@@ -43,8 +43,28 @@ interface PickState {
   picked: Picked | null;
 }
 
-/** 고른 날짜·영화·시간을 주소에 남겨 3번 화면에서 뒤로 왔을 때 그대로 보이게 한다 */
-function readPicked(params: URLSearchParams): PickState {
+/**
+ * 고른 날짜·영화·시간을 주소에 남겨 3번 화면에서 뒤로 왔을 때 그대로 보이게 한다.
+ * 3번 화면의 ‹ 뒤로는 관·날짜·시각·회차(?hall=&date=&time=&seq=)를 넘기므로, 그때는 시간표에서 그 상영을 찾아 되살린다.
+ */
+function readPicked(params: URLSearchParams, schedule: Schedule, todayIso: string): PickState {
+  const seq = params.get("seq");
+  const hall = params.get("hall");
+  const date = params.get("date");
+  const time = params.get("time");
+  if (!params.get("show") && seq && hall && date && time) {
+    const halls = new Map(schedule.screens.map((screen) => [screen.id, screen.auditoriumId]));
+    const showing = schedule.showings.find(
+      (s) => s.seq === seq && s.start === time && halls.get(s.screenId) === hall && addDays(todayIso, s.day) === date,
+    );
+    if (showing && showing.day >= 0 && showing.day < DAYS) {
+      return {
+        day: showing.day,
+        movieId: showing.movieId ?? null,
+        picked: { screenId: showing.screenId, start: showing.start },
+      };
+    }
+  }
   const day = Number(params.get("day") ?? 0);
   const show = params.get("show");
   const [screenId, start] = show ? show.split("@") : [];
@@ -66,7 +86,7 @@ function writePicked({ day, movieId, picked }: PickState) {
 
 export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes }: ShowtimePickerProps) {
   const searchParams = useSearchParams();
-  const [state, setState] = useState(() => readPicked(searchParams));
+  const [state, setState] = useState(() => readPicked(searchParams, schedule, todayIso));
   const { day } = state;
 
   // 실제 시간표는 영화가 여럿이다. 고른 영화의 상영만 남긴다.

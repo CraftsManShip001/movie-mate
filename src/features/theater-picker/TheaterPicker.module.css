@@ -147,6 +147,14 @@
   display: none;
 }
 
+/* 키가 작은 화면에서는 페이지 전체가 스크롤된다(Frame fit 참고) */
+@media (max-height: 700px) {
+  .rows {
+    flex: none;
+    overflow-y: visible;
+  }
+}
+
 .row {
   display: flex;
   justify-content: space-between;

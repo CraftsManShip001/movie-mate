@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChevronRight, Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { withSubject } from "@/lib/format";
 import { REGIONS, type Region } from "@/lib/regions";
@@ -26,15 +26,21 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
   const [picked, setPicked] = useState<string | null>(null);
   const selected = theaters.find((t) => t.id === picked) ?? theaters[0];
 
+  // 브랜드·지역을 바꾸면 자동으로 고른 첫 극장이 보이도록 목록을 맨 위로 올린다
+  const rowsRef = useRef<HTMLUListElement>(null);
+  const scrollToTop = () => rowsRef.current?.scrollTo({ top: 0 });
+
   const pickChain = (name: string) => {
     setChainName(name);
     setRegionName(null);
     setPicked(null);
+    scrollToTop();
   };
 
   const pickRegion = (name: Region) => {
     setRegionName(name);
     setPicked(null);
+    scrollToTop();
   };
 
   return (
@@ -102,7 +108,7 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
                 ))}
               </div>
             ) : null}
-            <ul className={styles.rows}>
+            <ul ref={rowsRef} className={styles.rows}>
               {theaters.map((t) => (
                 <li key={t.id}>
                   <button

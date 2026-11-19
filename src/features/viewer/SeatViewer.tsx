@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
+import { useLiveShow } from "@/features/flow/useLiveShow";
 import { SeatGrid } from "@/features/seat-map/SeatGrid";
 import { TicketPoster } from "@/features/ticket/Ticket";
 import { buildTicketInfo } from "@/features/ticket/ticket-info";
@@ -54,6 +55,8 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const [attempt, setAttempt] = useState(0);
   const onVideoStatus = useCallback((status: ScreenVideoStatus) => setVideoStatus(status), []);
   const eye = useMemo(() => (seat ? eyePosition(auditorium, seat, stature) : null), [auditorium, seat, stature]);
+  // 실제 회차(영화가 있을 때)면 미니 좌석표에도 팔린 자리를 표시한다
+  const { sold } = useLiveShow(theaterId, auditorium.id, show.date, show.seq, movie != null);
 
   const booking = bookingLink(chain);
   const base = `/theaters/${theaterId}/${auditorium.id}`;
@@ -61,7 +64,9 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
 
   if (!seat || !eye) return null;
 
-  const info = movie && buildTicketInfo({ movie, theaterName, screenName, seat, date: show.date, time: show.time, numbers });
+  // 팔린 자리는 내 티켓이 될 수 없으므로 티켓 없이 좌석표만 보여 준다
+  const seatSold = sold?.has(seat.id) ?? false;
+  const info = movie && !seatSold && buildTicketInfo({ movie, theaterName, screenName, seat, date: show.date, time: show.time, numbers });
   const pickSeat = (next: Seat) => {
     if (next.id === seat.id) return;
     router.replace(`${base}/seats/${next.id}${showQueryString(show)}`, { scroll: false });
@@ -118,8 +123,15 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
           </h1>
         </div>
         {failed ? null : (
-          <a href={booking.href} target="_blank" rel="noopener noreferrer" className={styles.booking}>
-            {booking.label}
+          <a
+            href={booking.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.booking}
+            aria-label={`${booking.label} (새 창)`}
+          >
+            <span className={styles.bookingLong}>{booking.label}</span>
+            <span className={styles.bookingShort}>예매</span>
             <ChevronRight />
           </a>
         )}
@@ -181,7 +193,14 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                   </>
                 ) : null}
                 <div className={styles.miniMap}>
-                  <SeatGrid auditorium={auditorium} selectedSeatId={seat.id} onSelect={pickSeat} tone="dark" maxSeat={11} />
+                  <SeatGrid
+                    auditorium={auditorium}
+                    selectedSeatId={seat.id}
+                    onSelect={pickSeat}
+                    tone="dark"
+                    maxSeat={11}
+                    soldSeatIds={sold}
+                  />
                 </div>
               </section>
             ) : null}
