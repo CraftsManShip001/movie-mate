@@ -46,7 +46,7 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
   return (
     <Frame
       fit
-      header={<FrameHeader title="영화관" />}
+      header={<FrameHeader title="영화관" logo />}
       bottom={
         selected ? (
           <>

@@ -12,6 +12,8 @@
   --color-btn: #f2f2f3;
   --color-seat: #dddde1;
   --color-accent: #e5432f;
+  /* 로고 전용(벨벳 버건디). 화면 강조색으로는 쓰지 않는다 */
+  --color-brand: #a3192e;
 
   /* 4·5번 어두운 화면 (다크 모드와 상관없이 항상 어둡다) */
   --color-stage: #0c0c0d;
