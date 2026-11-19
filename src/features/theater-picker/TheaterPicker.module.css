@@ -1,8 +1,10 @@
+/* 화면 높이에 맞추고, 극장 목록만 따로 스크롤한다. 목록이 하단 줄까지 닿도록 아래 여백은 두지 않는다. */
 .layout {
   flex: 1;
+  min-height: 0;
   display: flex;
   gap: 80px;
-  padding: 56px 80px;
+  padding: 56px 80px 0;
 }
 
 .side {
@@ -66,6 +68,7 @@
 .list {
   flex: 1;
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
 }
@@ -130,8 +133,18 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* 목록만 스크롤. 스크롤 막대는 숨긴다. */
 .rows {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
   list-style: none;
+}
+
+.rows::-webkit-scrollbar {
+  display: none;
 }
 
 .row {
@@ -180,7 +193,7 @@
   .layout {
     flex-direction: column;
     gap: 32px;
-    padding: 32px var(--gutter);
+    padding: 32px var(--gutter) 0;
   }
 
   .side {

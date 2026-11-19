@@ -38,9 +38,20 @@ export function FrameHeader({ title, backHref }: { title: string; backHref?: str
   );
 }
 
-export function Frame({ header, children, bottom }: { header: ReactNode; children: ReactNode; bottom?: ReactNode }) {
+/** fit: 화면 높이에 딱 맞추고 페이지 전체는 스크롤하지 않는다. 안쪽에서 스크롤할 곳을 따로 정한다. */
+export function Frame({
+  header,
+  children,
+  bottom,
+  fit = false,
+}: {
+  header: ReactNode;
+  children: ReactNode;
+  bottom?: ReactNode;
+  fit?: boolean;
+}) {
   return (
-    <div className={styles.frame}>
+    <div className={fit ? `${styles.frame} ${styles.fit}` : styles.frame}>
       {header}
       <main className={styles.content}>{children}</main>
       {bottom ? (

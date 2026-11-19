@@ -6,6 +6,16 @@
   background: var(--color-bg);
 }
 
+/* 화면 높이에 맞춘 틀: 페이지는 고정하고 내용 안쪽만 스크롤 */
+.fit {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.fit .content {
+  min-height: 0;
+}
+
 .header {
   position: sticky;
   top: 0;
