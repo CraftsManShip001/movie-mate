@@ -6,6 +6,7 @@ import { CHAIN_SEAT_TOTALS } from "./chains.generated";
 import { LOTTE_SEAT_TOTALS } from "./lotte.generated";
 import { getAllAuditoriums, getAuditorium, getAuditoriums, getTheaters } from "./registry";
 import { regionOf } from "@/lib/regions";
+import { ROUTE_IDS } from "./route-ids.generated";
 
 const DATA_DIR = path.resolve(__dirname, "../../../data/theaters");
 
@@ -120,6 +121,11 @@ describe("data/theaters", () => {
       const seats = getAuditoriums(theater.id).reduce((sum, a) => sum + listSeats(a).length, 0);
       expect(seats, theater.id).toBe(CHAIN_SEAT_TOTALS[theater.id]);
     }
+  });
+
+  it("주소 검사용 id 목록(route-ids.generated.ts)이 실제 데이터와 같다", () => {
+    const fromData = Object.fromEntries(getTheaters().map((t) => [t.id, [...t.auditoriumIds].sort()]));
+    expect(ROUTE_IDS).toEqual(fromData);
   });
 
   it("모든 극장 주소에서 지역을 알 수 있다", () => {

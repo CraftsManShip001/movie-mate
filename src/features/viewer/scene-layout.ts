@@ -13,6 +13,8 @@ import {
   seatFloorPosition,
   seatWidthM,
   seatGridWidthM,
+  boxSeats,
+  seatCenterX,
   unitX,
 } from "@/lib/domain/geometry";
 import type { Auditorium, AuditoriumFormat, Seat } from "@/lib/domain/types";
@@ -350,6 +352,8 @@ export interface PrivateBoxRooms {
  */
 export function privateBoxRooms(auditorium: Auditorium): PrivateBoxRooms {
   const rooms: PrivateBoxRooms = { solid: [], glass: [], lamps: [], frames: [] };
+  const seats = listSeats(auditorium);
+  const cell = mmToM(auditorium.layout.seatWidth.value);
   const B = PRIVATE_BOX;
   auditorium.rows.forEach((row, rowIndex) => {
     if (row.zoneKind !== "privateBox" || !row.boxes) return;
@@ -358,9 +362,16 @@ export function privateBoxRooms(auditorium: Auditorium): PrivateBoxRooms {
     const zFront = zc - B.front;
     const zBack = zc + B.back;
     const depth = zBack - zFront;
+    const rowSeats = seats.filter((seat) => seat.rowIndex === rowIndex);
     for (const [left, span] of row.boxes) {
-      const x0 = unitX(auditorium, left);
-      const x1 = unitX(auditorium, left + span);
+      // 방은 안에 든 좌석을 따라 세운다(통로 경계에 걸친 방도 좌석과 맞게)
+      const inside = boxSeats(rowSeats, [left, span]);
+      const x0 = inside
+        ? seatCenterX(auditorium, inside.first) - seatWidthM(auditorium, inside.first) / 2 - inside.padLeft * cell
+        : unitX(auditorium, left);
+      const x1 = inside
+        ? seatCenterX(auditorium, inside.last) + seatWidthM(auditorium, inside.last) / 2 + inside.padRight * cell
+        : unitX(auditorium, left + span);
       const w = x1 - x0;
       const cx = (x0 + x1) / 2;
       // 양옆 칸막이

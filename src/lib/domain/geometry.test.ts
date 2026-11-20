@@ -141,3 +141,16 @@ describe("넓은 좌석 (spans)", () => {
     expect(seatInFront(wide, b4)?.id).toBe("A3");
   });
 });
+
+describe("boxSeats", () => {
+  it("박스 안 좌석(가운데 기준)과 벽까지 여유를 돌려준다", async () => {
+    const { boxSeats } = await import("./geometry");
+    const seat = (left: number, span = 1) => ({ id: `A${left}`, rowLabel: "A", number: 1, rowIndex: 0, columnIndex: 0, left, span, kind: "s" as const });
+    const result = boxSeats([seat(0.5), seat(1.5), seat(4)], [0.2, 2.6]);
+    expect(result?.first.left).toBe(0.5);
+    expect(result?.last.left).toBe(1.5);
+    expect(result?.padLeft).toBeCloseTo(0.3);
+    expect(result?.padRight).toBeCloseTo(0.3);
+    expect(boxSeats([seat(4)], [0, 2])).toBeNull();
+  });
+});

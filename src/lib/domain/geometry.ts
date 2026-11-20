@@ -183,3 +183,26 @@ export function screenRect(auditorium: Auditorium): ScreenRect {
   const bottom = mmToM(auditorium.screen.bottomHeight.value);
   return { width, height, bottom, top: bottom + height, centerY: bottom + height / 2 };
 }
+
+/**
+ * 박스(방) 안에 든 좌석과 박스 벽까지의 여유(칸 단위).
+ * 박스는 좌석을 따라 그린다: 통로 경계에 걸친 박스는 통로 폭이 좌석 사이에 끼어 칸 위치만으로는 좌석과 어긋난다.
+ */
+export function boxSeats(
+  seats: Seat[],
+  [left, span]: [number, number],
+): { first: Seat; last: Seat; padLeft: number; padRight: number } | null {
+  const inside = seats.filter((seat) => {
+    const center = seat.left + seat.span / 2;
+    return center >= left && center <= left + span;
+  });
+  if (inside.length === 0) return null;
+  const first = inside[0];
+  const last = inside[inside.length - 1];
+  return {
+    first,
+    last,
+    padLeft: Math.max(0, first.left - left),
+    padRight: Math.max(0, left + span - (last.left + last.span)),
+  };
+}

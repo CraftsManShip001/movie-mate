@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useSyncExternalStore } from "react";
 import { ChevronLeft, ChevronRight } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
 import { useLiveShow } from "@/features/flow/useLiveShow";
@@ -21,6 +21,21 @@ import type { ScreenVideoStatus } from "./screen-texture";
 import styles from "./SeatViewer.module.css";
 import { useSeatView } from "./useSeatView";
 import { SCREEN_VIDEO_CREDIT, SCREEN_VIDEO_URL } from "./video-source";
+
+/** 휴대폰 폭(720px 이하): 좌석·티켓 패널이 화면을 거의 덮으므로 처음엔 접어 두고 3D 시야부터 보여 준다 */
+const PHONE_QUERY = "(max-width: 720px)";
+function subscribePhone(onChange: () => void) {
+  const query = window.matchMedia(PHONE_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+function useIsPhone(): boolean {
+  return useSyncExternalStore(
+    subscribePhone,
+    () => window.matchMedia(PHONE_QUERY).matches,
+    () => false,
+  );
+}
 
 const Scene = dynamic(() => import("./Scene"), {
   ssr: false,
@@ -46,7 +61,10 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const seat = useMemo(() => findSeat(auditorium, seatId), [auditorium, seatId]);
   const { stature, numbers } = useSeatView(auditorium, seat);
   const [showHeads, setShowHeads] = useState(true);
-  const [panelOpen, setPanelOpen] = useState(true);
+  // null = 아직 직접 고르지 않음: 데스크톱은 펼치고 휴대폰은 접는다
+  const [panelChoice, setPanelChoice] = useState<boolean | null>(null);
+  const isPhone = useIsPhone();
+  const panelOpen = panelChoice ?? !isPhone;
   const [videoStatus, setVideoStatus] = useState<ScreenVideoStatus>("loading");
   const [playRequest, setPlayRequest] = useState(0);
   const [recenterRequest, setRecenterRequest] = useState(0);
@@ -223,7 +241,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                 className={styles.control}
                 aria-expanded={panelOpen}
                 aria-controls="seat-ticket-panel"
-                onClick={() => setPanelOpen((v) => !v)}
+                onClick={() => setPanelChoice(!panelOpen)}
               >
                 {panelOpen ? (info ? "좌석·티켓 숨기기" : "좌석표 숨기기") : info ? "좌석·티켓 보기" : "좌석표 보기"}
               </button>

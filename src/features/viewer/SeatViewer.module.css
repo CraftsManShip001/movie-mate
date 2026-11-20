@@ -314,6 +314,25 @@
   .panel {
     width: 100%;
     padding: 16px;
+    /* 키 작은 화면에서도 위쪽 제목·예매 줄을 덮지 않게, 넘치는 부분은 패널 안에서 스크롤한다 */
+    min-height: 0;
+    flex: 0 1 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* 아래 묶음은 위쪽 줄(12px + 44px) 아래까지만 올라온다 */
+  .bottom {
+    max-height: calc(100dvh - 72px - env(safe-area-inset-bottom));
+  }
+
+  .right {
+    min-height: 0;
+    flex: 0 1 auto;
+  }
+
+  .right > .controls {
+    flex: none;
   }
 
   .miniMap {

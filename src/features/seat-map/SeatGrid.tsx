@@ -1,6 +1,6 @@
 import { Fragment, type CSSProperties } from "react";
 import { seatName } from "@/lib/format";
-import { listSeats } from "@/lib/domain/geometry";
+import { boxSeats, listSeats } from "@/lib/domain/geometry";
 import type { Auditorium, Seat } from "@/lib/domain/types";
 import styles from "./SeatGrid.module.css";
 
@@ -65,14 +65,22 @@ export function SeatGrid({
               </span>
               <div className={styles.seats}>
                 {/* 칸막이로 둘러싼 박스석 */}
-                {row.boxes?.map(([left, span]) => (
-                  <span
-                    key={left}
-                    className={styles.box}
-                    style={{ "--x": place(left + span / 2) - span / 2, "--w": span } as CSSProperties}
-                    aria-hidden="true"
-                  />
-                ))}
+                {row.boxes?.map((box) => {
+                  // 박스는 안에 든 좌석의 화면 위치를 따라 그린다(통로 경계에 걸쳐도 좌석과 맞게)
+                  const rowSeats = seats.filter((seat) => seat.rowIndex === rowIndex);
+                  const inside = boxSeats(rowSeats, box);
+                  const at = (seat: Seat) => place(seat.left + seat.span / 2) - seat.span / 2;
+                  const x0 = inside ? at(inside.first) - inside.padLeft : place(box[0] + box[1] / 2) - box[1] / 2;
+                  const x1 = inside ? at(inside.last) + inside.last.span + inside.padRight : x0 + box[1];
+                  return (
+                    <span
+                      key={box[0]}
+                      className={styles.box}
+                      style={{ "--x": x0, "--w": x1 - x0 } as CSSProperties}
+                      aria-hidden="true"
+                    />
+                  );
+                })}
                 {seats
                   .filter((seat) => seat.rowIndex === rowIndex)
                   .map((seat) => {
