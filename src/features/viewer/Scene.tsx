@@ -1,12 +1,57 @@
 "use client";
 
-import { Canvas, useThree } from "@react-three/fiber";
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
-import { BackSide, Object3D, PerspectiveCamera, type InstancedMesh } from "three";
-import { screenRect } from "@/lib/domain/geometry";
+import { PerformanceMonitor } from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactElement } from "react";
+import {
+  AdditiveBlending,
+  BoxGeometry,
+  Color,
+  CylinderGeometry,
+  DoubleSide,
+  Object3D,
+  PerspectiveCamera,
+  PlaneGeometry,
+  RectAreaLight,
+  type BufferGeometry,
+  type InstancedMesh,
+  type Texture,
+} from "three";
+import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib.js";
+import { mmToM, rowCenterZ, screenRect, seatFloorPosition } from "@/lib/domain/geometry";
 import type { Auditorium, Seat, Vec3 } from "@/lib/domain/types";
-import { frontHeadBoxes, HORIZONTAL_FOV_DEG, riserBoxes, roomBox, seatBoxes, type Box } from "./scene-layout";
+import {
+  balconyParapets,
+  CLOTHES_COLORS,
+  chairGroups,
+  downlightPositions,
+  exitSignPositions,
+  frontPeople,
+  HAIR_COLORS,
+  HORIZONTAL_FOV_DEG,
+  riserBoxes,
+  roomShape,
+  sconcePositions,
+  SKIN_COLORS,
+  stepLightBoxes,
+  privateBoxRooms,
+  type ChairGroup,
+  type ChairStyle,
+  type Tuple3,
+} from "./scene-layout";
+import {
+  acousticPanelTexture,
+  buildChair,
+  buildPerson,
+  carpetTexture,
+  exitSignTexture,
+  fabricBumpTexture,
+  glowTexture,
+} from "./scene-models";
 import { useScreenTexture, type ScreenVideoStatus } from "./screen-texture";
+
+// 스크린 면광원(RectAreaLight)을 쓰려면 한 번 초기화해야 한다
+RectAreaLightUniformsLib.init();
 
 export interface SceneProps {
   auditorium: Auditorium;
@@ -20,17 +65,26 @@ export interface SceneProps {
   recenterRequest: number;
   /** 스크린에서 고개를 많이 돌렸는지(true) 알려 준다 */
   onTurnedAwayChange: (turnedAway: boolean) => void;
+  /** 첫 장면을 그렸을 때 한 번 부른다(불러오는 중 표시를 걷는다) */
+  onReady?: () => void;
 }
 
 /** 3D 시야 장면. three.js는 브라우저 전용이므로 next/dynamic(ssr: false)으로만 불러온다. */
 export default function Scene(props: SceneProps) {
+  // 큰 상영관(의자·사람 수백 개)에서 프레임이 떨어지면 해상도를 낮추고, 여유가 생기면 다시 올린다
+  const [dpr, setDpr] = useState(() => Math.min(2, typeof window === "undefined" ? 1 : window.devicePixelRatio || 1));
   return (
     <Canvas
-      dpr={[1, 2]}
+      dpr={dpr}
       camera={{ near: 0.05, far: 200, position: [props.eye.x, props.eye.y, props.eye.z] }}
       style={{ touchAction: "none" }}
     >
+      <PerformanceMonitor
+        onDecline={() => setDpr((d) => Math.max(1, d - 0.5))}
+        onIncline={() => setDpr((d) => Math.min(2, window.devicePixelRatio || 1, d + 0.5))}
+      />
       <SceneContents {...props} />
+      {props.onReady ? <FirstFrame onReady={props.onReady} /> : null}
     </Canvas>
   );
 }
@@ -47,10 +101,6 @@ function SceneContents({
   onTurnedAwayChange,
 }: SceneProps) {
   const screen = screenRect(auditorium);
-  const room = useMemo(() => roomBox(auditorium), [auditorium]);
-  const risers = useMemo(() => riserBoxes(auditorium), [auditorium]);
-  const seats = useMemo(() => seatBoxes(auditorium), [auditorium]);
-  const heads = useMemo(() => frontHeadBoxes(auditorium, seat), [auditorium, seat]);
   const { texture, status } = useScreenTexture(videoUrl, auditorium.screen.aspectRatio.value, playRequest);
 
   useEffect(() => onVideoStatus(status), [status, onVideoStatus]);
@@ -58,24 +108,20 @@ function SceneContents({
   return (
     <>
       <color attach="background" args={["#000000"]} />
-      <ambientLight intensity={0.35} />
-      {/* 스크린 빛을 흉내 낸 조명 */}
-      <pointLight position={[0, screen.centerY, 2]} intensity={60} distance={0} decay={1.2} />
-
-      <mesh position={room.position}>
-        <boxGeometry args={room.scale} />
-        <meshStandardMaterial color="#2b2b2b" side={BackSide} />
-      </mesh>
-
-      <InstancedBoxes boxes={risers} color="#3a3a3a" />
-      <InstancedBoxes boxes={seats.cushions} color="#5a1e1e" />
-      <InstancedBoxes boxes={seats.backs} color="#5a1e1e" />
-      {showHeads ? <InstancedBoxes boxes={heads} color="#141414" shape="sphere" /> : null}
+      <Lights auditorium={auditorium} />
+      <BoxLamp auditorium={auditorium} seat={seat} />
+      <Room auditorium={auditorium} />
+      <Chairs auditorium={auditorium} />
+      {showHeads ? <People auditorium={auditorium} seat={seat} /> : null}
 
       <mesh position={[0, screen.centerY, 0]}>
         <planeGeometry args={[screen.width, screen.height]} />
         <meshBasicMaterial map={texture} toneMapped={false} />
       </mesh>
+      <ScreenMasking width={screen.width} height={screen.height} centerY={screen.centerY} />
+      {auditorium.screen.sideScreens ? (
+        <SideScreens auditorium={auditorium} texture={texture} depth={mmToM(auditorium.screen.sideScreens.value)} />
+      ) : null}
 
       <SeatCamera
         eye={eye}
@@ -87,35 +133,398 @@ function SceneContents({
   );
 }
 
-function InstancedBoxes({ boxes, color, shape = "box" }: { boxes: Box[]; color: string; shape?: "box" | "sphere" }) {
+/**
+ * PRIVATE BOX에 앉으면 그 방 천장 조명(어둡게 줄인 샹들리에)만 켠다.
+ * 방마다 켜면 빛이 많아 무거워지고, 다른 방은 유리창 너머라 잘 보이지 않는다.
+ */
+function BoxLamp({ auditorium, seat }: { auditorium: Auditorium; seat: Seat }) {
+  const lamp = useMemo(() => {
+    if (auditorium.rows[seat.rowIndex]?.zoneKind !== "privateBox") return null;
+    const x = seatFloorPosition(auditorium, seat).x;
+    const lamps = privateBoxRooms(auditorium).lamps.filter((p) => Math.abs(p[2] - rowCenterZ(auditorium, seat.rowIndex)) < 0.01);
+    return lamps.reduce<Tuple3 | null>((best, p) => (best === null || Math.abs(p[0] - x) < Math.abs(best[0] - x) ? p : best), null);
+  }, [auditorium, seat]);
+  if (!lamp) return null;
+  return <pointLight position={[lamp[0], lamp[1] - 0.15, lamp[2]]} intensity={7} distance={5} decay={2} color="#ffcf94" />;
+}
+
+/**
+ * 조명: 상영 중인 어두운 관. 스크린이 가장 큰 광원(면광원)이고,
+ * 뒤쪽 영사실과 벽등에서 새는 약한 빛이 의자 뒤판·사람 윤곽을 겨우 드러낸다.
+ */
+function Lights({ auditorium }: { auditorium: Auditorium }) {
+  const screen = screenRect(auditorium);
+  const room = roomShape(auditorium);
+  const screenLight = useMemo(() => {
+    const light = new RectAreaLight("#d9e2ff", 2.2, screen.width, screen.height);
+    light.position.set(0, screen.centerY, 0.05);
+    light.lookAt(0, screen.centerY, 10);
+    return light;
+  }, [screen.width, screen.height, screen.centerY]);
+  return (
+    <>
+      <ambientLight intensity={0.12} />
+      <hemisphereLight args={["#3a3f52", "#0c0a0a", 0.35]} />
+      {/* 영사실 쪽에서 오는 약한 빛 */}
+      <directionalLight position={[0, room.height, room.depth + 3]} intensity={0.16} color="#b8c4e0" />
+      <primitive object={screenLight} />
+    </>
+  );
+}
+
+function Room({ auditorium }: { auditorium: Auditorium }) {
+  const room = roomShape(auditorium);
+  const length = room.depth - room.front;
+  const midZ = (room.depth + room.front) / 2;
+  const risers = useMemo(() => riserBoxes(auditorium), [auditorium]);
+  const steps = useMemo(() => stepLightBoxes(auditorium), [auditorium]);
+  const boxRooms = useMemo(() => privateBoxRooms(auditorium), [auditorium]);
+  const parapets = useMemo(() => balconyParapets(auditorium), [auditorium]);
+  const sconces = useMemo(() => sconcePositions(auditorium), [auditorium]);
+  const exits = useMemo(() => exitSignPositions(auditorium), [auditorium]);
+  const downlights = useMemo(() => downlightPositions(auditorium), [auditorium]);
+
+  const textures = useMemo(() => {
+    const carpet = carpetTexture();
+    carpet.repeat.set(room.width / 2.5, length / 2.5);
+    const riserCarpet = carpet.clone();
+    riserCarpet.repeat.set(room.width / 2.5, 1);
+    const sidePanel = acousticPanelTexture();
+    sidePanel.repeat.set(length / 1.2, 1);
+    const backPanel = sidePanel.clone();
+    backPanel.repeat.set(room.width / 1.2, 1);
+    return { carpet, riserCarpet, sidePanel, backPanel, exit: exitSignTexture(), glow: glowTexture() };
+  }, [room.width, length]);
+  useEffect(() => () => Object.values(textures).forEach((t) => t.dispose()), [textures]);
+
+  return (
+    <group>
+      {/* 바닥·단차: 카펫 */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, midZ]}>
+        <planeGeometry args={[room.width, length]} />
+        <meshStandardMaterial map={textures.carpet} roughness={1} />
+      </mesh>
+      <Instanced
+        geometry={UNIT_BOX}
+        items={risers.map((b) => ({ position: b.position, scale: b.scale }))}
+        material={<meshStandardMaterial map={textures.riserCarpet} roughness={1} />}
+      />
+
+      {/* 옆벽·뒷벽: 흡음 패널, 앞벽·천장: 검은 마감 */}
+      <mesh position={[-room.width / 2, room.height / 2, midZ]} rotation={[0, Math.PI / 2, 0]}>
+        <planeGeometry args={[length, room.height]} />
+        <meshStandardMaterial map={textures.sidePanel} roughness={0.95} />
+      </mesh>
+      <mesh position={[room.width / 2, room.height / 2, midZ]} rotation={[0, -Math.PI / 2, 0]}>
+        <planeGeometry args={[length, room.height]} />
+        <meshStandardMaterial map={textures.sidePanel} roughness={0.95} />
+      </mesh>
+      <mesh position={[0, room.height / 2, room.depth]} rotation={[0, Math.PI, 0]}>
+        <planeGeometry args={[room.width, room.height]} />
+        <meshStandardMaterial map={textures.backPanel} roughness={0.95} />
+      </mesh>
+      <mesh position={[0, room.height / 2, room.front]}>
+        <planeGeometry args={[room.width, room.height]} />
+        <meshStandardMaterial color="#060606" roughness={1} />
+      </mesh>
+      <mesh position={[0, room.height, midZ]} rotation={[Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[room.width, length]} />
+        <meshStandardMaterial color="#121214" roughness={1} />
+      </mesh>
+
+      {/* 영사실 창 */}
+      <mesh position={[0, room.height - 1.2, room.depth - 0.01]} rotation={[0, Math.PI, 0]}>
+        <planeGeometry args={[0.9, 0.5]} />
+        <meshBasicMaterial color="#9fb4e6" toneMapped={false} />
+      </mesh>
+
+      {/* 통로 계단 발밑 등 */}
+      <Instanced geometry={UNIT_BOX} items={steps} material={<meshBasicMaterial color="#ffb45e" toneMapped={false} />} />
+      {/* PRIVATE BOX: 위층 방. 칸막이·뒷벽·천장은 어두운 패널, 스크린 쪽은 유리창, 천장 가운데 따뜻한 조명 */}
+      <Instanced geometry={UNIT_BOX} items={boxRooms.solid} material={<meshStandardMaterial color="#4a382d" roughness={0.75} />} />
+      {/* SWEETBOX 같은 열린 발코니 앞 난간 */}
+      <Instanced geometry={UNIT_BOX} items={parapets} material={<meshStandardMaterial color="#5a463b" roughness={0.7} />} />
+      <Instanced geometry={UNIT_BOX} items={boxRooms.frames} material={<meshStandardMaterial color="#8a7a68" roughness={0.4} metalness={0.5} />} />
+      <Instanced
+        geometry={UNIT_BOX}
+        items={boxRooms.glass}
+        material={
+          <meshStandardMaterial color="#9fb3c4" roughness={0.05} metalness={0.2} transparent opacity={0.14} depthWrite={false} />
+        }
+      />
+      <Instanced
+        geometry={LAMP}
+        items={boxRooms.lamps.map((position) => ({ position }))}
+        material={<meshBasicMaterial color="#ffd9a3" toneMapped={false} />}
+      />
+
+      {/* 벽등과 벽에 번지는 빛 */}
+      <Instanced
+        geometry={UNIT_BOX}
+        items={sconces.map((s) => ({ position: s.position, scale: [0.06, 0.32, 0.18] as Tuple3 }))}
+        material={<meshBasicMaterial color="#ffd7a6" toneMapped={false} />}
+      />
+      <Instanced
+        geometry={UNIT_PLANE}
+        items={sconces.map((s) => ({
+          position: [s.position[0] - s.side * 0.02, s.position[1], s.position[2]] as Tuple3,
+          rotation: [0, -s.side * (Math.PI / 2), 0] as Tuple3,
+          scale: [1.8, 1.8, 1] as Tuple3,
+        }))}
+        material={
+          <meshBasicMaterial map={textures.glow} transparent depthWrite={false} blending={AdditiveBlending} toneMapped={false} />
+        }
+      />
+
+      {/* 천장 다운라이트(상영 중이라 아주 어둡게) */}
+      <Instanced
+        geometry={DOWNLIGHT}
+        items={downlights.map((position) => ({ position }))}
+        material={<meshBasicMaterial color="#5c4c3a" toneMapped={false} />}
+      />
+
+      {/* 비상구 표시등 */}
+      {exits.map((e, i) => (
+        <mesh key={i} position={e.position} rotation={[0, -e.side * (Math.PI / 2), 0]}>
+          <planeGeometry args={[0.5, 0.25]} />
+          <meshBasicMaterial map={textures.exit} toneMapped={false} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+/**
+ * SCREENX 양옆 벽 영상. 앞 스크린 영상이 양옆 벽으로 이어지는 장면을 흉내 내어,
+ * 같은 영상을 어둡게 해서 벽(스크린 높이만큼, 앞에서 depth 까지)에 비춘다. 실제 벽 영상은 일부 장면에서만 나온다.
+ */
+function SideScreens({ auditorium, texture, depth }: { auditorium: Auditorium; texture: Texture | null; depth: number }) {
+  const screen = screenRect(auditorium);
+  const room = roomShape(auditorium);
+  const half = room.width / 2 - 0.03;
+  return (
+    <>
+      {([-1, 1] as const).map((side) => (
+        <mesh key={side} position={[side * half, screen.centerY, depth / 2]} rotation={[0, (-side * Math.PI) / 2, 0]}>
+          <planeGeometry args={[depth, screen.height]} />
+          <meshBasicMaterial map={texture} color="#5c5c5c" toneMapped={false} />
+        </mesh>
+      ))}
+    </>
+  );
+}
+
+/** 스크린 둘레의 검은 마스킹 천 */
+function ScreenMasking({ width, height, centerY }: { width: number; height: number; centerY: number }) {
+  const border = 0.35;
+  const bars: { position: Tuple3; scale: Tuple3 }[] = [
+    { position: [0, centerY + height / 2 + border / 2, -0.03], scale: [width + border * 2, border, 0.04] },
+    { position: [0, centerY - height / 2 - border / 2, -0.03], scale: [width + border * 2, border, 0.04] },
+    { position: [-width / 2 - border / 2, centerY, -0.03], scale: [border, height, 0.04] },
+    { position: [width / 2 + border / 2, centerY, -0.03], scale: [border, height, 0.04] },
+  ];
+  return <Instanced geometry={UNIT_BOX} items={bars} material={<meshStandardMaterial color="#030303" roughness={1} />} />;
+}
+
+const CHAIR_LOOK = {
+  standard: {
+    upholstery: { color: "#7f1b23", roughness: 0.95, bumpScale: 1.2 },
+    shell: { color: "#1b1b1e", roughness: 0.42 },
+    arm: { color: "#202023", roughness: 0.45 },
+  },
+  recliner: {
+    upholstery: { color: "#6a2d25", roughness: 0.5, bumpScale: 0.35 },
+    shell: { color: "#141212", roughness: 0.5 },
+    arm: { color: "#2c1e1b", roughness: 0.55 },
+  },
+  // 침대: 밝은 회색 매트리스, 어두운 틀, 짙은 칸막이
+  bed: {
+    upholstery: { color: "#8c8a86", roughness: 0.9, bumpScale: 0.6 },
+    shell: { color: "#1d1c1c", roughness: 0.6 },
+    arm: { color: "#262323", roughness: 0.7 },
+  },
+  beanbag: {
+    upholstery: { color: "#5b6b52", roughness: 0.95, bumpScale: 1 },
+    shell: { color: "#2f3a2a", roughness: 1 },
+    arm: { color: "#2f3a2a", roughness: 1 },
+  },
+  mat: {
+    upholstery: { color: "#7a6a55", roughness: 0.95, bumpScale: 1 },
+    shell: { color: "#3b4a33", roughness: 1 },
+    arm: { color: "#3b4a33", roughness: 1 },
+  },
+  cabana: {
+    upholstery: { color: "#7a6a55", roughness: 0.95, bumpScale: 1 },
+    shell: { color: "#cfc6b4", roughness: 0.9 },
+    arm: { color: "#cfc6b4", roughness: 0.9 },
+  },
+} as const satisfies Record<ChairStyle, unknown>;
+
+function Chairs({ auditorium }: { auditorium: Auditorium }) {
+  const groups = useMemo(() => chairGroups(auditorium), [auditorium]);
+  const bump = useMemo(() => {
+    const t = fabricBumpTexture();
+    t.repeat.set(5, 5);
+    return t;
+  }, []);
+  useEffect(() => () => bump.dispose(), [bump]);
+  return (
+    <>
+      {groups.map((group) => (
+        <ChairSet key={group.style} auditorium={auditorium} group={group} bump={bump} />
+      ))}
+    </>
+  );
+}
+
+/** 같은 모양의 의자 묶음. 본 객석과 위층 구역(PRIVATE BOX·SWEETBOX)의 의자 모양이 다를 수 있다. */
+function ChairSet({ auditorium, group, bump }: { auditorium: Auditorium; group: ChairGroup; bump: Texture }) {
+  const { style } = group;
+  const { seatWidth, seatHeight, seatBackHeight } = auditorium.layout;
+  const geometry = useMemo(
+    () =>
+      buildChair({
+        style,
+        width: mmToM(seatWidth.value),
+        seatHeight: mmToM(seatHeight.value),
+        backHeight: mmToM(seatBackHeight.value),
+      }),
+    [style, seatWidth.value, seatHeight.value, seatBackHeight.value],
+  );
+  useEffect(() => () => Object.values(geometry).forEach((g) => g.dispose()), [geometry]);
+  const chairs = useMemo(
+    () => group.chairs.map((position, i) => ({ position, scale: [group.widths[i], 1, 1] as Tuple3 })),
+    [group],
+  );
+  const arms = useMemo(() => group.arms.map((position) => ({ position })), [group]);
+  const look = CHAIR_LOOK[style];
+
+  return (
+    <>
+      <Instanced
+        geometry={geometry.upholstery}
+        items={chairs}
+        material={<meshStandardMaterial {...look.upholstery} bumpMap={bump} roughnessMap={bump} />}
+      />
+      <Instanced geometry={geometry.shell} items={chairs} material={<meshStandardMaterial {...look.shell} />} />
+      <Instanced
+        geometry={geometry.arm}
+        items={arms}
+        material={<meshStandardMaterial {...look.arm} side={DoubleSide} />}
+      />
+    </>
+  );
+}
+
+function People({ auditorium, seat }: { auditorium: Auditorium; seat: Seat }) {
+  const geometry = useMemo(() => buildPerson(), []);
+  useEffect(() => () => Object.values(geometry).forEach((g) => g.dispose()), [geometry]);
+  const people = useMemo(() => frontPeople(auditorium, seat), [auditorium, seat]);
+  const { placed, hair, skin, clothes } = useMemo(
+    () => ({
+      placed: people.map((p) => ({
+        position: p.position,
+        rotation: [0, p.yaw, p.roll] as Tuple3,
+        scale: [p.scale, p.scale, p.scale] as Tuple3,
+      })),
+      hair: people.map((p) => HAIR_COLORS[p.hair]),
+      skin: people.map((p) => SKIN_COLORS[p.skin]),
+      clothes: people.map((p) => CLOTHES_COLORS[p.clothes]),
+    }),
+    [people],
+  );
+  return (
+    <>
+      <Instanced
+        geometry={geometry.head}
+        items={placed}
+        colors={hair}
+        material={<meshStandardMaterial roughness={0.75} />}
+      />
+      <Instanced
+        geometry={geometry.skin}
+        items={placed}
+        colors={skin}
+        material={<meshStandardMaterial roughness={0.6} />}
+      />
+      <Instanced
+        geometry={geometry.body}
+        items={placed}
+        colors={clothes}
+        material={<meshStandardMaterial roughness={0.92} />}
+      />
+    </>
+  );
+}
+
+const UNIT_BOX = new BoxGeometry(1, 1, 1);
+/** PRIVATE BOX 천장 조명(샹들리에 자리) */
+const LAMP = new CylinderGeometry(0.16, 0.2, 0.06, 20);
+const UNIT_PLANE = new PlaneGeometry(1, 1);
+const DOWNLIGHT = new CylinderGeometry(0.07, 0.07, 0.02, 20);
+
+interface InstanceItem {
+  position: Tuple3;
+  rotation?: Tuple3;
+  scale?: Tuple3;
+}
+
+/** 같은 모양을 여러 곳에 놓는다(인스턴싱). colors 를 주면 인스턴스마다 색을 곱한다. */
+function Instanced({
+  geometry,
+  items,
+  material,
+  colors,
+}: {
+  geometry: BufferGeometry;
+  items: InstanceItem[];
+  material: ReactElement;
+  colors?: string[];
+}) {
   const ref = useRef<InstancedMesh>(null);
   useLayoutEffect(() => {
     const mesh = ref.current;
     if (!mesh) return;
     const dummy = new Object3D();
-    boxes.forEach((box, i) => {
-      dummy.position.set(...box.position);
-      dummy.scale.set(...box.scale);
+    const color = new Color();
+    items.forEach((item, i) => {
+      dummy.position.set(...item.position);
+      dummy.rotation.set(...(item.rotation ?? [0, 0, 0]));
+      dummy.scale.set(...(item.scale ?? [1, 1, 1]));
       dummy.updateMatrix();
       mesh.setMatrixAt(i, dummy.matrix);
+      if (colors) mesh.setColorAt(i, color.set(colors[i] ?? "#ffffff"));
     });
     mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     mesh.computeBoundingSphere();
-  }, [boxes]);
+  }, [items, colors]);
 
-  if (boxes.length === 0) return null;
+  if (items.length === 0) return null;
   return (
-    <instancedMesh ref={ref} args={[undefined, undefined, boxes.length]} key={boxes.length}>
-      {shape === "sphere" ? <sphereGeometry args={[0.5, 16, 12]} /> : <boxGeometry args={[1, 1, 1]} />}
-      <meshStandardMaterial color={color} />
+    <instancedMesh ref={ref} args={[geometry, undefined, items.length]} key={`${geometry.uuid}:${items.length}`}>
+      {material}
     </instancedMesh>
   );
 }
 
+/** 첫 프레임을 그린 뒤 onReady 를 한 번 부른다 */
+function FirstFrame({ onReady }: { onReady: () => void }) {
+  const done = useRef(false);
+  useFrame(() => {
+    if (done.current) return;
+    done.current = true;
+    onReady();
+  });
+  return null;
+}
+
 const MAX_PITCH = (80 * Math.PI) / 180;
 const DRAG_SPEED = 0.005;
-/** 스크린 방향에서 이만큼 넘게 돌리면 "스크린 보기" 버튼을 띄운다 */
+/** 스크린 방향에서 이만큼 넘게 돌리면 "스크린 보기" 버튼을 띄운다(좌우) */
 const TURNED_AWAY = (60 * Math.PI) / 180;
+/** 위아래로 이만큼 넘게 고개를 들거나 숙여도 버튼을 띄운다 */
+const TILTED_AWAY = (40 * Math.PI) / 180;
 const MAX_VERTICAL_FOV_DEG = 100;
 
 /**
@@ -140,8 +549,9 @@ function SeatCamera({
   const getState = useThree((state) => state.get);
   const yaw = useRef(0);
   const pitch = useRef(0);
-  /** 스크린 중심을 바라보는 yaw. 고개를 얼마나 돌렸는지 잴 때 기준 */
+  /** 스크린 중심을 바라보는 yaw·pitch. 고개를 얼마나 돌렸는지 잴 때 기준 */
   const homeYaw = useRef(0);
+  const homePitch = useRef(0);
   const turnedAway = useRef(false);
   const reportTurn = useRef(onTurnedAwayChange);
   useEffect(() => {
@@ -156,6 +566,7 @@ function SeatCamera({
     yaw.current = Math.atan2(-dx, -dz);
     homeYaw.current = yaw.current;
     pitch.current = Math.atan2(dy, Math.hypot(dx, dz));
+    homePitch.current = pitch.current;
     camera.rotation.set(pitch.current, yaw.current, 0, "YXZ");
     if (turnedAway.current) {
       turnedAway.current = false;
@@ -193,7 +604,9 @@ function SeatCamera({
       pitch.current = clamp(pitch.current + (e.clientY - last.y) * DRAG_SPEED, -MAX_PITCH, MAX_PITCH);
       last = { x: e.clientX, y: e.clientY };
       camera.rotation.set(pitch.current, yaw.current, 0, "YXZ");
-      const away = Math.abs(wrapAngle(yaw.current - homeYaw.current)) > TURNED_AWAY;
+      const away =
+        Math.abs(wrapAngle(yaw.current - homeYaw.current)) > TURNED_AWAY ||
+        Math.abs(pitch.current - homePitch.current) > TILTED_AWAY;
       if (away !== turnedAway.current) {
         turnedAway.current = away;
         reportTurn.current(away);

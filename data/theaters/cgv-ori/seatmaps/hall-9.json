@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-9",
+  "theaterId": "cgv-ori",
+  "name": "9관[CGV아트하우스]",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (110석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ww..ssssssss..",
+      "numbers": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "..ssssssssssss.."
+    },
+    {
+      "label": "C",
+      "cells": "..ssssssssssss.."
+    },
+    {
+      "label": "D",
+      "cells": "..ssssssssssss.."
+    },
+    {
+      "label": "E",
+      "cells": "..ssssssssssss.."
+    },
+    {
+      "label": "F",
+      "cells": "..ssss....ssss..",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "G",
+      "cells": "..ssss....ssss..",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "H",
+      "cells": "..ssss....ssss..",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "I",
+      "cells": "..ssss....ssss..",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "J",
+      "cells": "..ssss....ssss..",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "K",
+      "cells": "ssssss....ssssss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    }
+  ],
+  "crossAisleAfterRows": [
+    4
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-hwaseongbongdam",
+  "chain": "CGV",
+  "branch": "화성봉담",
+  "address": "경기도 화성시 봉담읍 동화길 51, 2층 221호",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

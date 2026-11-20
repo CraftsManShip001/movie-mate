@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-dongtan",
+  "chain": "CGV",
+  "branch": "동탄",
+  "address": "경기도 화성시 동탄중앙로 220 메타폴리스몰 A블럭 3층 (반송동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "s007",
+    "hall-8"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

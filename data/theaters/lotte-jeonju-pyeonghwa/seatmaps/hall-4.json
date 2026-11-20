@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "lotte-jeonju-pyeonghwa",
+  "name": "4관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (147석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "wwww.sss.ss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.sss.ss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.sss.ss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.sss.ss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.sss.ss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.sss.ss.sss."
+    },
+    {
+      "label": "G",
+      "cells": "ssss.sss.ss.sss."
+    },
+    {
+      "label": "H",
+      "cells": "ssss.sss.ss.ss.."
+    },
+    {
+      "label": "I",
+      "cells": "ssss.sss.ss.ss.."
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sss.ss.s..."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.sss.ss.s..."
+    },
+    {
+      "label": "L",
+      "cells": "ssss.sss.ss....."
+    },
+    {
+      "label": "M",
+      "cells": "ssss.sss........"
+    }
+  ]
+}

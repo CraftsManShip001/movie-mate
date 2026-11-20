@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "lotte-jinhae",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (121석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.w.ssssss.ss"
+    },
+    {
+      "label": "B",
+      "cells": "ss.ssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ss.ssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "ss.ssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "ss.ssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "............ss"
+    },
+    {
+      "label": "G",
+      "cells": "....sssssss.ss"
+    },
+    {
+      "label": "H",
+      "cells": "....sssssss.ss"
+    },
+    {
+      "label": "I",
+      "cells": "....sssssss.ss"
+    },
+    {
+      "label": "J",
+      "cells": "ss..sssssss.ss"
+    },
+    {
+      "label": "K",
+      "cells": "ss..sssssss.ss"
+    },
+    {
+      "label": "L",
+      "cells": "ss..sssssss.ss"
+    }
+  ]
+}

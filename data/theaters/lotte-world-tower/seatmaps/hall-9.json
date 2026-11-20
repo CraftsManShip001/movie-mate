@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-9",
+  "theaterId": "lotte-world-tower",
+  "name": "9관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (360석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "씨네패밀리 상영관. 좌석 데이터에 2층 좌석이 있어 뒤쪽 열로 이어 붙였다. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ss.ssss.sssssssswwwwww.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": "..ss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "N",
+      "cells": "ssss.ssss.ssssssssssssss.ssss"
+    },
+    {
+      "label": "O",
+      "cells": "s.ss.ss.ss.ss.ss.ss.ss.s.ss..",
+      "spans": [
+        [
+          0.09,
+          1.51
+        ],
+        [
+          1.6,
+          1.51
+        ],
+        [
+          3.11,
+          1.51
+        ],
+        [
+          4.62,
+          1.51
+        ],
+        [
+          6.13,
+          1.51
+        ],
+        [
+          7.64,
+          1.51
+        ],
+        [
+          9.15,
+          1.51
+        ],
+        [
+          10.66,
+          1.51
+        ],
+        [
+          12.17,
+          1.51
+        ],
+        [
+          13.68,
+          1.51
+        ],
+        [
+          15.19,
+          1.51
+        ],
+        [
+          16.7,
+          1.51
+        ],
+        [
+          18.21,
+          1.51
+        ],
+        [
+          19.72,
+          1.51
+        ],
+        [
+          21.23,
+          1.51
+        ],
+        [
+          22.74,
+          1.51
+        ],
+        [
+          24.25,
+          1.51
+        ],
+        [
+          25.76,
+          1.51
+        ]
+      ],
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "zone": "2층 씨네패밀리 부스",
+      "zoneKind": "privateBox",
+      "boxes": [
+        [
+          0.0,
+          9.15
+        ],
+        [
+          9.15,
+          6.04
+        ],
+        [
+          15.19,
+          6.04
+        ],
+        [
+          21.23,
+          6.34
+        ]
+      ],
+      "furniture": [
+        [
+          0,
+          6,
+          "sofa"
+        ],
+        [
+          6,
+          4,
+          "sofa"
+        ],
+        [
+          10,
+          4,
+          "sofa"
+        ],
+        [
+          14,
+          4,
+          "sofa"
+        ]
+      ]
+    }
+  ],
+  "crossAisleAfterRows": [
+    13
+  ]
+}

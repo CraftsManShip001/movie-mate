@@ -1,0 +1,291 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-21",
+  "theaterId": "lotte-world-tower",
+  "name": "21관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (295석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "screen": {
+    "width": 34000,
+    "height": 13800,
+    "note": "롯데시네마 발표 수치 (수퍼플렉스 G, 2014 기네스 세계 최대 스크린)"
+  },
+  "notes": "수퍼플렉스(대형 스크린) 상영관. 스크린 크기는 공개 수치를 썼고, 화면비는 그 폭과 높이로 계산했다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "....ssss....ssssss...ssssss..ssssss....ssss....",
+      "furniture": [
+        [
+          0,
+          9,
+          "beanbag"
+        ],
+        [
+          10,
+          4,
+          "beanbag"
+        ],
+        [
+          15,
+          4,
+          "beanbag"
+        ]
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "..ssssss..ssssssss..ssssssss.ssssssss..ssssss..",
+      "furniture": [
+        [
+          0,
+          13,
+          "bed"
+        ],
+        [
+          14,
+          13,
+          "bed"
+        ],
+        [
+          28,
+          4,
+          "bed"
+        ]
+      ]
+    },
+    {
+      "label": "C",
+      "cells": "ssssssss.sssssssss.sssssssss.sssssssss.ssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssssss.sssssssss.sssssssss.sssssssss.ssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssssss.sssssssss.sssssssss.sssssssss.ssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssssss...ssssss....ssssss...ssssss...ssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssssss...ssssss....ssssss...ssssss...ssssssss"
+    },
+    {
+      "label": "H",
+      "cells": "...www......ssss......ssss.....ssss....sss.....",
+      "furniture": [
+        [
+          3,
+          3,
+          "sofa"
+        ],
+        [
+          7,
+          2,
+          "sofa"
+        ],
+        [
+          11,
+          1,
+          "sofa"
+        ]
+      ]
+    },
+    {
+      "label": "I",
+      "cells": "....ss..ss...ss..ss..ss...ss..ss.ss..ss........",
+      "spans": [
+        [
+          3.95,
+          1.0
+        ],
+        [
+          4.95,
+          1.0
+        ],
+        [
+          8.34,
+          1.0
+        ],
+        [
+          9.34,
+          1.0
+        ],
+        [
+          12.95,
+          1.0
+        ],
+        [
+          13.95,
+          1.0
+        ],
+        [
+          17.34,
+          1.0
+        ],
+        [
+          18.34,
+          1.0
+        ],
+        [
+          21.02,
+          1.0
+        ],
+        [
+          22.02,
+          1.0
+        ],
+        [
+          26.33,
+          1.0
+        ],
+        [
+          27.33,
+          1.0
+        ],
+        [
+          30.02,
+          1.0
+        ],
+        [
+          31.02,
+          1.0
+        ],
+        [
+          32.78,
+          1.0
+        ],
+        [
+          33.78,
+          1.0
+        ],
+        [
+          37.17,
+          1.0
+        ],
+        [
+          38.17,
+          1.0
+        ]
+      ],
+      "numbers": [
+        5,
+        6,
+        9,
+        10,
+        14,
+        15,
+        18,
+        19,
+        22,
+        23,
+        27,
+        28,
+        31,
+        32,
+        34,
+        35,
+        38,
+        39
+      ],
+      "zone": "2층 부스",
+      "zoneKind": "privateBox",
+      "boxes": [
+        [
+          3.65,
+          2.6
+        ],
+        [
+          8.04,
+          2.6
+        ],
+        [
+          12.65,
+          2.6
+        ],
+        [
+          17.04,
+          2.6
+        ],
+        [
+          20.72,
+          2.6
+        ],
+        [
+          26.03,
+          2.6
+        ],
+        [
+          29.72,
+          2.6
+        ],
+        [
+          32.48,
+          2.6
+        ],
+        [
+          36.87,
+          2.6
+        ]
+      ],
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ],
+        [
+          2,
+          2,
+          "couple"
+        ],
+        [
+          4,
+          2,
+          "couple"
+        ],
+        [
+          6,
+          2,
+          "couple"
+        ],
+        [
+          8,
+          2,
+          "couple"
+        ],
+        [
+          10,
+          2,
+          "couple"
+        ],
+        [
+          12,
+          2,
+          "couple"
+        ],
+        [
+          14,
+          2,
+          "couple"
+        ],
+        [
+          16,
+          2,
+          "couple"
+        ]
+      ]
+    }
+  ],
+  "crossAisleAfterRows": [
+    5,
+    6,
+    7
+  ]
+}

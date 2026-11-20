@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-drive-in-yeongdo",
+  "chain": "CGV",
+  "branch": "Drive In 영도",
+  "address": "부산광역시 영도구 동삼동 1009 CGV DRIVE IN 영도",
+  "auditoriumIds": [
+    "s001"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

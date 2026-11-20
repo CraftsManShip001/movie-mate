@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "lotte-daejeon-gwanjeo",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (272석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssssss.ssssssssssss.ssssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssssss.sssss..sssss.ssssss"
+    },
+    {
+      "label": "L",
+      "cells": "wwww................ssssss",
+      "furniture": [
+        [
+          4,
+          4,
+          "couple"
+        ]
+      ]
+    }
+  ]
+}

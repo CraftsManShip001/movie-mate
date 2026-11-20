@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "lotte-daejeon",
+  "name": "6관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (187석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ss.www.sssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "..ss.sssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.sssssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sssssssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.sssssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.sssssssss.ssss"
+    }
+  ]
+}

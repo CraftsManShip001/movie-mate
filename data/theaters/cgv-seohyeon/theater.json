@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-seohyeon",
+  "chain": "CGV",
+  "branch": "서현",
+  "address": "경기도 성남시 분당구 서현로180번길 19 (서현동, 비전월드빌딩)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

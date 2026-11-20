@@ -3,10 +3,14 @@
  * 결과는 오류 메시지 배열이며 빈 배열이면 통과.
  */
 import { columnCount } from "./geometry";
-import type { Auditorium, Sourced, Theater } from "./types";
+import type { Auditorium, SeatFurniture, Sourced, Theater } from "./types";
+
+const FURNITURE_KINDS: readonly SeatFurniture[] = ["couple", "sofa", "bed", "beanbag", "mat", "cabana"];
 
 const CELL_PATTERN = /^[swx.]*$/;
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** 좌석 위치·폭(칸 단위)의 반올림 오차 허용값 */
+const SPAN_TOLERANCE = 0.05;
 const ASPECT_TOLERANCE = 0.01;
 
 export interface SourcedEntry {
@@ -120,6 +124,49 @@ export function validateAuditorium(auditorium: Auditorium): string[] {
     if (!CELL_PATTERN.test(row.cells)) errors.push(`rows[${i}](${row.label}) cells에 s, w, x, . 이외 글자가 있습니다.`);
     if (row.cells.length !== width) {
       errors.push(`rows[${i}](${row.label}) 칸 수 ${row.cells.length}가 첫 열 칸 수 ${width}와 다릅니다.`);
+    }
+    if (row.numbers) {
+      const seatCount = [...row.cells].filter((code) => code !== ".").length;
+      if (row.numbers.length !== seatCount) {
+        errors.push(`rows[${i}](${row.label}) numbers 개수 ${row.numbers.length}가 좌석 수 ${seatCount}와 다릅니다.`);
+      }
+      if (!row.numbers.every((n) => Number.isInteger(n) && n > 0)) {
+        errors.push(`rows[${i}](${row.label}) numbers는 1 이상의 정수여야 합니다.`);
+      }
+      if (new Set(row.numbers).size !== row.numbers.length) {
+        errors.push(`rows[${i}](${row.label}) numbers에 같은 번호가 있습니다.`);
+      }
+    }
+    if (row.spans) {
+      const seatCount = [...row.cells].filter((code) => code !== ".").length;
+      if (row.spans.length !== seatCount) {
+        errors.push(`rows[${i}](${row.label}) spans 개수 ${row.spans.length}가 좌석 수 ${seatCount}와 다릅니다.`);
+      }
+      let end = 0;
+      for (const [left, span] of row.spans) {
+        if (!(span > 0) || !(left >= 0) || left + span > width + SPAN_TOLERANCE) {
+          errors.push(`rows[${i}](${row.label}) spans [${left}, ${span}]가 좌석표 범위(0~${width}) 밖입니다.`);
+        }
+        if (left < end - SPAN_TOLERANCE) {
+          errors.push(`rows[${i}](${row.label}) spans [${left}, ${span}]가 앞 좌석과 겹칩니다.`);
+        }
+        end = left + span;
+      }
+    }
+    if (row.zone !== undefined && (!row.zone.trim() || !row.spans)) {
+      errors.push(`rows[${i}](${row.label}) zone 열은 이름과 spans가 있어야 합니다.`);
+    }
+    const seatTotal = [...row.cells].filter((code) => code !== ".").length;
+    for (const [first, count, kind] of row.furniture ?? []) {
+      if (!Number.isInteger(first) || !Number.isInteger(count) || first < 0 || count < 1 || first + count > seatTotal) {
+        errors.push(`rows[${i}](${row.label}) furniture [${first}, ${count}]가 좌석 수 ${seatTotal}를 넘습니다.`);
+      }
+      if (!FURNITURE_KINDS.includes(kind)) errors.push(`rows[${i}](${row.label}) furniture 종류 "${kind}"를 모릅니다.`);
+    }
+    for (const [left, span] of row.boxes ?? []) {
+      if (!(span > 0) || !(left >= 0) || left + span > width + SPAN_TOLERANCE) {
+        errors.push(`rows[${i}](${row.label}) boxes [${left}, ${span}]가 좌석표 범위(0~${width}) 밖입니다.`);
+      }
     }
   });
 

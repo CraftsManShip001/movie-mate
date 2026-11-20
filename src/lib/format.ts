@@ -1,7 +1,7 @@
 /**
  * 화면·티켓 문구 만들기 (순수 함수).
  */
-import { WEEKDAYS_KO, weekdayIndex } from "@/lib/showtimes/schedule";
+import { weekdayIndex } from "@/lib/showtimes/schedule";
 import type { Seat } from "@/lib/domain/types";
 
 const WEEKDAYS_EN = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] as const;
@@ -25,11 +25,6 @@ export function formatDotDate(iso: string): string {
 /** 티켓 뒷면 DATE 줄. "2026.11.16 MON" */
 export function formatTicketDate(iso: string): string {
   return `${formatDotDate(iso)} ${WEEKDAYS_EN[weekdayIndex(iso)]}`;
-}
-
-/** 티켓 앞면 띠. "2026.11.16 (월) 13:40" */
-export function formatBandDate(iso: string, time: string): string {
-  return `${formatDotDate(iso)} (${WEEKDAYS_KO[weekdayIndex(iso)]}) ${time}`;
 }
 
 /** "J열 14번" */
@@ -74,6 +69,15 @@ export function ticketNumber(dateIso: string, seat: Pick<Seat, "rowIndex" | "num
 }
 
 /** 서울 시각 기준 오늘 날짜와 지금 시각(분) */
+/** ISO 시각 → 서울 기준 "14:02 기준". 값이 이상하면 빈 문자열 */
+export function asOfLabel(iso: string | null | undefined): string {
+  if (!iso) return "";
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  const { minutes } = nowInSeoul(date);
+  return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")} 기준`;
+}
+
 export function nowInSeoul(now: Date): { todayIso: string; minutes: number } {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Seoul",

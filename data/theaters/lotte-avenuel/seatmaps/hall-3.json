@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "lotte-avenuel",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (189석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "sssssssss.wwww..."
+    },
+    {
+      "label": "B",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "H",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "I",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "J",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "K",
+      "cells": "ssssssssssssss.ss"
+    },
+    {
+      "label": "L",
+      "cells": "ssssssssssssss.ss"
+    }
+  ]
+}

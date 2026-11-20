@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-incheon-terminal",
+  "chain": "롯데시네마",
+  "branch": "인천터미널",
+  "address": "인천광역시 미추홀구 연남로 35 (관교동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

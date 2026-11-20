@@ -10,19 +10,22 @@
  *    - 치수를 아는 상영관: auditoriums/<auditoriumId>.json (완성된 Auditorium)
  *    - 좌석표만 있는 상영관: seatmaps/<auditoriumId>.json (SeatMapInput). 불러올 때 estimateAuditorium 으로 크기를 추정한다.
  * 3. 아래 import 와 THEATER_FILES / AUDITORIUM_FILES / SEATMAP_FILES 에 한 줄씩 추가한다.
+ *    (롯데시네마는 lotte.generated.ts, CGV·메가박스는 chains.generated.ts 생성 파일에 모여 있다.)
  * (등록을 빠뜨리면 registry.test.ts 가 실패한다.)
  */
-import yongsanTheater from "@data/theaters/cgv-yongsan-ipark-mall/theater.json";
-import yongsanSample4dx from "@data/theaters/cgv-yongsan-ipark-mall/auditoriums/sample-4dx.json";
 import yongsanImaxSeatMap from "@data/theaters/cgv-yongsan-ipark-mall/seatmaps/imax.json";
 
+import { CHAIN_SEATMAP_FILES, CHAIN_THEATER_FILES } from "./chains.generated";
+import { LOTTE_SEATMAP_FILES, LOTTE_THEATER_FILES } from "./lotte.generated";
 import { estimateAuditorium, type SeatMapInput } from "@/lib/domain/estimate";
 import type { Auditorium, Theater } from "@/lib/domain/types";
 import { validateAuditorium, validateTheater } from "@/lib/domain/validation";
 
-const THEATER_FILES: unknown[] = [yongsanTheater];
-const AUDITORIUM_FILES: unknown[] = [yongsanSample4dx];
-const SEATMAP_FILES: unknown[] = [yongsanImaxSeatMap];
+const THEATER_FILES: unknown[] = [...CHAIN_THEATER_FILES, ...LOTTE_THEATER_FILES];
+/** 치수를 아는(손으로 만든) 상영관. 지금은 없다. */
+const AUDITORIUM_FILES: unknown[] = [];
+/** 용산 IMAX관은 손으로 옮긴 좌석표(공개 스크린 크기 포함), 나머지는 생성 파일 */
+const SEATMAP_FILES: unknown[] = [yongsanImaxSeatMap, ...CHAIN_SEATMAP_FILES, ...LOTTE_SEATMAP_FILES];
 
 function loadTheater(json: unknown): Theater {
   const theater = json as Theater;

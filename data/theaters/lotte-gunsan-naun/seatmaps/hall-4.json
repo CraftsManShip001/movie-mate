@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "lotte-gunsan-naun",
+  "name": "4관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (155석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "wwww.ssssssss.ss",
+      "furniture": [
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssss.ss",
+      "furniture": [
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssss.ss",
+      "furniture": [
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssss.ss",
+      "furniture": [
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssss.ss",
+      "furniture": [
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "F",
+      "cells": "..............ss"
+    },
+    {
+      "label": "G",
+      "cells": "...s.ssssssss.ss",
+      "furniture": [
+        [
+          8,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "H",
+      "cells": "...s.ssssssss.ss",
+      "furniture": [
+        [
+          8,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "I",
+      "cells": "...s.ssssssss.ss",
+      "furniture": [
+        [
+          8,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "J",
+      "cells": "...s.ssssssss.ss",
+      "furniture": [
+        [
+          8,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "K",
+      "cells": "...s.ssssssss.ss",
+      "furniture": [
+        [
+          8,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssssssss.ss",
+      "furniture": [
+        [
+          0,
+          4,
+          "couple"
+        ],
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "M",
+      "cells": "ssss.ssssssss.ss",
+      "furniture": [
+        [
+          0,
+          4,
+          "couple"
+        ],
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
+    }
+  ]
+}

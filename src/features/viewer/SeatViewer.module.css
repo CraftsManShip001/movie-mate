@@ -22,6 +22,14 @@
   font-size: var(--text-sm);
 }
 
+/* 3D 첫 장면을 그리기 전까지 캔버스 위를 덮는다 */
+.loadingCover {
+  position: absolute;
+  inset: 0;
+  background: var(--color-stage);
+  pointer-events: none;
+}
+
 .top {
   position: absolute;
   left: 24px;
@@ -78,6 +86,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.bookingShort {
+  display: none;
 }
 
 .bottom {
@@ -289,6 +301,15 @@
     font-size: 14px;
   }
 
+  /* 휴대폰에서는 "예매"로 줄여 제목(관 · 좌석)이 잘리지 않게 한다 */
+  .bookingLong {
+    display: none;
+  }
+
+  .bookingShort {
+    display: inline;
+  }
+
   .bottom {
     left: 16px;
     right: 16px;
@@ -301,6 +322,25 @@
   .panel {
     width: 100%;
     padding: 16px;
+    /* 키 작은 화면에서도 위쪽 제목·예매 줄을 덮지 않게, 넘치는 부분은 패널 안에서 스크롤한다 */
+    min-height: 0;
+    flex: 0 1 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  /* 아래 묶음은 위쪽 줄(12px + 44px) 아래까지만 올라온다 */
+  .bottom {
+    max-height: calc(100dvh - 72px - env(safe-area-inset-bottom));
+  }
+
+  .right {
+    min-height: 0;
+    flex: 0 1 auto;
+  }
+
+  .right > .controls {
+    flex: none;
   }
 
   .miniMap {
@@ -382,4 +422,23 @@
   background: var(--color-stage-btn);
   color: var(--color-stage-fg);
   font-size: 12px;
+}
+
+/* 휴대폰 키 패널: 버튼 기준이면 화면 왼쪽 밖으로 나간다. 조작 줄 전체 폭에 맞춰 연다(위 기본값보다 뒤에 둔다) */
+@media (max-width: 720px) {
+  .controls {
+    position: relative;
+    align-self: stretch;
+    justify-content: flex-end;
+  }
+
+  .statureRoot {
+    position: static;
+  }
+
+  .stature {
+    left: 0;
+    right: 0;
+    width: auto;
+  }
 }

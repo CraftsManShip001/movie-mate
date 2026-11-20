@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "id": "s010",
+  "theaterId": "cgv-yeongdeungpotaimseukweeo",
+  "name": "SCREENX관 (리클라이너) with PRIVATE BOX",
+  "format": "screenx",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-20 (240석)",
+  "aspectRatio": 1.9,
+  "notes": "SCREENX 상영관. 좌석 구역이 여럿이라 본 객석 뒤에 따로 떨어진 구역(PRIVATE BOX 7층, PRIVATE BOX 8층) 열을 붙였다. 구역 사이 높이·거리는 추정이다. 스크린 크기는 공개 수치를 썼다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "....ssss.ssssss.ssssssssss.ssssss.ssss....",
+      "numbers": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "ssssssss.ssssss.ssssssssss.ssssss.ssssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssssss.ssssss.ssssssssss.ssssss.ssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssssss.ssssss.ssssssssss.ssssss.ssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssssss.ssssss.ssssssssss.ssssss.ssssssss"
+    },
+    {
+      "label": "F",
+      "cells": ".wssssss.ssssss.ssssssssss.ssssss.sssssww.",
+      "numbers": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ]
+    },
+    {
+      "label": "L",
+      "cells": ".s.s......ss........ss........s.s.....s.s.",
+      "spans": [
+        [
+          1.0,
+          1.5
+        ],
+        [
+          2.5,
+          1.5
+        ],
+        [
+          9.25,
+          1.5
+        ],
+        [
+          10.75,
+          1.5
+        ],
+        [
+          19.25,
+          1.5
+        ],
+        [
+          20.75,
+          1.5
+        ],
+        [
+          29.75,
+          1.5
+        ],
+        [
+          31.25,
+          1.5
+        ],
+        [
+          38.0,
+          1.5
+        ],
+        [
+          39.5,
+          1.5
+        ]
+      ],
+      "zone": "PRIVATE BOX 7층",
+      "zoneKind": "privateBox",
+      "boxes": [
+        [
+          0.0,
+          5.0
+        ],
+        [
+          8.25,
+          5.0
+        ],
+        [
+          18.25,
+          5.0
+        ],
+        [
+          28.75,
+          5.0
+        ],
+        [
+          37.0,
+          5.0
+        ]
+      ]
+    },
+    {
+      "label": "M",
+      "cells": ".ssss.........s.s.........ss.........ssss.",
+      "spans": [
+        [
+          0.4,
+          1.3
+        ],
+        [
+          1.7,
+          1.3
+        ],
+        [
+          3.0,
+          1.3
+        ],
+        [
+          4.3,
+          1.3
+        ],
+        [
+          13.75,
+          1.5
+        ],
+        [
+          15.25,
+          1.5
+        ],
+        [
+          25.25,
+          1.5
+        ],
+        [
+          26.75,
+          1.5
+        ],
+        [
+          36.4,
+          1.3
+        ],
+        [
+          37.7,
+          1.3
+        ],
+        [
+          39.0,
+          1.3
+        ],
+        [
+          40.3,
+          1.3
+        ]
+      ],
+      "zone": "PRIVATE BOX 8층",
+      "zoneKind": "privateBox",
+      "boxes": [
+        [
+          0.0,
+          6.0
+        ],
+        [
+          12.75,
+          5.0
+        ],
+        [
+          24.25,
+          5.0
+        ],
+        [
+          36.0,
+          6.0
+        ]
+      ]
+    }
+  ],
+  "crossAisleAfterRows": [
+    5,
+    6
+  ],
+  "screen": {
+    "width": 25000,
+    "note": "SCREENX PLF 정면 스크린 폭 25m (CJ뉴스룸 체험기). 높이는 화면비로 계산"
+  }
+}

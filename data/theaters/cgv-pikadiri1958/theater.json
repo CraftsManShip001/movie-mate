@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-pikadiri1958",
+  "chain": "CGV",
+  "branch": "피카디리1958",
+  "address": "서울특별시 종로구 돈화문로5가길 1 (돈의동 137) 지하 2층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-4",
+    "hall-5",
+    "hall-6"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

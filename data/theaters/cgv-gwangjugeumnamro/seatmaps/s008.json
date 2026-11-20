@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "id": "s008",
+  "theaterId": "cgv-gwangjugeumnamro",
+  "name": "씨네앤포레",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (66석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다. 씨네앤포레: 인조잔디 언덕형 바닥에 빈백·매트·카바나 좌석(인사이트).",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss..ssss",
+      "furniture": [
+        [
+          0,
+          8,
+          "beanbag"
+        ]
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "ssss..ssss",
+      "furniture": [
+        [
+          0,
+          8,
+          "beanbag"
+        ]
+      ]
+    },
+    {
+      "label": "C",
+      "cells": "ssss..ssss",
+      "furniture": [
+        [
+          0,
+          8,
+          "beanbag"
+        ]
+      ]
+    },
+    {
+      "label": "D",
+      "cells": "ssss..ssss",
+      "furniture": [
+        [
+          0,
+          8,
+          "beanbag"
+        ]
+      ]
+    },
+    {
+      "label": "E",
+      "cells": "ssss..ssss",
+      "furniture": [
+        [
+          0,
+          8,
+          "beanbag"
+        ]
+      ]
+    },
+    {
+      "label": "F",
+      "cells": "ssss..ssss",
+      "furniture": [
+        [
+          0,
+          8,
+          "beanbag"
+        ]
+      ]
+    },
+    {
+      "label": "G",
+      "cells": "ssss..ssss",
+      "furniture": [
+        [
+          0,
+          8,
+          "beanbag"
+        ]
+      ]
+    },
+    {
+      "label": "H",
+      "cells": "ssssssssss",
+      "furniture": [
+        [
+          0,
+          10,
+          "cabana"
+        ]
+      ]
+    }
+  ],
+  "crossAisleAfterRows": [
+    6
+  ]
+}

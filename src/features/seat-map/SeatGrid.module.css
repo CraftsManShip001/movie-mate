@@ -8,6 +8,7 @@
   --seat-bg: var(--color-seat);
   --seat-on: var(--color-accent);
   --seat-off: var(--color-btn);
+  --seat-sold: var(--color-seat);
   --label: var(--color-sub);
   --line: var(--color-ink);
 }
@@ -16,6 +17,7 @@
   --seat-bg: var(--color-stage-seat);
   --seat-on: var(--color-stage-accent);
   --seat-off: transparent;
+  --seat-sold: var(--color-stage-seat-label);
   --label: var(--color-stage-seat-label);
   --line: var(--color-stage-sub);
 }
@@ -27,6 +29,8 @@
   display: inline-flex;
   flex-direction: column;
   gap: var(--gap);
+  /* 마지막 열 박스석 테두리(좌석 아래로 반 칸 나온다)가 잘리지 않게 */
+  padding-bottom: calc(var(--gap) / 2 + 1px);
 }
 
 .screen {
@@ -37,6 +41,10 @@
   margin-bottom: 24px;
   padding-left: calc(16px + var(--gap));
   color: var(--line);
+  /* 스크린 SVG의 기본 폭(760)이 좌석표 폭을 늘리지 않게 한다. 폭은 좌석 줄이 정하고, 스크린은 그 폭에 맞춰 좌석 가운데에 온다. */
+  width: 0;
+  min-width: 100%;
+  box-sizing: border-box;
 }
 
 .screenCurve {
@@ -65,16 +73,49 @@
   color: var(--label);
 }
 
-.seat,
-.empty,
-.aisle,
 .skeletonSeat {
   width: var(--seat);
   height: var(--seat);
   flex: none;
 }
 
+/* 한 줄의 좌석 자리. 좌석은 칸 단위 위치(--x)와 폭(--w)으로 놓는다. 넓은 좌석은 여러 칸을 차지한다. */
+.seats {
+  --pitch: calc(var(--seat) + var(--gap));
+  position: relative;
+  flex: none;
+  width: calc(var(--units) * var(--pitch) - var(--gap));
+  height: var(--seat);
+}
+
+/* 본 객석과 떨어진 구역(다른 층 PRIVATE BOX·SWEETBOX) 이름. 가로 통로 아래, 그 구역 첫 열 위에 둔다. */
+.zone {
+  padding-left: calc(16px + var(--gap));
+  font-size: min(var(--text-xs), calc(var(--seat) * 1.15));
+  line-height: 1.2;
+  color: var(--label);
+  white-space: nowrap;
+}
+
+/* 칸막이로 둘러싼 박스석: 좌석을 감싸는 얇은 테두리 */
+.box {
+  position: absolute;
+  top: calc(var(--gap) / -2);
+  left: calc(var(--x) * var(--pitch) - var(--gap) / 2);
+  width: calc(var(--w) * var(--pitch));
+  height: calc(var(--seat) + var(--gap));
+  box-sizing: border-box;
+  border: 1px solid var(--label);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
 .seat {
+  position: absolute;
+  top: 0;
+  left: calc(var(--x) * var(--pitch));
+  width: calc(var(--w) * var(--pitch) - var(--gap));
+  height: var(--seat);
   padding: 0;
   border: 0;
   border-radius: 4px 4px 2px 2px;
@@ -94,8 +135,36 @@
   background: var(--seat-off);
 }
 
+/* 의자가 아닌 좌석: 모양으로 구분한다(색은 고른 자리·팔린 자리 표시에 쓰므로 그대로 둔다) */
+.furniture-bed {
+  border-radius: 2px;
+  box-shadow: inset 0 calc(var(--seat) * 0.3) 0 0 color-mix(in srgb, var(--seat-bg) 70%, var(--label));
+}
+
+.furniture-beanbag {
+  border-radius: 50%;
+}
+
+.furniture-mat,
+.furniture-cabana {
+  border-radius: 2px;
+}
+
 .wheelchair {
   box-shadow: inset 0 0 0 1.5px var(--label);
+}
+
+/*
+ * 이 회차에 이미 팔린 자리: 속이 빈 칸(빈 자리는 채운 칸). 시야는 볼 수 있게 누를 수는 있다.
+ * 휠체어석 테두리보다 뒤에 두어 팔린 표시가 이긴다.
+ */
+.sold {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--seat-sold);
+}
+
+.dark .sold {
+  box-shadow: inset 0 0 0 1px var(--seat-sold);
 }
 
 button.seat:not(:disabled):hover {

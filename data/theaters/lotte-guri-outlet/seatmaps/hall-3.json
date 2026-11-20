@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "lotte-guri-outlet",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (289석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ss.wwwwssssssss.ss..."
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "D",
+      "cells": "..ss.ssssssssssss.sssss"
+    },
+    {
+      "label": "E",
+      "cells": "..ss.ssssssssssss.sssss"
+    },
+    {
+      "label": "F",
+      "cells": "..ss.ssssssssssss.sssss"
+    },
+    {
+      "label": "G",
+      "cells": "..ss.ssssssssssss.sssss"
+    },
+    {
+      "label": "H",
+      "cells": "..ss.ssssssssssss.sssss"
+    },
+    {
+      "label": "I",
+      "cells": "..ss.ssssssssssss.sssss"
+    },
+    {
+      "label": "J",
+      "cells": "..ss.ssssssssssss.sssss"
+    },
+    {
+      "label": "K",
+      "cells": "..ss.ssssssssssss.sssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "N",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "O",
+      "cells": "ssss.ssss....ssss.ssss."
+    }
+  ],
+  "crossAisleAfterRows": [
+    2
+  ]
+}

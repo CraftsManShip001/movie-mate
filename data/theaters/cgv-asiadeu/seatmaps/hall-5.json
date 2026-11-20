@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "cgv-asiadeu",
+  "name": "5관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (201석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssssss.wwww"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssss....."
+    },
+    {
+      "label": "I",
+      "cells": "ssss.sssssssss...."
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sssssssss...."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.sssssssss...."
+    },
+    {
+      "label": "L",
+      "cells": "ssss.sssssssss...."
+    },
+    {
+      "label": "M",
+      "cells": "ssss.sssssssss...."
+    },
+    {
+      "label": "N",
+      "cells": "ssss.ssssssss.....",
+      "furniture": [
+        [
+          4,
+          8,
+          "couple"
+        ]
+      ]
+    }
+  ]
+}

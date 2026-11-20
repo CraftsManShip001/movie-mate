@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "lotte-geochang",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (245석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssssssss.sss.."
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssssssss.sss.."
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssssssss.sssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sss...ssssss.sss.."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.sss...ssssss.sss.."
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ww....ssssss.ssss."
+    },
+    {
+      "label": "M",
+      "cells": "ssss..............ssss."
+    },
+    {
+      "label": "N",
+      "cells": "ssss..................."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-yangjuokjeong",
+  "chain": "CGV",
+  "branch": "양주옥정",
+  "address": "경기도 양주시 옥정로 200, 7-8층 (옥정동, 씨네마엠디프라자)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

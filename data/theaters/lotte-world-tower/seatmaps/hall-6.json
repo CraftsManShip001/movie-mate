@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "lotte-world-tower",
+  "name": "6관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (124석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.sssswwww..."
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssss..."
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssss..."
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssss..."
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssss..."
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssss..."
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssss..."
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssss..."
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssss.ss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssss.ss"
+    }
+  ]
+}

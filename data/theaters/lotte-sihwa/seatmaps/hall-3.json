@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "lotte-sihwa",
+  "name": "3관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (76석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssssss.ssss."
+    },
+    {
+      "label": "B",
+      "cells": "ssssss.sssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssss.sssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.sssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.sssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssss.sssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssss.sssss"
+    }
+  ]
+}

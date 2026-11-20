@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-gwangyang",
+  "chain": "CGV",
+  "branch": "광양",
+  "address": "전라남도 광양시 금호동 624-12",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

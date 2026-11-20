@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-8",
+  "theaterId": "lotte-byeongjeom",
+  "name": "8관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (171석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "www..ssssssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": ".....ssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": ".....ssssssss.ss.."
+    },
+    {
+      "label": "H",
+      "cells": ".....ssssssss.ss.."
+    },
+    {
+      "label": "I",
+      "cells": ".....ssssssss.ss.."
+    },
+    {
+      "label": "J",
+      "cells": ".....ssssssss.ss.."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssss..........ssss"
+    }
+  ],
+  "crossAisleAfterRows": [
+    5
+  ]
+}

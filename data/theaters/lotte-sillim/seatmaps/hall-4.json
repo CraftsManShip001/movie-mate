@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "lotte-sillim",
+  "name": "4관",
+  "format": "recliner",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (84석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.sssssssss.ww"
+    },
+    {
+      "label": "B",
+      "cells": "ss.sssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ss.sssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "...sssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "...sssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "...sssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "ss.ssssssss..ss"
+    }
+  ],
+  "crossAisleAfterRows": [
+    2
+  ]
+}

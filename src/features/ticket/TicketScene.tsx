@@ -67,9 +67,7 @@ export function TicketScene({ theaterId, theaterName, screenName, auditorium, se
     time: show.time,
     numbers,
   });
-  const poster = (
-    <TicketPoster posterUrl={info.posterUrl} bandDate={info.bandDate} bandTheater={`${theaterName} · ${screenName}`} />
-  );
+  const poster = <TicketPoster posterUrl={info.posterUrl} fallbackUrl={info.posterFallbackUrl} />;
 
   return (
     <div className={styles.stage}>

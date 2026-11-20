@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-bundang",
+  "chain": "메가박스",
+  "branch": "분당",
+  "address": "경기도 성남시 분당구 황새울로 332, (서현동) 분당문화센터 1층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

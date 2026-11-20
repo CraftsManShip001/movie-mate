@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-gasan-digital",
+  "chain": "롯데시네마",
+  "branch": "가산디지털",
+  "address": "서울특별시 금천구 디지털로10길 9 (가산동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-18)로 옮겼고, 크기는 좌석표로 추정했다."
+}

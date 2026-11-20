@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "lotte-iksan-mohyeon",
+  "name": "4관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (336석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssssss.wwww..ssssssss.ssssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssssss.ssssssssssssss.ssssss"
+    }
+  ]
+}

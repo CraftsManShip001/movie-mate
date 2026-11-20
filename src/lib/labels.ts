@@ -4,9 +4,12 @@ const FORMAT_LABELS: Record<string, string> = {
   standard: "일반",
   imax: "IMAX",
   "4dx": "4DX",
+  mx4d: "MX4D",
   screenx: "ScreenX",
   "dolby-cinema": "Dolby Cinema",
   premium: "프리미엄",
+  recliner: "리클라이너",
+  bed: "침대",
 };
 
 export function formatLabel(format: AuditoriumFormat): string {
@@ -25,8 +28,8 @@ export const CHAINS = ["CGV", "메가박스", "롯데시네마"] as const;
  */
 const BOOKING_URLS: Record<string, string> = {
   CGV: "https://www.cgv.co.kr",
-  메가박스: "https://www.megabox.co.kr",
-  롯데시네마: "https://www.lottecinema.co.kr",
+  메가박스: "https://www.megabox.co.kr/booking",
+  롯데시네마: "https://www.lottecinema.co.kr/NLCHS/Ticketing",
 };
 
 export function bookingLink(chain: string): { label: string; href: string } {

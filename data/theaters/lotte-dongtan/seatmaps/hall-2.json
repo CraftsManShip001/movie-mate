@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "lotte-dongtan",
+  "name": "2관",
+  "format": "recliner",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (81석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssss.w.ss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss...ss.ssss"
+    }
+  ]
+}

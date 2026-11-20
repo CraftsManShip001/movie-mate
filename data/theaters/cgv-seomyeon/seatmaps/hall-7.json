@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-7",
+  "theaterId": "cgv-seomyeon",
+  "name": "7관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (166석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "sssssssssssssss"
+    },
+    {
+      "label": "B",
+      "cells": "sssssssssssssss"
+    },
+    {
+      "label": "C",
+      "cells": "sssssssssssww.."
+    },
+    {
+      "label": "D",
+      "cells": "sssssssssssss.."
+    },
+    {
+      "label": "E",
+      "cells": "sssssssssssss.."
+    },
+    {
+      "label": "F",
+      "cells": "sssssssssssss.."
+    },
+    {
+      "label": "G",
+      "cells": "sssssssssssss.."
+    },
+    {
+      "label": "H",
+      "cells": "sssssssssssss.."
+    },
+    {
+      "label": "I",
+      "cells": "sssssssssssss.."
+    },
+    {
+      "label": "J",
+      "cells": "sssssssssssssss"
+    },
+    {
+      "label": "K",
+      "cells": "sssssssssssssss"
+    },
+    {
+      "label": "L",
+      "cells": "sssssssssssssss"
+    }
+  ],
+  "crossAisleAfterRows": [
+    2
+  ]
+}

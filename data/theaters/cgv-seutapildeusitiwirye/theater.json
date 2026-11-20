@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-seutapildeusitiwirye",
+  "chain": "CGV",
+  "branch": "스타필드시티위례",
+  "address": "경기도 하남시 학암동 90-33 스타필드시티위례 5층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "s005",
+    "hall-6"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "cgv-asiadeu",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (174석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssss.www"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssss.sss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssss.sss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssss.sss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssss.sss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssss.sss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssss.sss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssss.sss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssss...."
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssss...."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssssss...."
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssssss...."
+    },
+    {
+      "label": "M",
+      "cells": "ssss.ssssss...."
+    },
+    {
+      "label": "N",
+      "cells": "ssss.ssssss...."
+    },
+    {
+      "label": "O",
+      "cells": "ssss.ssssss...."
+    }
+  ]
+}

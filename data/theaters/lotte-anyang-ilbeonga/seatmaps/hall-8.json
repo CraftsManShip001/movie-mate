@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-8",
+  "theaterId": "lotte-anyang-ilbeonga",
+  "name": "8관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (79석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "w.sssssss"
+    },
+    {
+      "label": "B",
+      "cells": "sssssssss"
+    },
+    {
+      "label": "C",
+      "cells": "sssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssssss."
+    },
+    {
+      "label": "E",
+      "cells": "sssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "sssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "sssssssss"
+    },
+    {
+      "label": "H",
+      "cells": "sssssssss"
+    },
+    {
+      "label": "I",
+      "cells": "sssssssss"
+    }
+  ]
+}
