@@ -11,7 +11,7 @@
       "format": "2D",
       "subtitle": "자막",
       "aspectRatio": 1.9,
-      "seatCount": 112,
+      "seatCount": 132,
       "auditoriumId": "s001"
     },
     {
@@ -38,7 +38,7 @@
       "format": "2D",
       "subtitle": "자막",
       "aspectRatio": 1.9,
-      "seatCount": 186,
+      "seatCount": 206,
       "auditoriumId": "hall-3"
     },
     {

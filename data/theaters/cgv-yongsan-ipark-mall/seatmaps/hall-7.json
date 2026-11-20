@@ -219,7 +219,14 @@
     },
     {
       "label": "N",
-      "cells": "ss.ssssssssss.ssss"
+      "cells": "ss.ssssssssss.ssss",
+      "furniture": [
+        [
+          2,
+          10,
+          "couple"
+        ]
+      ]
     }
   ]
 }

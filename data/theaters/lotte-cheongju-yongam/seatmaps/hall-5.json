@@ -39,7 +39,19 @@
     },
     {
       "label": "H",
-      "cells": "ss.ss....ss.ss."
+      "cells": "ss.ss....ss.ss.",
+      "furniture": [
+        [
+          0,
+          3,
+          "couple"
+        ],
+        [
+          4,
+          2,
+          "couple"
+        ]
+      ]
     }
   ]
 }

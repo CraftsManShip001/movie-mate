@@ -51,7 +51,19 @@
     },
     {
       "label": "K",
-      "cells": "ssss.ssss..ssssss.ss"
+      "cells": "ssss.ssss..ssssss.ss",
+      "furniture": [
+        [
+          0,
+          7,
+          "couple"
+        ],
+        [
+          8,
+          6,
+          "couple"
+        ]
+      ]
     }
   ]
 }

@@ -67,7 +67,79 @@ function merge(parts: BufferGeometry[]): BufferGeometry {
 }
 
 export function buildChair(spec: ChairSpec): ChairGeometries {
-  return spec.style === "recliner" ? buildRecliner(spec) : buildStandardChair(spec);
+  switch (spec.style) {
+    case "recliner":
+      return buildRecliner(spec);
+    case "bed":
+      return buildBed(spec);
+    case "beanbag":
+      return buildBeanbag(spec);
+    case "mat":
+      return buildMat(spec, false);
+    case "cabana":
+      return buildMat(spec, true);
+    default:
+      return buildStandardChair(spec);
+  }
+}
+
+/**
+ * 누워서 보는 전동 침대(템퍼 시네마·모션베드): 길이 2m, 다리 쪽(스크린 쪽)은 평평하고 머리 쪽 등판을 세웠다.
+ * 팔걸이 대신 침대 사이에 높은 칸막이를 둔다.
+ */
+function buildBed({ width }: ChairSpec): ChairGeometries {
+  const inner = width - 0.08;
+  const length = 2.0;
+  const top = 0.42;
+  const upholstery = merge([
+    // 다리 쪽 매트리스
+    roundedBox(inner, 0.16, 1.15, 0.06, [0, top - 0.08, -0.48], { segments: 3 }),
+    // 세운 등판(약 45°)과 베개
+    roundedBox(inner, 0.85, 0.16, 0.06, [0, top - 0.06, 0.12], { tilt: -0.8, pivotBottom: true, segments: 3 }),
+    roundedBox(inner * 0.7, 0.14, 0.12, 0.05, [0, top + 0.5, 0.62], { tilt: -0.8 }),
+  ]);
+  const shell = merge([roundedBox(inner + 0.02, top - 0.12, length, 0.03, [0, (top - 0.12) / 2, -0.05], { segments: 1 })]);
+  const arm = merge([roundedBox(0.05, 1.05, length + 0.1, 0.02, [0, 0.525, -0.05], { segments: 1 })]);
+  return { upholstery, shell, arm };
+}
+
+/** 바닥 빈백: 납작하게 눌린 자루와 뒤쪽 등 받침 */
+function buildBeanbag({ width }: ChairSpec): ChairGeometries {
+  const w = Math.max(0.75, width * 0.95);
+  const body = new SphereGeometry(0.5, 20, 14);
+  body.scale(w, 0.5, 0.9);
+  body.translate(0, 0.22, 0.05);
+  const back = new SphereGeometry(0.5, 18, 12);
+  back.scale(w * 0.85, 0.75, 0.4);
+  back.translate(0, 0.42, 0.38);
+  const upholstery = merge([body, back]);
+  const shell = merge([roundedBox(w * 0.6, 0.02, 0.5, 0.005, [0, 0.01, 0.05], { segments: 1 })]);
+  return { upholstery, shell, arm: emptyGeometry() };
+}
+
+/** 바닥 매트·방석(씨네앤포레). cabana 면 위에 작은 천막 틀을 씌운다 */
+function buildMat({ width }: ChairSpec, tent: boolean): ChairGeometries {
+  const w = Math.max(0.7, width * 0.95);
+  const upholstery = merge([
+    roundedBox(w, 0.1, 0.85, 0.04, [0, 0.05, 0]),
+    roundedBox(w * 0.85, 0.45, 0.14, 0.05, [0, 0.08, 0.36], { tilt: -0.2, pivotBottom: true }),
+  ]);
+  const parts = [roundedBox(w + 0.1, 0.03, 1.0, 0.01, [0, 0.015, 0], { segments: 1 })];
+  if (tent) {
+    const h = 1.5;
+    for (const x of [-(w / 2 + 0.05), w / 2 + 0.05]) {
+      for (const z of [-0.5, 0.5]) parts.push(roundedBox(0.04, h, 0.04, 0.01, [x, h / 2, z], { segments: 1 }));
+    }
+    // 뒤와 양옆 천, 지붕
+    parts.push(roundedBox(w + 0.14, h, 0.02, 0.005, [0, h / 2, 0.52], { segments: 1 }));
+    for (const x of [-(w / 2 + 0.06), w / 2 + 0.06]) parts.push(roundedBox(0.02, h, 1.0, 0.005, [x, h / 2, 0], { segments: 1 }));
+    parts.push(roundedBox(w + 0.2, 0.03, 1.1, 0.01, [0, h + 0.02, 0], { segments: 1 }));
+  }
+  return { upholstery, shell: merge(parts), arm: emptyGeometry() };
+}
+
+function emptyGeometry(): BufferGeometry {
+  return new BufferGeometry();
 }
 
 /** 일반 영화관 의자: 얇은 등받이, 플라스틱 뒤판, 좁은 팔걸이와 컵홀더 */

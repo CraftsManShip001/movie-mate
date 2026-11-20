@@ -104,7 +104,14 @@
     },
     {
       "label": "J",
-      "cells": "ssss.ssssssssss"
+      "cells": "ssss.ssssssssss",
+      "furniture": [
+        [
+          4,
+          10,
+          "couple"
+        ]
+      ]
     }
   ]
 }

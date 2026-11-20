@@ -51,11 +51,25 @@
     },
     {
       "label": "K",
-      "cells": ".sss.ssssss.ss.."
+      "cells": ".sss.ssssss.ss..",
+      "furniture": [
+        [
+          3,
+          5,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "L",
-      "cells": ".ss.........ss.."
+      "cells": ".ss.........ss..",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     }
   ]
 }

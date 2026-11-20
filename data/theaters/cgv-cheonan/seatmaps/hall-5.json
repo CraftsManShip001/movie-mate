@@ -141,7 +141,14 @@
     },
     {
       "label": "H",
-      "cells": "sss.ssssssss.ss."
+      "cells": "sss.ssssssss.ss.",
+      "furniture": [
+        [
+          3,
+          8,
+          "couple"
+        ]
+      ]
     }
   ]
 }

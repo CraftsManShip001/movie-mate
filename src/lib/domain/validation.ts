@@ -3,7 +3,9 @@
  * 결과는 오류 메시지 배열이며 빈 배열이면 통과.
  */
 import { columnCount } from "./geometry";
-import type { Auditorium, Sourced, Theater } from "./types";
+import type { Auditorium, SeatFurniture, Sourced, Theater } from "./types";
+
+const FURNITURE_KINDS: readonly SeatFurniture[] = ["couple", "sofa", "bed", "beanbag", "mat", "cabana"];
 
 const CELL_PATTERN = /^[swx.]*$/;
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -149,6 +151,21 @@ export function validateAuditorium(auditorium: Auditorium): string[] {
           errors.push(`rows[${i}](${row.label}) spans [${left}, ${span}]가 앞 좌석과 겹칩니다.`);
         }
         end = left + span;
+      }
+    }
+    if (row.zone !== undefined && (!row.zone.trim() || !row.spans)) {
+      errors.push(`rows[${i}](${row.label}) zone 열은 이름과 spans가 있어야 합니다.`);
+    }
+    const seatTotal = [...row.cells].filter((code) => code !== ".").length;
+    for (const [first, count, kind] of row.furniture ?? []) {
+      if (!Number.isInteger(first) || !Number.isInteger(count) || first < 0 || count < 1 || first + count > seatTotal) {
+        errors.push(`rows[${i}](${row.label}) furniture [${first}, ${count}]가 좌석 수 ${seatTotal}를 넘습니다.`);
+      }
+      if (!FURNITURE_KINDS.includes(kind)) errors.push(`rows[${i}](${row.label}) furniture 종류 "${kind}"를 모릅니다.`);
+    }
+    for (const [left, span] of row.boxes ?? []) {
+      if (!(span > 0) || !(left >= 0) || left + span > width + SPAN_TOLERANCE) {
+        errors.push(`rows[${i}](${row.label}) boxes [${left}, ${span}]가 좌석표 범위(0~${width}) 밖입니다.`);
       }
     }
   });

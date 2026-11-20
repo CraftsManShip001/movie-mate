@@ -3,7 +3,7 @@
  * 좌표계는 types.ts 머리말 참고.
  */
 import { seatedEyeHeightM } from "./anthropometry";
-import type { Auditorium, CellCode, Seat, Vec3 } from "./types";
+import type { Auditorium, CellCode, Seat, SeatFurniture, SeatRow, Vec3 } from "./types";
 
 export const mmToM = (mm: number): number => mm / 1000;
 
@@ -25,6 +25,7 @@ export function listSeats(auditorium: Auditorium): Seat[] {
       count += 1;
       const number = row.numbers?.[count - 1] ?? (byColumn ? columnIndex + 1 : count);
       const [left, span] = row.spans?.[count - 1] ?? [columnIndex, 1];
+      const furniture = row.furniture?.find(([first, n]) => count - 1 >= first && count - 1 < first + n)?.[2];
       seats.push({
         id: `${row.label}${number}`,
         rowLabel: row.label,
@@ -34,6 +35,7 @@ export function listSeats(auditorium: Auditorium): Seat[] {
         left,
         span,
         kind: code as Exclude<CellCode, ".">,
+        ...(furniture ? { furniture } : {}),
       });
     });
   });
@@ -70,7 +72,20 @@ export function columnCenterX(auditorium: Auditorium, columnIndex: number): numb
   return unitX(auditorium, columnIndex + 0.5);
 }
 
-type SeatPlace = Pick<Seat, "rowIndex" | "columnIndex"> & Partial<Pick<Seat, "left" | "span">>;
+type SeatPlace = Pick<Seat, "rowIndex" | "columnIndex"> & Partial<Pick<Seat, "left" | "span" | "furniture">>;
+
+/**
+ * 의자가 아닌 좌석의 눈 위치 (바닥 기준 높이, 좌석 중심에서 뒤로 간 거리, m).
+ * - 침대: 등받이를 올려 반쯤 누운 자세. 눈은 매트리스 위 약 0.35m, 침대 가운데보다 0.6m 뒤(머리 쪽).
+ * - 빈백·매트·카바나: 바닥 가까이 앉는다.
+ * 키에 따른 차이는 작아서 고정값으로 둔다.
+ */
+export const FURNITURE_EYE: Partial<Record<SeatFurniture, { height: number; back: number }>> = {
+  bed: { height: 0.82, back: 0.6 },
+  beanbag: { height: 0.78, back: 0.1 },
+  mat: { height: 0.8, back: 0 },
+  cabana: { height: 0.8, back: 0.1 },
+};
 
 /** 좌석 중심의 x 좌표 (m). 넓은 좌석은 차지한 폭의 가운데다. */
 export function seatCenterX(auditorium: Auditorium, seat: SeatPlace): number {
@@ -91,11 +106,29 @@ export function rowCenterZ(auditorium: Auditorium, rowIndex: number): number {
   return mmToM(firstRowDistance.value + rowIndex * rowSpacing.value + crossBefore);
 }
 
-/** 열 바닥 높이 (m). 앞쪽 flatRowCount개 열은 0, 그 뒤로 열마다 단차만큼 올라간다. */
+/**
+ * 열 바닥 높이 (m). 앞쪽 flatRowCount개 열은 0, 그 뒤로 열마다 단차만큼 올라간다.
+ * 따로 떨어진 구역(zone) 열은 본 객석 맨 뒷열 바닥에서 구역(층)마다 zoneRise 만큼 더 올라간 발코니에 있다.
+ */
 export function rowFloorY(auditorium: Auditorium, rowIndex: number): number {
-  const { riserHeight, flatRowCount } = auditorium.layout;
-  const steps = Math.max(0, rowIndex - flatRowCount.value + 1);
-  return mmToM(steps * riserHeight.value);
+  return mmToM(rowFloorMm(auditorium.rows, rowIndex, auditorium.layout));
+}
+
+/** rowFloorY 의 mm 계산. 상영관을 만들기 전(추정 단계)에도 쓴다. */
+export function rowFloorMm(
+  rows: Pick<SeatRow, "zone" | "zoneFloor">[],
+  rowIndex: number,
+  layout: { riserHeight: { value: number }; flatRowCount: { value: number }; zoneRise?: { value: number } },
+): number {
+  const steps = (i: number) => Math.max(0, i - layout.flatRowCount.value + 1) * layout.riserHeight.value;
+  const upper = (row: Pick<SeatRow, "zone" | "zoneFloor"> | undefined) => row?.zone !== undefined && row.zoneFloor !== "main";
+  const zone = rows[rowIndex]?.zone;
+  if (!upper(rows[rowIndex]) || !layout.zoneRise) return steps(rowIndex);
+  let lastMain = rowIndex;
+  while (lastMain >= 0 && upper(rows[lastMain])) lastMain -= 1;
+  const zones = new Set(rows.slice(lastMain + 1, rowIndex + 1).map((row) => row.zone));
+  const firstOfZone = rows.findIndex((row, i) => i > lastMain && row.zone === zone);
+  return steps(Math.max(0, lastMain)) + zones.size * layout.zoneRise.value + (rowIndex - firstOfZone) * layout.riserHeight.value;
 }
 
 /** 좌석 바닥 중심 위치 (m) */
@@ -117,6 +150,8 @@ export function eyePosition(
   statureCm: number,
 ): Vec3 {
   const floor = seatFloorPosition(auditorium, seat);
+  const low = seat.furniture ? FURNITURE_EYE[seat.furniture] : undefined;
+  if (low) return { x: floor.x, y: floor.y + low.height, z: floor.z + low.back };
   return {
     x: floor.x,
     y: floor.y + mmToM(auditorium.layout.seatHeight.value) + seatedEyeHeightM(statureCm),

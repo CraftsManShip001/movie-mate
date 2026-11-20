@@ -232,7 +232,14 @@
     },
     {
       "label": "L",
-      "cells": "sssss.ssssssssss.ssss"
+      "cells": "sssss.ssssssssss.ssss",
+      "furniture": [
+        [
+          5,
+          10,
+          "couple"
+        ]
+      ]
     }
   ]
 }

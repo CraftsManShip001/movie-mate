@@ -10,7 +10,7 @@
       "name": "DOLBY CINEMA",
       "format": "2D Dolby Dolby Cinema",
       "subtitle": "자막",
-      "aspectRatio": 1.9,
+      "aspectRatio": 2.351,
       "seatCount": 378,
       "auditoriumId": "s01"
     },
@@ -19,7 +19,7 @@
       "name": "MEGA | LED 2관",
       "format": "2D MEGA LED",
       "subtitle": "자막",
-      "aspectRatio": 1.9,
+      "aspectRatio": 1.958,
       "seatCount": 431,
       "auditoriumId": "hall-2"
     },
@@ -28,7 +28,7 @@
       "name": "MEGA | LED 3관",
       "format": "2D MEGA LED",
       "subtitle": "자막",
-      "aspectRatio": 1.9,
+      "aspectRatio": 1.958,
       "seatCount": 399,
       "auditoriumId": "hall-3"
     },
@@ -37,7 +37,7 @@
       "name": "MEGA | LED 4관",
       "format": "2D MEGA LED",
       "subtitle": "자막",
-      "aspectRatio": 1.9,
+      "aspectRatio": 1.958,
       "seatCount": 298,
       "auditoriumId": "hall-4"
     },

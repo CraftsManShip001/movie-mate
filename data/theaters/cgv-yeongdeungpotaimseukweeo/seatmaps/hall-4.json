@@ -65,7 +65,14 @@
     },
     {
       "label": "J",
-      "cells": "ssss.ssssssssss.ssss"
+      "cells": "ssss.ssssssssss.ssss",
+      "furniture": [
+        [
+          4,
+          10,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "K",
@@ -87,6 +94,13 @@
         16,
         17,
         18
+      ],
+      "furniture": [
+        [
+          4,
+          6,
+          "couple"
+        ]
       ]
     }
   ]

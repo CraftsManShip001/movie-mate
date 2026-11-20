@@ -58,7 +58,14 @@
     },
     {
       "label": "I",
-      "cells": "ss.ssssssssss...."
+      "cells": "ss.ssssssssss....",
+      "furniture": [
+        [
+          2,
+          10,
+          "couple"
+        ]
+      ]
     }
   ],
   "crossAisleAfterRows": [

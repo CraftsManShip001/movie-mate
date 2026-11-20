@@ -39,11 +39,25 @@
     },
     {
       "label": "H",
-      "cells": "ssss.ssssss.ssss"
+      "cells": "ssss.ssssss.ssss",
+      "furniture": [
+        [
+          4,
+          5,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "I",
-      "cells": "ssss........ssss"
+      "cells": "ssss........ssss",
+      "furniture": [
+        [
+          0,
+          6,
+          "couple"
+        ]
+      ]
     }
   ]
 }

@@ -216,7 +216,14 @@
     },
     {
       "label": "J",
-      "cells": "ssssss.ssssssssss.ssssss"
+      "cells": "ssssss.ssssssssss.ssssss",
+      "furniture": [
+        [
+          0,
+          22,
+          "couple"
+        ]
+      ]
     }
   ],
   "crossAisleAfterRows": [

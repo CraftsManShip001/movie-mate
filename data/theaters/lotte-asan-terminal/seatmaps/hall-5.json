@@ -15,23 +15,58 @@
     },
     {
       "label": "B",
-      "cells": "ss.ssssssssss..."
+      "cells": "ss.ssssssssss...",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "C",
-      "cells": "ss.ssssssssss..."
+      "cells": "ss.ssssssssss...",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "D",
-      "cells": "ss.ssssssssss..."
+      "cells": "ss.ssssssssss...",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "E",
-      "cells": "ss.ssssssssss..s"
+      "cells": "ss.ssssssssss..s",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "F",
-      "cells": "ss.sss.....sss.s"
+      "cells": "ss.sss.....sss.s",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     }
   ],
   "crossAisleAfterRows": [

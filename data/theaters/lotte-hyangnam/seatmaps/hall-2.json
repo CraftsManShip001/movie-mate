@@ -47,7 +47,14 @@
     },
     {
       "label": "J",
-      "cells": "ss.sssssswwww..."
+      "cells": "ss.sssssswwww...",
+      "furniture": [
+        [
+          0,
+          7,
+          "couple"
+        ]
+      ]
     }
   ]
 }

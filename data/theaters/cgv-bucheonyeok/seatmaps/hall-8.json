@@ -49,7 +49,14 @@
     },
     {
       "label": "G",
-      "cells": "ssssssssssss.."
+      "cells": "ssssssssssss..",
+      "furniture": [
+        [
+          0,
+          12,
+          "couple"
+        ]
+      ]
     }
   ]
 }

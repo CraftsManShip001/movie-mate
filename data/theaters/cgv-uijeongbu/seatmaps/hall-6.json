@@ -59,7 +59,14 @@
     },
     {
       "label": "I",
-      "cells": "ss.ss.ssssssssss..ssss"
+      "cells": "ss.ss.ssssssssss..ssss",
+      "furniture": [
+        [
+          4,
+          10,
+          "couple"
+        ]
+      ]
     }
   ]
 }

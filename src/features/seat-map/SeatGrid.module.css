@@ -29,6 +29,8 @@
   display: inline-flex;
   flex-direction: column;
   gap: var(--gap);
+  /* 마지막 열 박스석 테두리(좌석 아래로 반 칸 나온다)가 잘리지 않게 */
+  padding-bottom: calc(var(--gap) / 2 + 1px);
 }
 
 .screen {
@@ -84,6 +86,28 @@
   flex: none;
   width: calc(var(--units) * var(--pitch) - var(--gap));
   height: var(--seat);
+}
+
+/* 본 객석과 떨어진 구역(다른 층 PRIVATE BOX·SWEETBOX) 이름. 가로 통로 아래, 그 구역 첫 열 위에 둔다. */
+.zone {
+  padding-left: calc(16px + var(--gap));
+  font-size: min(var(--text-xs), calc(var(--seat) * 1.15));
+  line-height: 1.2;
+  color: var(--label);
+  white-space: nowrap;
+}
+
+/* 칸막이로 둘러싼 박스석: 좌석을 감싸는 얇은 테두리 */
+.box {
+  position: absolute;
+  top: calc(var(--gap) / -2);
+  left: calc(var(--x) * var(--pitch) - var(--gap) / 2);
+  width: calc(var(--w) * var(--pitch));
+  height: calc(var(--seat) + var(--gap));
+  box-sizing: border-box;
+  border: 1px solid var(--label);
+  border-radius: 4px;
+  pointer-events: none;
 }
 
 .seat {

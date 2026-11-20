@@ -61,7 +61,14 @@
     },
     {
       "label": "I",
-      "cells": "ssss.ssssssssss.ssss"
+      "cells": "ssss.ssssssssss.ssss",
+      "furniture": [
+        [
+          4,
+          10,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "J",
@@ -83,6 +90,13 @@
         16,
         17,
         18
+      ],
+      "furniture": [
+        [
+          6,
+          6,
+          "couple"
+        ]
       ]
     }
   ]

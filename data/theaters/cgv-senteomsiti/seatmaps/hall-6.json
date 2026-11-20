@@ -371,11 +371,25 @@
     },
     {
       "label": "N",
-      "cells": "sssss.ssssssssssssss.ssssss"
+      "cells": "sssss.ssssssssssssss.ssssss",
+      "furniture": [
+        [
+          5,
+          14,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "O",
-      "cells": "sssss.ssssssssssssss.ssssss"
+      "cells": "sssss.ssssssssssssss.ssssss",
+      "furniture": [
+        [
+          5,
+          14,
+          "couple"
+        ]
+      ]
     }
   ]
 }

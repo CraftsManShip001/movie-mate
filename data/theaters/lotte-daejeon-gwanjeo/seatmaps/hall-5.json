@@ -59,7 +59,24 @@
     },
     {
       "label": "M",
-      "cells": ".......ssss..ss..wwww.ssss"
+      "cells": ".......ssss..ss..wwww.ssss",
+      "furniture": [
+        [
+          0,
+          3,
+          "couple"
+        ],
+        [
+          4,
+          1,
+          "couple"
+        ],
+        [
+          9,
+          3,
+          "couple"
+        ]
+      ]
     }
   ]
 }

@@ -80,7 +80,14 @@
     },
     {
       "label": "N",
-      "cells": "ssss.ssssssssssss.sssss"
+      "cells": "ssss.ssssssssssss.sssss",
+      "furniture": [
+        [
+          4,
+          12,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "O",
@@ -94,6 +101,13 @@
         19,
         20,
         21
+      ],
+      "furniture": [
+        [
+          0,
+          8,
+          "couple"
+        ]
       ]
     }
   ]

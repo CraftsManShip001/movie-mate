@@ -56,17 +56,29 @@ export function SeatGrid({
         ) : null}
         {auditorium.rows.map((row, rowIndex) => (
           <Fragment key={row.label}>
+            {row.zone && row.zone !== auditorium.rows[rowIndex - 1]?.zone ? (
+              <div className={styles.zone}>{row.zone}</div>
+            ) : null}
             <div className={styles.row}>
               <span className={styles.label} aria-hidden="true">
                 {row.label}
               </span>
               <div className={styles.seats}>
+                {/* 칸막이로 둘러싼 박스석 */}
+                {row.boxes?.map(([left, span]) => (
+                  <span
+                    key={left}
+                    className={styles.box}
+                    style={{ "--x": place(left + span / 2) - span / 2, "--w": span } as CSSProperties}
+                    aria-hidden="true"
+                  />
+                ))}
                 {seats
                   .filter((seat) => seat.rowIndex === rowIndex)
                   .map((seat) => {
                     const sold = soldSeatIds?.has(seat.id) ?? false;
                     const wide = seat.span >= 1.5;
-                    const label = `${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}${wide ? " 넓은 좌석" : ""}${sold ? ", 팔린 자리" : ""}`;
+                    const label = `${row.zone ? `${row.zone} ` : ""}${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}${wide ? " 넓은 좌석" : ""}${sold ? ", 팔린 자리" : ""}`;
                     const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : "", sold ? styles.sold : ""].join(" ");
                     // 가운데 위치는 통로를 반영하고, 폭은 좌석이 차지한 칸 수 그대로다
                     const x = place(seat.left + seat.span / 2) - seat.span / 2;

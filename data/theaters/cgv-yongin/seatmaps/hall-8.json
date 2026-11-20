@@ -6,19 +6,40 @@
   "format": "recliner",
   "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (90석)",
   "aspectRatio": 1.9,
-  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다. 커플 리클라이너: 붙어 있는 두 자리가 2인 리클라이너 소파다(이름 기준 추정).",
   "rows": [
     {
       "label": "A",
-      "cells": "ss.ss.ss.ss.ss.ss"
+      "cells": "ss.ss.ss.ss.ss.ss",
+      "furniture": [
+        [
+          0,
+          12,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "B",
-      "cells": "ss.ss.ss.ss.ss.ss"
+      "cells": "ss.ss.ss.ss.ss.ss",
+      "furniture": [
+        [
+          0,
+          12,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "C",
-      "cells": "ss.ss.ss.ss.ss.ss"
+      "cells": "ss.ss.ss.ss.ss.ss",
+      "furniture": [
+        [
+          0,
+          12,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "D",
@@ -34,6 +55,13 @@
         10,
         11,
         12
+      ],
+      "furniture": [
+        [
+          0,
+          10,
+          "couple"
+        ]
       ]
     },
     {
@@ -50,6 +78,13 @@
         10,
         11,
         12
+      ],
+      "furniture": [
+        [
+          0,
+          10,
+          "couple"
+        ]
       ]
     },
     {
@@ -66,15 +101,36 @@
         10,
         11,
         12
+      ],
+      "furniture": [
+        [
+          0,
+          10,
+          "couple"
+        ]
       ]
     },
     {
       "label": "G",
-      "cells": "ss.ss.ss.ss.ss.ss"
+      "cells": "ss.ss.ss.ss.ss.ss",
+      "furniture": [
+        [
+          0,
+          12,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "H",
-      "cells": "ss.ss.ss.ss.ss.ss"
+      "cells": "ss.ss.ss.ss.ss.ss",
+      "furniture": [
+        [
+          0,
+          12,
+          "couple"
+        ]
+      ]
     }
   ]
 }

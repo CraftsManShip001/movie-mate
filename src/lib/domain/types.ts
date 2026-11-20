@@ -49,6 +49,7 @@ export type AuditoriumFormat =
   | "dolby-cinema"
   | "premium"
   | "recliner"
+  | "bed"
   | (string & {});
 
 /**
@@ -81,7 +82,41 @@ export interface SeatRow {
    * 없으면 좌석은 cells 의 칸 위치에 폭 1로 놓인다. 있으면 위치·폭은 이 값을 따르고, cells 는 좌석 종류와 대략의 칸만 나타낸다.
    */
   spans?: [number, number][];
+  /**
+   * 본 객석과 떨어진 구역 이름. 예: "PRIVATE BOX 7층", "SWEETBOX PREMIUM 6층".
+   * 다른 층 발코니처럼 본 객석 뒤에 따로 있는 좌석 열에만 쓴다. 이 열들은 세로 통로를 정할 때 빼고 보며, spans 가 꼭 있어야 한다.
+   */
+  zone?: string;
+  /**
+   * 구역 종류. 3D 모양을 정한다.
+   * - "privateBox": 객석 뒤 높은 층의 방(유리창, 칸막이·천장, 리클라이너). boxes 로 방 범위를 준다.
+   * - "sweetbox": 위층 발코니의 2인 가죽 소파(가운데 팔걸이 없음). 붙어 있는 두 자리가 한 소파다.
+   */
+  zoneKind?: "privateBox" | "sweetbox";
+  /**
+   * 구역 바닥. 기본은 "upper"(본 객석 뒤 위층 발코니). "main"이면 본 객석과 같은 층 뒤쪽에 있어 열마다 오르는 단차만 따른다
+   * (롯데시네마 1층 씨네패밀리 부스).
+   */
+  zoneFloor?: "upper" | "main";
+  /**
+   * 일반 의자가 아닌 좌석. [이 열 좌석 중 첫 좌석 순서(0부터), 좌석 수, 종류]. 종류는 SeatFurniture 참고.
+   * 예: [[0, 4, "couple"]] = 왼쪽 네 자리가 2인 소파 두 개.
+   */
+  furniture?: [number, number, SeatFurniture][];
+  /** 칸막이로 둘러싼 박스석(PRIVATE BOX) 범위. 박스마다 [왼쪽 끝, 폭], 단위는 spans 와 같다. */
+  boxes?: [number, number][];
 }
+
+/**
+ * 일반 의자가 아닌 좌석 종류. 3D 모양과 눈높이가 달라진다.
+ * - "couple": 2인 소파(SWEETBOX·커플석). 붙어 있는 두 자리가 한 소파이고 가운데 팔걸이가 없다.
+ * - "sofa": 여러 사람이 앉는 소파 한 덩어리(가족석·발코니 소파). 덩어리 안에 팔걸이가 없다.
+ * - "bed": 누워서 보는 침대(템퍼 시네마, 모션베드). 눈이 낮고 뒤쪽에 있다.
+ * - "beanbag": 바닥의 빈백. 눈이 낮다.
+ * - "mat": 바닥 매트·방석. 눈이 낮다.
+ * - "cabana": 바닥에 앉는 작은 천막(카바나).
+ */
+export type SeatFurniture = "couple" | "sofa" | "bed" | "beanbag" | "mat" | "cabana";
 
 /** 세로 통로: 좌석 행렬의 몇 번째 칸 뒤에 통로가 있는지 */
 export interface VerticalAisle {
@@ -106,6 +141,11 @@ export interface AuditoriumScreen {
   bottomHeight: Sourced;
   /** 스크린 비율(폭/높이). 예: 1.9 (= 1.90:1). width/height와 1% 이상 다르면 검증 오류. */
   aspectRatio: Sourced;
+  /**
+   * SCREENX: 영상이 양옆 벽까지 이어진다. 스크린 면에서 뒤쪽으로 벽 영상이 닿는 깊이 (mm).
+   * 없으면 앞벽 스크린만 있다.
+   */
+  sideScreens?: Sourced;
 }
 
 export interface AuditoriumRoom {
@@ -134,6 +174,8 @@ export interface AuditoriumLayout {
   seatBackHeight: Sourced;
   verticalAisles: VerticalAisle[];
   crossAisles: CrossAisle[];
+  /** 따로 떨어진 구역(zone) 열이 본 객석 맨 뒷열 바닥보다 높은 양. 구역(층)이 바뀔 때마다 한 번씩 더 올라간다 (mm) */
+  zoneRise?: Sourced;
 }
 
 export interface Auditorium {
@@ -176,6 +218,8 @@ export interface Seat {
   /** 좌석 폭 (칸 단위). 일반 좌석은 1, 넓은 좌석은 1보다 크다. */
   span: number;
   kind: Exclude<CellCode, ".">;
+  /** 일반 의자가 아니면 그 종류 */
+  furniture?: SeatFurniture;
 }
 
 export interface Vec3 {

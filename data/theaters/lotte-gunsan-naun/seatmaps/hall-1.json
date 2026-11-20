@@ -39,23 +39,58 @@
     },
     {
       "label": "H",
-      "cells": "ss.ssssss.ss.."
+      "cells": "ss.ssssss.ss..",
+      "furniture": [
+        [
+          7,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "I",
-      "cells": "ss.ssssss.ss.."
+      "cells": "ss.ssssss.ss..",
+      "furniture": [
+        [
+          7,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "J",
-      "cells": "ss.ssssss.ss.."
+      "cells": "ss.ssssss.ss..",
+      "furniture": [
+        [
+          7,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "K",
-      "cells": "ss.ssssss.ss.."
+      "cells": "ss.ssssss.ss..",
+      "furniture": [
+        [
+          7,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "L",
-      "cells": "ss.ssssss.ss.."
+      "cells": "ss.ssssss.ss..",
+      "furniture": [
+        [
+          7,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "M",

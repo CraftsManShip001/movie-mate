@@ -3,22 +3,43 @@
   "id": "s001",
   "theaterId": "cgv-sinsegyegyeonggi",
   "name": "TEMPUR CINEMA",
-  "format": "premium",
+  "format": "bed",
   "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (22석)",
   "aspectRatio": 1.9,
-  "notes": "TEMPUR CINEMA 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "notes": "TEMPUR CINEMA 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다. 누워서 보는 전동 침대(2인) 상영관이다(CJ뉴스룸·머니투데이). 침대 크기·열 간격은 표준값으로 추정했다.",
   "rows": [
     {
       "label": "A",
-      "cells": "ss.ss.ss"
+      "cells": "ss.ss.ss",
+      "furniture": [
+        [
+          0,
+          6,
+          "bed"
+        ]
+      ]
     },
     {
       "label": "B",
-      "cells": "ss.ss.ss"
+      "cells": "ss.ss.ss",
+      "furniture": [
+        [
+          0,
+          6,
+          "bed"
+        ]
+      ]
     },
     {
       "label": "C",
-      "cells": "ss.ss.ss"
+      "cells": "ss.ss.ss",
+      "furniture": [
+        [
+          0,
+          6,
+          "bed"
+        ]
+      ]
     },
     {
       "label": "D",
@@ -28,6 +49,13 @@
         2,
         5,
         6
+      ],
+      "furniture": [
+        [
+          0,
+          4,
+          "bed"
+        ]
       ]
     }
   ]

@@ -2391,7 +2391,7 @@ export const LOTTE_SEAT_TOTALS: Record<string, number> = {
   "lotte-andong": 343,
   "lotte-chilgok": 474,
   "lotte-geochang": 410,
-  "lotte-gwangbok": 2361,
+  "lotte-gwangbok": 2409,
   "lotte-gimhae-buwon": 1121,
   "lotte-gimhae-outlet": 1023,
   "lotte-dongnae": 1581,

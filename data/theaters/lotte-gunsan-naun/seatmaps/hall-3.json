@@ -11,23 +11,58 @@
   "rows": [
     {
       "label": "A",
-      "cells": "ss.ssssssss.wwww"
+      "cells": "ss.ssssssss.wwww",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "B",
-      "cells": "ss.ssssssss.ssss"
+      "cells": "ss.ssssssss.ssss",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "C",
-      "cells": "ss.ssssssss.ssss"
+      "cells": "ss.ssssssss.ssss",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "D",
-      "cells": "ss.ssssssss.ssss"
+      "cells": "ss.ssssssss.ssss",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "E",
-      "cells": "ss.ssssssss.ssss"
+      "cells": "ss.ssssssss.ssss",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "F",
@@ -35,23 +70,68 @@
     },
     {
       "label": "G",
-      "cells": "ss.ssssssss.ss.."
+      "cells": "ss.ssssssss.ss..",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ],
+        [
+          9,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "H",
-      "cells": "ss.ssssssss.ss.."
+      "cells": "ss.ssssssss.ss..",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ],
+        [
+          9,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "I",
-      "cells": ".s.ssssssss.ss.."
+      "cells": ".s.ssssssss.ss..",
+      "furniture": [
+        [
+          8,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "J",
-      "cells": ".s.ssssssss.ss.."
+      "cells": ".s.ssssssss.ss..",
+      "furniture": [
+        [
+          8,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "K",
-      "cells": ".s.ssssssss.ss.."
+      "cells": ".s.ssssssss.ss..",
+      "furniture": [
+        [
+          8,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "L",

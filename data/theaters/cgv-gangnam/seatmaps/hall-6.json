@@ -144,15 +144,36 @@
     },
     {
       "label": "I",
-      "cells": "ss.sssssssssss"
+      "cells": "ss.sssssssssss",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "J",
-      "cells": "ss.ssssssssss."
+      "cells": "ss.ssssssssss.",
+      "furniture": [
+        [
+          0,
+          12,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "K",
-      "cells": "ss.ssssssssss."
+      "cells": "ss.ssssssssss.",
+      "furniture": [
+        [
+          0,
+          12,
+          "couple"
+        ]
+      ]
     }
   ]
 }

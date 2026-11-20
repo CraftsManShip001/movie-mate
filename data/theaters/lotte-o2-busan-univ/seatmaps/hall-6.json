@@ -51,19 +51,67 @@
     },
     {
       "label": "K",
-      "cells": "....ss.ssssssssss.ss...."
+      "cells": "....ss.ssssssssss.ss....",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ],
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "L",
-      "cells": "....ss.ssssssssss.ss...."
+      "cells": "....ss.ssssssssss.ss....",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ],
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "M",
-      "cells": "....ss.ssssssssss.ss...."
+      "cells": "....ss.ssssssssss.ss....",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ],
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "N",
-      "cells": "....ss.ssssssssss.ss...."
+      "cells": "....ss.ssssssssss.ss....",
+      "furniture": [
+        [
+          0,
+          2,
+          "couple"
+        ],
+        [
+          11,
+          1,
+          "couple"
+        ]
+      ]
     },
     {
       "label": "O",

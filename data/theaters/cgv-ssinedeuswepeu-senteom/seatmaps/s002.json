@@ -3,30 +3,65 @@
   "id": "s002",
   "theaterId": "cgv-ssinedeuswepeu-senteom",
   "name": "템퍼 시네마[CINE de CHEF]",
-  "format": "premium",
+  "format": "bed",
   "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (30석)",
   "aspectRatio": 1.9,
-  "notes": "TEMPUR CINEMA 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "notes": "TEMPUR CINEMA 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 누워서 보는 전동 침대(2인) 상영관이다(CJ뉴스룸·머니투데이). 침대 크기·열 간격은 표준값으로 추정했다.",
   "rows": [
     {
       "label": "A",
-      "cells": "ssss.ss"
+      "cells": "ssss.ss",
+      "furniture": [
+        [
+          0,
+          6,
+          "bed"
+        ]
+      ]
     },
     {
       "label": "B",
-      "cells": "ssss.ss"
+      "cells": "ssss.ss",
+      "furniture": [
+        [
+          0,
+          6,
+          "bed"
+        ]
+      ]
     },
     {
       "label": "C",
-      "cells": "ssss.ss"
+      "cells": "ssss.ss",
+      "furniture": [
+        [
+          0,
+          6,
+          "bed"
+        ]
+      ]
     },
     {
       "label": "D",
-      "cells": "ssss.ss"
+      "cells": "ssss.ss",
+      "furniture": [
+        [
+          0,
+          6,
+          "bed"
+        ]
+      ]
     },
     {
       "label": "E",
-      "cells": "ssss.ss"
+      "cells": "ssss.ss",
+      "furniture": [
+        [
+          0,
+          6,
+          "bed"
+        ]
+      ]
     }
   ]
 }
