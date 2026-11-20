@@ -53,8 +53,9 @@
   gap: 16px;
   overflow-x: auto;
   scrollbar-width: none;
-  margin: 0 calc(var(--gutter) * -1);
-  padding: 0 var(--gutter) 4px;
+  /* 옆으로 넘기는 줄은 위아래도 잘라 낸다. 고른 포스터 테두리(바깥 4px)가 보이게 위아래 여유를 두고, 위쪽은 margin으로 상쇄한다 */
+  margin: -4px calc(var(--gutter) * -1) 0;
+  padding: 4px var(--gutter) 4px;
 }
 
 .movies::-webkit-scrollbar {
