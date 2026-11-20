@@ -35,12 +35,13 @@ export function SeatGrid({
   soldSeatIds,
 }: SeatGridProps) {
   const seats = listSeats(auditorium);
-  const seatAt = new Map(seats.map((seat) => [`${seat.rowIndex}:${seat.columnIndex}`, seat]));
-  const aisleAfterColumn = new Set(auditorium.layout.verticalAisles.map((a) => a.afterColumn));
+  const aisleColumns = auditorium.layout.verticalAisles.map((a) => a.afterColumn);
   const aisleAfterRow = new Set(auditorium.layout.crossAisles.map((a) => a.afterRow));
   const columns = auditorium.rows[0]?.cells.length ?? 0;
-  const units = columns + aisleAfterColumn.size;
+  const units = columns + aisleColumns.length;
   const style = { "--units": units, "--seat-max": `${maxSeat}px`, "--seat-min": `${minSeat}px` } as CSSProperties;
+  /** 칸 단위 위치 → 통로 칸을 더한 화면 위치(칸 단위). 3D의 unitX 와 같은 규칙이다. */
+  const place = (unit: number) => unit + aisleColumns.filter((after) => after + 1 <= unit).length;
 
   return (
     <div className={`${styles.wrap} ${tone === "dark" ? styles.dark : ""}`} style={style}>
@@ -59,38 +60,39 @@ export function SeatGrid({
               <span className={styles.label} aria-hidden="true">
                 {row.label}
               </span>
-              {[...row.cells].map((_, columnIndex) => {
-                const seat = seatAt.get(`${rowIndex}:${columnIndex}`);
-                const aisle = aisleAfterColumn.has(columnIndex) ? <span className={styles.aisle} /> : null;
-                if (!seat) {
-                  return (
-                    <Fragment key={columnIndex}>
-                      <span className={styles.empty} />
-                      {aisle}
-                    </Fragment>
-                  );
-                }
-                const sold = soldSeatIds?.has(seat.id) ?? false;
-                const label = `${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}${sold ? ", 팔린 자리" : ""}`;
-                const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : "", sold ? styles.sold : ""].join(" ");
-                return (
-                  <Fragment key={columnIndex}>
-                    {onSelect ? (
+              <div className={styles.seats}>
+                {seats
+                  .filter((seat) => seat.rowIndex === rowIndex)
+                  .map((seat) => {
+                    const sold = soldSeatIds?.has(seat.id) ?? false;
+                    const wide = seat.span >= 1.5;
+                    const label = `${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}${wide ? " 넓은 좌석" : ""}${sold ? ", 팔린 자리" : ""}`;
+                    const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : "", sold ? styles.sold : ""].join(" ");
+                    // 가운데 위치는 통로를 반영하고, 폭은 좌석이 차지한 칸 수 그대로다
+                    const x = place(seat.left + seat.span / 2) - seat.span / 2;
+                    const seatStyle = { "--x": x, "--w": seat.span } as CSSProperties;
+                    return onSelect ? (
                       <button
+                        key={seat.id}
                         type="button"
                         className={className}
+                        style={seatStyle}
                         aria-label={label}
                         aria-pressed={seat.id === selectedSeatId}
                         disabled={seat.kind === "x"}
                         onClick={() => onSelect(seat)}
                       />
                     ) : (
-                      <span className={className} data-selected={seat.id === selectedSeatId || undefined} aria-label={label} />
-                    )}
-                    {aisle}
-                  </Fragment>
-                );
-              })}
+                      <span
+                        key={seat.id}
+                        className={className}
+                        style={seatStyle}
+                        data-selected={seat.id === selectedSeatId || undefined}
+                        aria-label={label}
+                      />
+                    );
+                  })}
+              </div>
             </div>
             {aisleAfterRow.has(rowIndex) ? <div className={styles.crossAisle} /> : null}
           </Fragment>

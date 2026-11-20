@@ -11,6 +11,7 @@ import {
   rowCenterZ,
   rowFloorY,
   seatFloorPosition,
+  seatWidthM,
   seatGridWidthM,
 } from "@/lib/domain/geometry";
 import type { Auditorium, AuditoriumFormat, Seat } from "@/lib/domain/types";
@@ -84,28 +85,40 @@ export function chairStyle(format: AuditoriumFormat): ChairStyle {
 export interface ChairLayout {
   /** 의자 하나의 바닥 중심 위치 */
   chairs: Tuple3[];
+  /** 의자마다 가로 배율: 넓은 좌석(차지한 칸 수)만큼 의자를 넓힌다. chairs 와 같은 순서 */
+  widths: number[];
   /** 팔걸이 위치(바닥 중심). 붙어 있는 좌석은 팔걸이를 같이 쓴다. */
   arms: Tuple3[];
 }
+
+/** 옆 좌석과 이만큼(칸) 안쪽으로 붙어 있으면 팔걸이를 같이 쓴다 */
+const JOIN_GAP = 0.08;
 
 /**
  * 의자와 팔걸이 위치. 의자마다 왼쪽 팔걸이를 갖고, 줄 끝(통로·빈 칸 앞) 의자는 오른쪽 팔걸이를 하나 더 갖는다.
  */
 export function chairLayout(auditorium: Auditorium): ChairLayout {
   const seats = listSeats(auditorium);
-  const half = mmToM(auditorium.layout.seatWidth.value) / 2;
-  const aisleAfter = new Set(auditorium.layout.verticalAisles.map((a) => a.afterColumn));
-  const occupied = new Set(seats.map((s) => `${s.rowIndex}:${s.columnIndex}`));
+  const aisleEdges = auditorium.layout.verticalAisles.map((a) => a.afterColumn + 1);
   const chairs: Tuple3[] = [];
+  const widths: number[] = [];
   const arms: Tuple3[] = [];
-  for (const seat of seats) {
+  seats.forEach((seat, i) => {
     const { x, y, z } = seatFloorPosition(auditorium, seat);
+    const half = seatWidthM(auditorium, seat) / 2;
     chairs.push([x, y, z]);
+    widths.push(seat.span);
     arms.push([x - half, y, z]);
-    const joined = occupied.has(`${seat.rowIndex}:${seat.columnIndex + 1}`) && !aisleAfter.has(seat.columnIndex);
+    const right = seat.left + seat.span;
+    const next = seats[i + 1];
+    const joined =
+      next !== undefined &&
+      next.rowIndex === seat.rowIndex &&
+      Math.abs(next.left - right) <= JOIN_GAP &&
+      !aisleEdges.some((edge) => Math.abs(edge - right) <= JOIN_GAP);
     if (!joined) arms.push([x + half, y, z]);
-  }
-  return { chairs, arms };
+  });
+  return { chairs, widths, arms };
 }
 
 export interface PersonPlacement {

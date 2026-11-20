@@ -7,6 +7,8 @@ import type { Auditorium, Sourced, Theater } from "./types";
 
 const CELL_PATTERN = /^[swx.]*$/;
 const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** 좌석 위치·폭(칸 단위)의 반올림 오차 허용값 */
+const SPAN_TOLERANCE = 0.05;
 const ASPECT_TOLERANCE = 0.01;
 
 export interface SourcedEntry {
@@ -131,6 +133,22 @@ export function validateAuditorium(auditorium: Auditorium): string[] {
       }
       if (new Set(row.numbers).size !== row.numbers.length) {
         errors.push(`rows[${i}](${row.label}) numbers에 같은 번호가 있습니다.`);
+      }
+    }
+    if (row.spans) {
+      const seatCount = [...row.cells].filter((code) => code !== ".").length;
+      if (row.spans.length !== seatCount) {
+        errors.push(`rows[${i}](${row.label}) spans 개수 ${row.spans.length}가 좌석 수 ${seatCount}와 다릅니다.`);
+      }
+      let end = 0;
+      for (const [left, span] of row.spans) {
+        if (!(span > 0) || !(left >= 0) || left + span > width + SPAN_TOLERANCE) {
+          errors.push(`rows[${i}](${row.label}) spans [${left}, ${span}]가 좌석표 범위(0~${width}) 밖입니다.`);
+        }
+        if (left < end - SPAN_TOLERANCE) {
+          errors.push(`rows[${i}](${row.label}) spans [${left}, ${span}]가 앞 좌석과 겹칩니다.`);
+        }
+        end = left + span;
       }
     }
   });

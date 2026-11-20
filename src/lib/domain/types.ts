@@ -75,6 +75,12 @@ export interface SeatRow {
    * 번호가 칸 위치와 맞지 않는 상영관(열마다 좌석이 엇갈리거나 번호가 건너뛰는 곳)에만 쓴다. 있으면 seatNumbering 보다 앞선다.
    */
   numbers?: number[];
+  /**
+   * 좌석마다 [왼쪽 끝 위치, 폭]. 단위는 칸(1 = 일반 좌석 한 칸)이고 소수도 된다. 이 열의 좌석마다 왼쪽부터 하나씩.
+   * 넓은 좌석(리클라이너·커플석·소파석)이 있거나 좌석이 칸에 딱 맞지 않는 열에만 쓴다.
+   * 없으면 좌석은 cells 의 칸 위치에 폭 1로 놓인다. 있으면 위치·폭은 이 값을 따르고, cells 는 좌석 종류와 대략의 칸만 나타낸다.
+   */
+  spans?: [number, number][];
 }
 
 /** 세로 통로: 좌석 행렬의 몇 번째 칸 뒤에 통로가 있는지 */
@@ -165,6 +171,10 @@ export interface Seat {
   number: number;
   rowIndex: number;
   columnIndex: number;
+  /** 좌석 왼쪽 끝 위치 (칸 단위, 소수 가능). 보통은 columnIndex 와 같다. */
+  left: number;
+  /** 좌석 폭 (칸 단위). 일반 좌석은 1, 넓은 좌석은 1보다 크다. */
+  span: number;
   kind: Exclude<CellCode, ".">;
 }
 

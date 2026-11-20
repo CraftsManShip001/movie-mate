@@ -24,12 +24,15 @@ export function listSeats(auditorium: Auditorium): Seat[] {
       if (code === ".") return;
       count += 1;
       const number = row.numbers?.[count - 1] ?? (byColumn ? columnIndex + 1 : count);
+      const [left, span] = row.spans?.[count - 1] ?? [columnIndex, 1];
       seats.push({
         id: `${row.label}${number}`,
         rowLabel: row.label,
         number,
         rowIndex,
         columnIndex,
+        left,
+        span,
         kind: code as Exclude<CellCode, ".">,
       });
     });
@@ -49,14 +52,34 @@ export function seatGridWidthM(auditorium: Auditorium): number {
   return mmToM(columnCount(auditorium) * seatWidth.value + aisles);
 }
 
-/** 칸 중심의 x 좌표 (m). 좌석 행렬은 스크린 중앙에 맞춰 놓는다. */
-export function columnCenterX(auditorium: Auditorium, columnIndex: number): number {
+/**
+ * 칸 단위 위치(소수 가능)의 x 좌표 (m). 좌석 행렬은 스크린 중앙에 맞춰 놓는다.
+ * 통로는 그 통로 앞 칸의 오른쪽 끝(afterColumn + 1)을 지난 위치부터 더한다.
+ */
+export function unitX(auditorium: Auditorium, unit: number): number {
   const { seatWidth, verticalAisles } = auditorium.layout;
   const aislesBefore = verticalAisles
-    .filter((aisle) => aisle.afterColumn < columnIndex)
+    .filter((aisle) => aisle.afterColumn + 1 <= unit)
     .reduce((sum, aisle) => sum + aisle.width.value, 0);
   const left = -seatGridWidthM(auditorium) / 2;
-  return left + mmToM(columnIndex * seatWidth.value + seatWidth.value / 2 + aislesBefore);
+  return left + mmToM(unit * seatWidth.value + aislesBefore);
+}
+
+/** 칸 중심의 x 좌표 (m) */
+export function columnCenterX(auditorium: Auditorium, columnIndex: number): number {
+  return unitX(auditorium, columnIndex + 0.5);
+}
+
+type SeatPlace = Pick<Seat, "rowIndex" | "columnIndex"> & Partial<Pick<Seat, "left" | "span">>;
+
+/** 좌석 중심의 x 좌표 (m). 넓은 좌석은 차지한 폭의 가운데다. */
+export function seatCenterX(auditorium: Auditorium, seat: SeatPlace): number {
+  return unitX(auditorium, (seat.left ?? seat.columnIndex) + (seat.span ?? 1) / 2);
+}
+
+/** 좌석 폭 (m): 좌석 폭 × 차지한 칸 수 */
+export function seatWidthM(auditorium: Auditorium, seat: Partial<Pick<Seat, "span">>): number {
+  return mmToM(auditorium.layout.seatWidth.value) * (seat.span ?? 1);
 }
 
 /** 열 좌석 중심의 z 좌표 (m): 스크린 면에서의 수평 거리 */
@@ -78,10 +101,10 @@ export function rowFloorY(auditorium: Auditorium, rowIndex: number): number {
 /** 좌석 바닥 중심 위치 (m) */
 export function seatFloorPosition(
   auditorium: Auditorium,
-  seat: Pick<Seat, "rowIndex" | "columnIndex">,
+  seat: SeatPlace,
 ): Vec3 {
   return {
-    x: columnCenterX(auditorium, seat.columnIndex),
+    x: seatCenterX(auditorium, seat),
     y: rowFloorY(auditorium, seat.rowIndex),
     z: rowCenterZ(auditorium, seat.rowIndex),
   };
@@ -90,7 +113,7 @@ export function seatFloorPosition(
 /** 앉은 사람의 눈 위치 (m) */
 export function eyePosition(
   auditorium: Auditorium,
-  seat: Pick<Seat, "rowIndex" | "columnIndex">,
+  seat: SeatPlace,
   statureCm: number,
 ): Vec3 {
   const floor = seatFloorPosition(auditorium, seat);
@@ -101,11 +124,12 @@ export function eyePosition(
   };
 }
 
-/** 바로 앞 열에서 같은 칸에 있는 좌석. 없으면 undefined. */
+/** 바로 앞 열에서 이 좌석 가운데 앞에 있는 좌석. 없으면 undefined. */
 export function seatInFront(auditorium: Auditorium, seat: Seat): Seat | undefined {
   if (seat.rowIndex === 0) return undefined;
+  const center = seat.left + seat.span / 2;
   return listSeats(auditorium).find(
-    (other) => other.rowIndex === seat.rowIndex - 1 && other.columnIndex === seat.columnIndex,
+    (other) => other.rowIndex === seat.rowIndex - 1 && other.left <= center && center < other.left + other.span,
   );
 }
 

@@ -27,6 +27,20 @@ describe("scene-layout", () => {
     expect(rowB).toHaveLength(19 + 3);
   });
 
+  it("넓은 좌석은 의자를 칸 수만큼 넓히고, 차지한 폭의 가운데에 놓는다", () => {
+    // 메가박스 해운대(장산) 1관: B열은 일반 리클라이너, E열은 2칸짜리 넓은 리클라이너 7석
+    const wideHall = getAuditorium("megabox-haeundae-jangsan", "hall-1")!;
+    const seats = listSeats(wideHall);
+    const { chairs, widths } = chairLayout(wideHall);
+    const at = (id: string) => seats.findIndex((s) => s.id === id);
+    expect(widths[at("B1")]).toBe(1);
+    expect(widths[at("E2")]).toBe(2);
+    // E열 7석은 B열과 같은 폭에 걸쳐 가운데에 놓인다 (왼쪽으로 쏠리지 않는다)
+    const rowE = seats.filter((s) => s.rowLabel === "E").map((s) => chairs[at(s.id)][0]);
+    expect(rowE[0] + rowE[rowE.length - 1]).toBeCloseTo(0, 1);
+    expect(rowE[1] - rowE[0]).toBeCloseTo(1.6, 2);
+  });
+
   it("앞사람은 고른 좌석보다 앞 열에만 앉고, 좌석마다 늘 같은 모습이다", () => {
     const seat = findSeat(hall, "H10")!;
     const people = frontPeople(hall, seat);

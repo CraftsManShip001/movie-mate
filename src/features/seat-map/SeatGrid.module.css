@@ -71,16 +71,27 @@
   color: var(--label);
 }
 
-.seat,
-.empty,
-.aisle,
 .skeletonSeat {
   width: var(--seat);
   height: var(--seat);
   flex: none;
 }
 
+/* 한 줄의 좌석 자리. 좌석은 칸 단위 위치(--x)와 폭(--w)으로 놓는다. 넓은 좌석은 여러 칸을 차지한다. */
+.seats {
+  --pitch: calc(var(--seat) + var(--gap));
+  position: relative;
+  flex: none;
+  width: calc(var(--units) * var(--pitch) - var(--gap));
+  height: var(--seat);
+}
+
 .seat {
+  position: absolute;
+  top: 0;
+  left: calc(var(--x) * var(--pitch));
+  width: calc(var(--w) * var(--pitch) - var(--gap));
+  height: var(--seat);
   padding: 0;
   border: 0;
   border-radius: 4px 4px 2px 2px;

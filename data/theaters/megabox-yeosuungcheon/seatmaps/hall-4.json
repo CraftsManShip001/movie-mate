@@ -6,43 +6,49 @@
   "format": "standard",
   "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (122석)",
   "aspectRatio": 1.9,
-  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 넓은 좌석은 좌석 데이터의 폭 비율대로 넓게 적었다.",
   "rows": [
     {
       "label": "A",
-      "cells": ".sssssssssssww."
+      "cells": "..sssssssssssww.",
+      "spans": [[1.6, 1], [2.6, 1], [3.6, 1], [4.6, 1], [5.6, 1], [6.6, 1], [7.6, 1], [8.6, 1], [9.6, 1], [10.6, 1], [11.6, 1], [12.6, 1], [13.6, 1]]
     },
     {
       "label": "B",
-      "cells": ".ssssssssssssss"
+      "cells": ".ssssssssssssss."
     },
     {
       "label": "C",
-      "cells": ".sssssssssssss."
+      "cells": "..sssssssssssss.",
+      "spans": [[1.6, 1], [2.6, 1], [3.6, 1], [4.6, 1], [5.6, 1], [6.6, 1], [7.6, 1], [8.6, 1], [9.6, 1], [10.6, 1], [11.6, 1], [12.6, 1], [13.6, 1]]
     },
     {
       "label": "D",
-      "cells": ".sssssssssssss."
+      "cells": "..sssssssssssss.",
+      "spans": [[1.6, 1], [2.6, 1], [3.6, 1], [4.6, 1], [5.6, 1], [6.6, 1], [7.6, 1], [8.6, 1], [9.6, 1], [10.6, 1], [11.6, 1], [12.6, 1], [13.6, 1]]
     },
     {
       "label": "E",
-      "cells": "ssss.ssssssssss"
+      "cells": "ssss.ssssss.ssss",
+      "spans": [[0, 1], [1, 1], [2.4, 1], [3.4, 1], [5, 1], [6, 1], [7.2, 1], [8.2, 1], [9.4, 1], [10.4, 1], [11.6, 1], [12.6, 1], [13.8, 1], [14.8, 1]]
     },
     {
       "label": "F",
-      "cells": "ssss.ssssssssss"
+      "cells": "ssss.ssssss.ssss",
+      "spans": [[0, 1], [1, 1], [2.4, 1], [3.4, 1], [5, 1], [6, 1], [7.2, 1], [8.2, 1], [9.4, 1], [10.4, 1], [11.6, 1], [12.6, 1], [13.8, 1], [14.8, 1]]
     },
     {
       "label": "G",
-      "cells": ".sssssssssssss."
+      "cells": "..sssssssssssss.",
+      "spans": [[1.6, 1], [2.6, 1], [3.6, 1], [4.6, 1], [5.6, 1], [6.6, 1], [7.6, 1], [8.6, 1], [9.6, 1], [10.6, 1], [11.6, 1], [12.6, 1], [13.6, 1]]
     },
     {
       "label": "H",
-      "cells": ".ssssssssssssss"
+      "cells": ".ssssssssssssss."
     },
     {
       "label": "I",
-      "cells": ".ssssssssssssss"
+      "cells": ".ssssssssssssss."
     }
   ]
 }

@@ -90,10 +90,28 @@ export interface CompactedGrid {
   verticalAisles: number[];
 }
 
-/** 모든 열에서 빈 세로줄을 지우고, 그 자리를 통로 위치(afterColumn)로 바꾼다. 양 끝 빈 줄은 그냥 지운다. */
+/** 넓은 좌석이 세로줄을 이만큼(칸) 넘게 덮으면 그 줄은 빈 줄이 아니다 */
+const COVER_MIN = 0.2;
+
+/**
+ * 모든 열에서 빈 세로줄을 지우고, 그 자리를 통로 위치(afterColumn)로 바꾼다. 양 끝 빈 줄은 그냥 지운다.
+ * spans 가 있는 열은 좌석이 실제로 덮은 범위로 빈 줄을 판단하고, 지운 줄만큼 위치를 당긴다.
+ */
 export function compactSeatMap(rows: SeatRow[]): CompactedGrid {
   const width = rows[0]?.cells.length ?? 0;
-  const empty = Array.from({ length: width }, (_, c) => rows.every((row) => row.cells[c] === "."));
+  const covered = (row: SeatRow, c: number): boolean =>
+    row.spans
+      ? row.spans.some(([left, span]) => Math.min(left + span, c + 1) - Math.max(left, c) > COVER_MIN)
+      : row.cells[c] !== ".";
+  const empty = Array.from({ length: width }, (_, c) => rows.every((row) => row.cells[c] === "." && !covered(row, c)));
+  // 양 끝 줄은 조금만 걸쳐도 남긴다(좌석이 좌석표 밖으로 나가지 않게)
+  const ends = rows.flatMap((row) => row.spans ?? []);
+  if (ends.length > 0) {
+    const first = Math.floor(Math.min(...ends.map(([left]) => left)) + 0.01);
+    const last = Math.ceil(Math.max(...ends.map(([left, span]) => left + span)) - 0.01) - 1;
+    if (first >= 0 && first < width) empty[first] = false;
+    if (last >= 0 && last < width) empty[last] = false;
+  }
   const keep: number[] = [];
   const aisles: number[] = [];
   let pendingAisle = false;
@@ -108,12 +126,22 @@ export function compactSeatMap(rows: SeatRow[]): CompactedGrid {
     }
     keep.push(c);
   }
+  // 좌석 가운데보다 왼쪽에서 지운 줄 수만큼 왼쪽으로 당긴다
+  const removedBefore = (center: number): number => empty.filter((isEmpty, c) => isEmpty && c + 0.5 < center).length;
   return {
     rows: rows.map((row) => ({
       label: row.label,
       cells: keep.map((c) => row.cells[c]).join(""),
       // 빈 세로줄만 지우므로 좌석 순서는 그대로다
       ...(row.numbers ? { numbers: row.numbers } : {}),
+      ...(row.spans
+        ? {
+            spans: row.spans.map(([left, span]): [number, number] => [
+              Math.round(Math.max(0, left - removedBefore(left + span / 2)) * 100) / 100,
+              span,
+            ]),
+          }
+        : {}),
     })),
     verticalAisles: aisles,
   };

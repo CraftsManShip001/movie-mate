@@ -295,7 +295,10 @@ function Chairs({ auditorium }: { auditorium: Auditorium }) {
     return t;
   }, []);
   useEffect(() => () => bump.dispose(), [bump]);
-  const chairs = useMemo(() => layout.chairs.map((position) => ({ position })), [layout]);
+  const chairs = useMemo(
+    () => layout.chairs.map((position, i) => ({ position, scale: [layout.widths[i], 1, 1] as Tuple3 })),
+    [layout],
+  );
   const arms = useMemo(() => layout.arms.map((position) => ({ position })), [layout]);
   const look = CHAIR_LOOK[style];
 

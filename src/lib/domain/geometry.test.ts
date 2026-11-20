@@ -9,8 +9,10 @@ import {
   rowCenterZ,
   rowFloorY,
   screenRect,
+  seatCenterX,
   seatGridWidthM,
   seatInFront,
+  seatWidthM,
 } from "./geometry";
 
 const hall = makeTestAuditorium();
@@ -100,5 +102,42 @@ describe("키", () => {
     expect(clampStature(250)).toBe(200);
     expect(clampStature(Number.NaN)).toBe(DEFAULT_STATURE_CM);
     expect(seatedEyeHeightM(200)).toBeCloseTo(0.88);
+  });
+});
+
+describe("넓은 좌석 (spans)", () => {
+  // C열: 0~2칸을 차지하는 2칸짜리 좌석 하나, 통로 건너 3~5칸에 2칸짜리 하나
+  const wide = makeTestAuditorium({
+    rows: [
+      { label: "A", cells: ".ssss" },
+      { label: "B", cells: "sssss" },
+      { label: "C", cells: "s..s.", spans: [[0, 2], [3, 2]] },
+    ],
+  });
+
+  it("좌석마다 위치와 폭을 갖고, spans 가 없으면 칸 위치에 폭 1이다", () => {
+    const seats = listSeats(wide);
+    expect(seats.find((s) => s.id === "B3")).toMatchObject({ left: 2, span: 1 });
+    expect(seats.filter((s) => s.rowLabel === "C").map((s) => [s.id, s.left, s.span])).toEqual([
+      ["C1", 0, 2],
+      ["C2", 3, 2],
+    ]);
+  });
+
+  it("넓은 좌석의 중심은 차지한 폭의 가운데이고, 폭은 칸 수만큼 넓다", () => {
+    const [c1, c2] = listSeats(wide).filter((s) => s.rowLabel === "C");
+    // C1은 B1·B2 두 칸의 가운데
+    expect(seatCenterX(wide, c1)).toBeCloseTo((columnCenterX(wide, 0) + columnCenterX(wide, 1)) / 2, 9);
+    expect(seatCenterX(wide, c2)).toBeCloseTo((columnCenterX(wide, 3) + columnCenterX(wide, 4)) / 2, 9);
+    expect(seatWidthM(wide, c1)).toBeCloseTo(1.0, 9);
+    expect(eyePosition(wide, c1, DEFAULT_STATURE_CM).x).toBeCloseTo(seatCenterX(wide, c1), 9);
+  });
+
+  it("앞 좌석은 내 가운데 앞에 있는 좌석이다", () => {
+    const b4 = findSeat(wide, "B4")!;
+    const c2 = findSeat(wide, "C2")!;
+    // C2(3~5칸)의 가운데 4는 B5(4~5칸) 앞
+    expect(seatInFront(wide, c2)?.id).toBe("B5");
+    expect(seatInFront(wide, b4)?.id).toBe("A3");
   });
 });

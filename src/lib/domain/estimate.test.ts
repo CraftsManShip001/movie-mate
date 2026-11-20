@@ -28,6 +28,18 @@ describe("compactSeatMap", () => {
     expect(rows[3].cells).toBe("sssss" + "ssssssss" + "sssss");
     expect(verticalAisles).toEqual([4, 12]);
   });
+
+  it("넓은 좌석이 덮은 세로줄은 빈 줄로 보지 않고, 지운 줄만큼 위치를 당긴다", () => {
+    const { rows, verticalAisles } = compactSeatMap([
+      { label: "A", cells: ".ss.ss.ss" },
+      // 2칸짜리 좌석이 1~3칸, 통로 건너 4.5~6.5칸, 7~9칸
+      { label: "B", cells: ".s...s.s.", spans: [[1, 2], [4.5, 2], [7, 2]] },
+    ]);
+    // 0번 줄(끝)과 3번 줄(통로)만 지워진다. 6번 줄은 B열 좌석이 덮는다
+    expect(rows[0].cells).toBe("ss" + "ss.ss");
+    expect(verticalAisles).toEqual([1]);
+    expect(rows[1].spans).toEqual([[0, 2], [2.5, 2], [5, 2]]);
+  });
 });
 
 describe("sightlineRiser", () => {
