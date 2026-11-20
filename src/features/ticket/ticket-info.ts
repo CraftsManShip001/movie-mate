@@ -1,10 +1,10 @@
 import type { Seat } from "@/lib/domain/types";
-import { formatBandDate, formatTicketDate, seatCode, ticketNumber, type ViewNumbers } from "@/lib/format";
+import { formatTicketDate, seatCode, ticketNumber, type ViewNumbers } from "@/lib/format";
 import type { Movie } from "@/lib/showtimes/types";
 import type { TicketInfo } from "./Ticket";
 
 export function buildTicketInfo(input: {
-  movie: Pick<Movie, "title" | "titleEn" | "year" | "posterUrl">;
+  movie: Pick<Movie, "title" | "titleEn" | "year" | "posterUrl" | "ticketPosterUrl">;
   theaterName: string;
   screenName: string;
   seat: Pick<Seat, "rowLabel" | "number" | "rowIndex">;
@@ -18,13 +18,13 @@ export function buildTicketInfo(input: {
     ticketNo: ticketNumber(date ?? "0000-00-00", input.seat).replace(/^000000/, ""),
     movieTitle: movie.title,
     movieTitleEn: [movie.titleEn, movie.year].filter(Boolean).join(" · "),
-    posterUrl: movie.posterUrl,
+    posterUrl: movie.ticketPosterUrl || movie.posterUrl,
+    posterFallbackUrl: movie.posterUrl,
     seatCode: seatCode(input.seat),
     theaterName: input.theaterName,
     screenName: input.screenName,
     dateLine: date ? formatTicketDate(date) : "",
     time: time ?? "",
-    bandDate: date && time ? formatBandDate(date, time) : date ? formatTicketDate(date) : "",
     view: numbers ? `${numbers.fov} / ${numbers.up}` : "",
     distance: numbers?.dist ?? "",
   };

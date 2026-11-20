@@ -54,6 +54,7 @@ describe("buildLotteSchedule", () => {
       titleEn: "White Blast",
       source: "lotte",
       posterUrl: "https://cf.lottecinema.co.kr/Media/MovieFile/MovieImg/202611/25121_503_1.jpg",
+      ticketPosterUrl: "https://cf.lottecinema.co.kr/Media/MovieFile/MovieImg/202611/25121_504_1.jpg",
     });
     expect(schedule.movieId).toBe("25121");
   });

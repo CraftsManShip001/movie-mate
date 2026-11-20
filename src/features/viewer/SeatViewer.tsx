@@ -172,8 +172,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                         <TicketPoster
                           width={84}
                           posterUrl={info.posterUrl}
-                          bandDate={info.bandDate}
-                          bandTheater={`${theaterName} · ${screenName}`}
+                          fallbackUrl={info.posterFallbackUrl}
                           alt={`${movie.title} 티켓`}
                         />
                       </div>

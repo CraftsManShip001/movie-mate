@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { buildMegaboxSchedule, decodeEntities, megaboxRating, parseMegaboxSold, type MegaboxPlayItem } from "./megabox-parse";
+import {
+  buildMegaboxSchedule,
+  decodeEntities,
+  megaboxTicketPosterUrl,
+  megaboxRating,
+  parseMegaboxSold,
+  type MegaboxPlayItem,
+} from "./megabox-parse";
 
 const mapping = { brchNo: "1372", screens: { "01": "hall-1", "02": "hall-2" } };
 
@@ -53,6 +60,7 @@ describe("buildMegaboxSchedule", () => {
       runtimeMin: 158,
       source: "megabox",
       posterUrl: "https://img.megabox.co.kr/SharedImg/2026/11/17/poster_150.jpg",
+      ticketPosterUrl: "https://img.megabox.co.kr/SharedImg/2026/11/17/poster.jpg",
     });
     expect(schedule.movies?.[1].rating).toBe("전체 관람가");
   });
@@ -88,5 +96,13 @@ describe("표시 문자", () => {
     expect(megaboxRating("12세이상관람가")).toBe("12세 이상");
     expect(megaboxRating("청소년관람불가")).toBe("청소년 관람불가");
     expect(decodeEntities("2D&#40;더빙&#41;")).toBe("2D(더빙)");
+  });
+});
+
+describe("megaboxTicketPosterUrl", () => {
+  it("썸네일 크기 꼬리를 떼어 원본 포스터를 쓴다", () => {
+    expect(megaboxTicketPosterUrl("/SharedImg/2026/11/07/abc_150.jpg")).toBe("https://img.megabox.co.kr/SharedImg/2026/11/07/abc.jpg");
+    expect(megaboxTicketPosterUrl("/SharedImg/2026/11/07/abc.jpg")).toBe("https://img.megabox.co.kr/SharedImg/2026/11/07/abc.jpg");
+    expect(megaboxTicketPosterUrl(null)).toBeUndefined();
   });
 });

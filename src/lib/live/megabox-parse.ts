@@ -38,6 +38,15 @@ export interface MegaboxDay {
 const TIME = /^(\d{1,2}):(\d{2})$/;
 const POSTER_HOST = "https://img.megabox.co.kr";
 
+/**
+ * 티켓 앞면용 큰 포스터. 시간표가 주는 포스터는 104×150 썸네일(`…_150.jpg`)이라
+ * 크기 꼬리를 떼어 원본(448×640)을 쓴다.
+ */
+export function megaboxTicketPosterUrl(path: string | null | undefined): string | undefined {
+  if (!path) return undefined;
+  return `${POSTER_HOST}${path.replace(/_\d+(\.\w+)$/, "$1")}`;
+}
+
 /** "&#40;" 같은 HTML 문자 참조를 푼다 */
 export function decodeEntities(text: string | null | undefined): string {
   return (text ?? "")
@@ -128,6 +137,7 @@ export function buildMegaboxSchedule(input: {
           rating: megaboxRating(item.admisClassCdNm),
           ...(Number.isFinite(runtime) && runtime > 0 ? { runtimeMin: runtime } : {}),
           posterUrl: item.moviePosterImg ? `${POSTER_HOST}${item.moviePosterImg}` : "",
+          ticketPosterUrl: megaboxTicketPosterUrl(item.moviePosterImg),
           count: 1,
         });
       }

@@ -21,6 +21,11 @@ export interface Movie {
   runtimeMin?: number;
   /** 포스터 이미지 주소(2:3). public/ 경로나 외부 URL. 바꾸면 화면·티켓이 모두 따라 바뀐다. */
   posterUrl: string;
+  /**
+   * 티켓 앞면용 큰 포스터. 시간표의 포스터는 목록용 썸네일이라 앞면(250×520)을 꽉 채우면 흐리다.
+   * 없거나 불러오지 못하면 posterUrl을 쓴다.
+   */
+  ticketPosterUrl?: string;
 }
 
 /** 시간표의 관 하나 */

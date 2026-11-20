@@ -80,6 +80,14 @@ function posterUrl(url: string | null | undefined): string {
 }
 
 /**
+ * 티켓 앞면용 큰 포스터. 시간표 포스터(`…_503_1.jpg`)는 200×288이라
+ * 같은 그림의 600×860 판(`…_504_1.jpg`)을 쓴다. 이름 규칙이 다르면 없다.
+ */
+export function lotteTicketPosterUrl(url: string): string | undefined {
+  return /_503_1\.jpg$/.test(url) ? url.replace(/_503_1\.jpg$/, "_504_1.jpg") : undefined;
+}
+
+/**
  * 7일치 시간표를 하나의 Schedule로 묶는다.
  * - 관은 우리 상영관(시야 데이터)과 ScreenID로 잇고, 같은 관이라도 형식(2D·4D·자막·더빙)이 다르면 줄을 나눈다.
  * - 영화는 7일 동안 상영 횟수가 많은 순.
@@ -136,6 +144,7 @@ export function buildLotteSchedule(input: {
           titleEn: (item.MovieNameUS ?? "").trim(),
           rating: ratingLabel(item.ViewGradeNameKR),
           posterUrl: posterUrl(item.PosterURL),
+          ticketPosterUrl: lotteTicketPosterUrl(posterUrl(item.PosterURL)),
           count: 1,
         });
 

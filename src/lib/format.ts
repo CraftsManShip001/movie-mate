@@ -1,7 +1,7 @@
 /**
  * 화면·티켓 문구 만들기 (순수 함수).
  */
-import { WEEKDAYS_KO, weekdayIndex } from "@/lib/showtimes/schedule";
+import { weekdayIndex } from "@/lib/showtimes/schedule";
 import type { Seat } from "@/lib/domain/types";
 
 const WEEKDAYS_EN = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] as const;
@@ -25,11 +25,6 @@ export function formatDotDate(iso: string): string {
 /** 티켓 뒷면 DATE 줄. "2026.11.16 MON" */
 export function formatTicketDate(iso: string): string {
   return `${formatDotDate(iso)} ${WEEKDAYS_EN[weekdayIndex(iso)]}`;
-}
-
-/** 티켓 앞면 띠. "2026.11.16 (월) 13:40" */
-export function formatBandDate(iso: string, time: string): string {
-  return `${formatDotDate(iso)} (${WEEKDAYS_KO[weekdayIndex(iso)]}) ${time}`;
 }
 
 /** "J열 14번" */
