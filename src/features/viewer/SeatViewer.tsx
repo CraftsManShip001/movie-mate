@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
 import { useLiveShow } from "@/features/flow/useLiveShow";
 import { SeatGrid } from "@/features/seat-map/SeatGrid";
+import { FROM_PICKER_KEY } from "@/features/seat-picker/SeatPicker";
 import { TicketPoster } from "@/features/ticket/Ticket";
 import { buildTicketInfo } from "@/features/ticket/ticket-info";
 import { eyePosition, findSeat } from "@/lib/domain/geometry";
@@ -70,6 +71,9 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const [recenterRequest, setRecenterRequest] = useState(0);
   const [turnedAway, setTurnedAway] = useState(false);
   const [failed, setFailed] = useState(false);
+  // 3D 첫 장면을 그릴 때까지(큰 관은 몇 초) 검은 화면 대신 불러오는 중 표시를 둔다
+  const [ready, setReady] = useState(false);
+  const onReady = useCallback(() => setReady(true), []);
   const [attempt, setAttempt] = useState(0);
   const onVideoStatus = useCallback((status: ScreenVideoStatus) => setVideoStatus(status), []);
   const eye = useMemo(() => (seat ? eyePosition(auditorium, seat, stature) : null), [auditorium, seat, stature]);
@@ -126,14 +130,38 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
               onVideoStatus={onVideoStatus}
               recenterRequest={recenterRequest}
               onTurnedAwayChange={setTurnedAway}
+              onReady={onReady}
             />
           </SceneErrorBoundary>
+          {ready ? null : (
+            <div className={`${styles.placeholder} ${styles.loadingCover}`} role="status">
+              시야를 그리고 있어요
+            </div>
+          )}
         </div>
       )}
 
       <div className={styles.top}>
         <div className={styles.titleBar}>
-          <Link href={backHref} className={styles.back} aria-label="뒤로">
+          <Link
+            href={backHref}
+            className={styles.back}
+            aria-label="뒤로"
+            onClick={(event) => {
+              // 좌석 화면에서 왔으면 기록을 쌓지 않고 돌아간다(브라우저 뒤로 가기가 다시 시야로 오지 않게)
+              let fromPicker = false;
+              try {
+                fromPicker = sessionStorage.getItem(FROM_PICKER_KEY) === base;
+                sessionStorage.removeItem(FROM_PICKER_KEY);
+              } catch {
+                fromPicker = false;
+              }
+              if (fromPicker && window.history.length > 1) {
+                event.preventDefault();
+                router.back();
+              }
+            }}
+          >
             <ChevronLeft />
           </Link>
           <h1 className={styles.title}>

@@ -7,7 +7,7 @@
  * note 에 어떻게 구했는지 남긴다.
  */
 import { seatedEyeHeightM, DEFAULT_STATURE_CM } from "./anthropometry";
-import { rowFloorMm } from "./geometry";
+import { FURNITURE_EYE, rowFloorMm } from "./geometry";
 import type { Auditorium, AuditoriumFormat, CrossAisle, SeatRow, Sourced, VerticalAisle } from "./types";
 
 /** data/theaters/<theaterId>/auditoriums/<id>.seatmap.json 형식 */
@@ -59,7 +59,7 @@ export const STANDARDS = {
     // 전동 리클라이너: 다리 받침을 펴도 뒷줄 통로가 남도록 열 간격을 넓게 잡는다
     recliner: { seatWidth: 800, rowSpacing: 1700, firstRowRatio: 0.5, minRiser: 400, screenBottom: 900 },
     // 누워서 보는 침대(템퍼 시네마·모션베드): 침대 하나 약 1.0m × 2.0m, 뒷줄과 칸막이 여유를 둔다
-    bed: { seatWidth: 1000, rowSpacing: 2400, firstRowRatio: 0.5, minRiser: 450, screenBottom: 900 },
+    bed: { seatWidth: 1000, rowSpacing: 2400, firstRowRatio: 0.5, minRiser: 600, screenBottom: 900 },
   } satisfies Record<string, FormatStandard>,
   /** 세로 통로 폭 */
   aisleWidth: 1100,
@@ -345,7 +345,11 @@ export function estimateAuditorium(input: SeatMapInput): Auditorium {
   const hasZones = rows.some((row) => row.zone !== undefined && row.zoneFloor !== "main");
 
   // 단차: 앞 1열은 평지. 시선 계산은 본 객석 열만 본다
-  const eyeAboveFloor = STANDARDS.seatHeight + seatedEyeHeightM(DEFAULT_STATURE_CM) * 1000;
+  // 침대 관은 누운 눈높이로 단차를 잡는다(앞 침대 등판 너머로 스크린 아래가 보이게)
+  const eyeAboveFloor =
+    input.format === "bed" && FURNITURE_EYE.bed
+      ? FURNITURE_EYE.bed.height * 1000
+      : STANDARDS.seatHeight + seatedEyeHeightM(DEFAULT_STATURE_CM) * 1000;
   const mainDistances = distances.filter((_, i) => rows[i].zone === undefined);
   const sightRiser = sightlineRiser(mainDistances, eyeAboveFloor - std.screenBottom, STANDARDS.cValue);
   const riser = Math.max(std.minRiser, sightRiser);

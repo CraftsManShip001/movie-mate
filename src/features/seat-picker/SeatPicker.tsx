@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
 import { useLiveShow } from "@/features/flow/useLiveShow";
@@ -38,6 +38,15 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
   const seatSold = seat ? (sold?.has(seat.id) ?? false) : false;
   const booking = bookingLink(chain);
 
+  // 주소로 미리 고른 자리(뒤로 가기 등)가 좌석표 아래쪽이면 그 자리가 보이게 스크롤한다
+  const mapRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!seatId) return;
+    mapRef.current?.querySelector('[aria-pressed="true"]')?.scrollIntoView({ block: "center", inline: "nearest" });
+    // 처음 한 번만
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const pick = (next: Seat) => {
     setSeatId(next.id);
     window.history.replaceState(null, "", showQueryString(show, { seat: next.id }));
@@ -65,21 +74,21 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
             <span className={frameStyles.summaryLabel}>자리를 골라 주세요</span>
           )}
           <div className={frameStyles.actions}>
-            {liveShow.show ? (
-              <a
-                href={booking.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={frameStyles.secondary}
-                aria-label={`${booking.label} (새 창)`}
-              >
-                {chain} 예매
-              </a>
-            ) : null}
+            {/* 상영 정보 없이 들어와도(CGV·주소로 바로) 예매는 영화관 사이트로 보낸다 */}
+            <a
+              href={booking.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={frameStyles.secondary}
+              aria-label={`${booking.label} (새 창)`}
+            >
+              {chain} 예매
+            </a>
             {seat ? (
               <Link
                 href={`${base}/seats/${seat.id}${liveShow.show && !seatSold ? "/ticket" : ""}${showQueryString(show)}`}
                 className={frameStyles.cta}
+                onClick={() => markFromPicker(base)}
               >
                 이 자리에서 보기
               </Link>
@@ -93,7 +102,7 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
       }
     >
       <div className={styles.layout}>
-        <div className={styles.map}>
+        <div className={styles.map} ref={mapRef}>
           <SeatGrid
             auditorium={auditorium}
             selectedSeatId={seat?.id ?? null}
@@ -208,4 +217,14 @@ export function SeatPickerSkeleton({ title, backHref }: { title: string; backHre
       </div>
     </Frame>
   );
+}
+
+/** 시야 화면의 뒤로 버튼이 새 기록을 쌓지 않고 이 화면으로 돌아오게 표시해 둔다 */
+export const FROM_PICKER_KEY = "movie-mate:from-picker";
+function markFromPicker(base: string) {
+  try {
+    sessionStorage.setItem(FROM_PICKER_KEY, base);
+  } catch {
+    // 저장소를 못 쓰면 뒤로 버튼은 링크로 동작한다
+  }
 }

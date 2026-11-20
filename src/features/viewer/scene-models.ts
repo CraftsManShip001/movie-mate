@@ -94,9 +94,9 @@ function buildBed({ width }: ChairSpec): ChairGeometries {
   const upholstery = merge([
     // 다리 쪽 매트리스
     roundedBox(inner, 0.16, 1.15, 0.06, [0, top - 0.08, -0.48], { segments: 3 }),
-    // 세운 등판(약 45°)과 베개
-    roundedBox(inner, 0.85, 0.16, 0.06, [0, top - 0.06, 0.12], { tilt: -0.8, pivotBottom: true, segments: 3 }),
-    roundedBox(inner * 0.7, 0.14, 0.12, 0.05, [0, top + 0.5, 0.62], { tilt: -0.8 }),
+    // 뒤로 젖힌 등판(약 45°)과 베개. 머리는 뒤(+z), 발은 스크린 쪽(-z)
+    roundedBox(inner, 0.85, 0.16, 0.06, [0, top - 0.06, 0.12], { tilt: 0.8, pivotBottom: true, segments: 3 }),
+    roundedBox(inner * 0.7, 0.14, 0.12, 0.05, [0, top + 0.52, 0.66], { tilt: 0.8 }),
   ]);
   const shell = merge([roundedBox(inner + 0.02, top - 0.12, length, 0.03, [0, (top - 0.12) / 2, -0.05], { segments: 1 })]);
   const arm = merge([roundedBox(0.05, 1.05, length + 0.1, 0.02, [0, 0.525, -0.05], { segments: 1 })]);

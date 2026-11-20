@@ -1,8 +1,18 @@
 import { Fragment, type CSSProperties } from "react";
 import { seatName } from "@/lib/format";
 import { boxSeats, listSeats } from "@/lib/domain/geometry";
-import type { Auditorium, Seat } from "@/lib/domain/types";
+import type { Auditorium, Seat, SeatFurniture } from "@/lib/domain/types";
 import styles from "./SeatGrid.module.css";
+
+/** 의자가 아닌 좌석 이름(읽어 주기용) */
+const FURNITURE_LABEL: Record<SeatFurniture, string> = {
+  couple: "커플석",
+  sofa: "소파석",
+  bed: "침대",
+  beanbag: "빈백",
+  mat: "매트",
+  cabana: "카바나",
+};
 
 interface SeatGridProps {
   auditorium: Auditorium;
@@ -86,8 +96,9 @@ export function SeatGrid({
                   .map((seat) => {
                     const sold = soldSeatIds?.has(seat.id) ?? false;
                     const wide = seat.span >= 1.5;
-                    const label = `${row.zone ? `${row.zone} ` : ""}${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}${wide ? " 넓은 좌석" : ""}${sold ? ", 팔린 자리" : ""}`;
-                    const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : "", sold ? styles.sold : ""].join(" ");
+                    const label = `${row.zone ? `${row.zone} ` : ""}${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}${seat.furniture ? ` ${FURNITURE_LABEL[seat.furniture]}` : wide ? " 넓은 좌석" : ""}${sold ? ", 팔린 자리" : ""}`;
+                    const furnitureClass = seat.furniture ? (styles[`furniture-${seat.furniture}`] ?? "") : "";
+                    const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : "", furnitureClass, sold ? styles.sold : ""].join(" ");
                     // 가운데 위치는 통로를 반영하고, 폭은 좌석이 차지한 칸 수 그대로다
                     const x = place(seat.left + seat.span / 2) - seat.span / 2;
                     const seatStyle = { "--x": x, "--w": seat.span } as CSSProperties;

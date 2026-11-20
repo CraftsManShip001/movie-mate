@@ -135,6 +135,21 @@
   background: var(--seat-off);
 }
 
+/* 의자가 아닌 좌석: 모양으로 구분한다(색은 고른 자리·팔린 자리 표시에 쓰므로 그대로 둔다) */
+.furniture-bed {
+  border-radius: 2px;
+  box-shadow: inset 0 calc(var(--seat) * 0.3) 0 0 color-mix(in srgb, var(--seat-bg) 70%, var(--label));
+}
+
+.furniture-beanbag {
+  border-radius: 50%;
+}
+
+.furniture-mat,
+.furniture-cabana {
+  border-radius: 2px;
+}
+
 .wheelchair {
   box-shadow: inset 0 0 0 1.5px var(--label);
 }

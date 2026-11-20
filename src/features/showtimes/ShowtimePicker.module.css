@@ -125,6 +125,10 @@
   gap: 2px;
 }
 
+.date:disabled {
+  opacity: 0.35;
+}
+
 .date[aria-pressed="true"] {
   background: var(--color-ink);
   color: #ffffff;

@@ -2,7 +2,7 @@
  * 좌석 좌표 계산. 모두 순수 함수이며 결과 단위는 미터(m).
  * 좌표계는 types.ts 머리말 참고.
  */
-import { seatedEyeHeightM } from "./anthropometry";
+import { DEFAULT_STATURE_CM, seatedEyeHeightM } from "./anthropometry";
 import type { Auditorium, CellCode, Seat, SeatFurniture, SeatRow, Vec3 } from "./types";
 
 export const mmToM = (mm: number): number => mm / 1000;
@@ -76,12 +76,12 @@ type SeatPlace = Pick<Seat, "rowIndex" | "columnIndex"> & Partial<Pick<Seat, "le
 
 /**
  * 의자가 아닌 좌석의 눈 위치 (바닥 기준 높이, 좌석 중심에서 뒤로 간 거리, m).
- * - 침대: 등받이를 올려 반쯤 누운 자세. 눈은 매트리스 위 약 0.35m, 침대 가운데보다 0.6m 뒤(머리 쪽).
+ * - 침대: 등판을 올려 반쯤 누운 자세. 눈은 바닥에서 약 0.82m, 침대 가운데보다 0.3m 뒤(등판 앞, 머리 쪽).
  * - 빈백·매트·카바나: 바닥 가까이 앉는다.
  * 키에 따른 차이는 작아서 고정값으로 둔다.
  */
 export const FURNITURE_EYE: Partial<Record<SeatFurniture, { height: number; back: number }>> = {
-  bed: { height: 0.82, back: 0.6 },
+  bed: { height: 0.82, back: 0.3 },
   beanbag: { height: 0.78, back: 0.1 },
   mat: { height: 0.8, back: 0 },
   cabana: { height: 0.8, back: 0.1 },
@@ -151,7 +151,11 @@ export function eyePosition(
 ): Vec3 {
   const floor = seatFloorPosition(auditorium, seat);
   const low = seat.furniture ? FURNITURE_EYE[seat.furniture] : undefined;
-  if (low) return { x: floor.x, y: floor.y + low.height, z: floor.z + low.back };
+  if (low) {
+    // 눕거나 바닥에 앉아도 키가 크면 눈이 조금 높다(앉은 키 차이의 절반)
+    const tall = (seatedEyeHeightM(statureCm) - seatedEyeHeightM(DEFAULT_STATURE_CM)) * 0.5;
+    return { x: floor.x, y: floor.y + low.height + tall, z: floor.z + low.back };
+  }
   return {
     x: floor.x,
     y: floor.y + mmToM(auditorium.layout.seatHeight.value) + seatedEyeHeightM(statureCm),

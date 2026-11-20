@@ -6,6 +6,9 @@ import { coverUv } from "@/lib/domain/texture-fit";
 import { aspectLabel } from "@/lib/labels";
 import { SCREEN_VIDEO_RANGE, SCREEN_VIDEO_TIMEOUT_MS } from "./video-source";
 
+/** 영상 불러오기에 실패하면 다시 시도하는 횟수 */
+const VIDEO_RETRIES = 2;
+
 export type ScreenVideoStatus = "loading" | "playing" | "blocked" | "fallback";
 
 /**
@@ -124,7 +127,18 @@ export function useScreenTexture(
         },
       );
     };
-    const onError = () => settle("fallback");
+    // 영상 서버(Wikimedia)가 잠깐 503 을 줄 때가 있어 두 번까지 다시 받아 본다
+    let retries = 0;
+    let retryTimer = 0;
+    const onError = () => {
+      if (settled) return;
+      if (retries < VIDEO_RETRIES) {
+        retries += 1;
+        retryTimer = window.setTimeout(() => el.load(), 1500 * retries);
+        return;
+      }
+      settle("fallback");
+    };
     const onPlaying = () => settle("playing");
     const { start, loopFrom, loopTo } = SCREEN_VIDEO_RANGE;
     const onMetadata = () => {
@@ -148,6 +162,7 @@ export function useScreenTexture(
 
     return () => {
       window.clearTimeout(timer);
+      window.clearTimeout(retryTimer);
       el.removeEventListener("playing", onPlaying);
       el.removeEventListener("error", onError);
       el.removeEventListener("timeupdate", onTimeUpdate);

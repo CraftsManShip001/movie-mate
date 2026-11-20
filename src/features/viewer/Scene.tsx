@@ -1,7 +1,7 @@
 "use client";
 
 import { PerformanceMonitor } from "@react-three/drei";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactElement } from "react";
 import {
   AdditiveBlending,
@@ -65,6 +65,8 @@ export interface SceneProps {
   recenterRequest: number;
   /** 스크린에서 고개를 많이 돌렸는지(true) 알려 준다 */
   onTurnedAwayChange: (turnedAway: boolean) => void;
+  /** 첫 장면을 그렸을 때 한 번 부른다(불러오는 중 표시를 걷는다) */
+  onReady?: () => void;
 }
 
 /** 3D 시야 장면. three.js는 브라우저 전용이므로 next/dynamic(ssr: false)으로만 불러온다. */
@@ -82,6 +84,7 @@ export default function Scene(props: SceneProps) {
         onIncline={() => setDpr((d) => Math.min(2, window.devicePixelRatio || 1, d + 0.5))}
       />
       <SceneContents {...props} />
+      {props.onReady ? <FirstFrame onReady={props.onReady} /> : null}
     </Canvas>
   );
 }
@@ -505,10 +508,23 @@ function Instanced({
   );
 }
 
+/** 첫 프레임을 그린 뒤 onReady 를 한 번 부른다 */
+function FirstFrame({ onReady }: { onReady: () => void }) {
+  const done = useRef(false);
+  useFrame(() => {
+    if (done.current) return;
+    done.current = true;
+    onReady();
+  });
+  return null;
+}
+
 const MAX_PITCH = (80 * Math.PI) / 180;
 const DRAG_SPEED = 0.005;
-/** 스크린 방향에서 이만큼 넘게 돌리면 "스크린 보기" 버튼을 띄운다 */
+/** 스크린 방향에서 이만큼 넘게 돌리면 "스크린 보기" 버튼을 띄운다(좌우) */
 const TURNED_AWAY = (60 * Math.PI) / 180;
+/** 위아래로 이만큼 넘게 고개를 들거나 숙여도 버튼을 띄운다 */
+const TILTED_AWAY = (40 * Math.PI) / 180;
 const MAX_VERTICAL_FOV_DEG = 100;
 
 /**
@@ -533,8 +549,9 @@ function SeatCamera({
   const getState = useThree((state) => state.get);
   const yaw = useRef(0);
   const pitch = useRef(0);
-  /** 스크린 중심을 바라보는 yaw. 고개를 얼마나 돌렸는지 잴 때 기준 */
+  /** 스크린 중심을 바라보는 yaw·pitch. 고개를 얼마나 돌렸는지 잴 때 기준 */
   const homeYaw = useRef(0);
+  const homePitch = useRef(0);
   const turnedAway = useRef(false);
   const reportTurn = useRef(onTurnedAwayChange);
   useEffect(() => {
@@ -549,6 +566,7 @@ function SeatCamera({
     yaw.current = Math.atan2(-dx, -dz);
     homeYaw.current = yaw.current;
     pitch.current = Math.atan2(dy, Math.hypot(dx, dz));
+    homePitch.current = pitch.current;
     camera.rotation.set(pitch.current, yaw.current, 0, "YXZ");
     if (turnedAway.current) {
       turnedAway.current = false;
@@ -586,7 +604,9 @@ function SeatCamera({
       pitch.current = clamp(pitch.current + (e.clientY - last.y) * DRAG_SPEED, -MAX_PITCH, MAX_PITCH);
       last = { x: e.clientX, y: e.clientY };
       camera.rotation.set(pitch.current, yaw.current, 0, "YXZ");
-      const away = Math.abs(wrapAngle(yaw.current - homeYaw.current)) > TURNED_AWAY;
+      const away =
+        Math.abs(wrapAngle(yaw.current - homeYaw.current)) > TURNED_AWAY ||
+        Math.abs(pitch.current - homePitch.current) > TILTED_AWAY;
       if (away !== turnedAway.current) {
         turnedAway.current = away;
         reportTurn.current(away);

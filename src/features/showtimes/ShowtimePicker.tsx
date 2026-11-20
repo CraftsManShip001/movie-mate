@@ -95,6 +95,8 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
   const view = movies ? { ...schedule, showings: schedule.showings.filter((s) => s.movieId === currentMovie.id) } : schedule;
 
   const dates = buildDateStrip(todayIso, DAYS);
+  // 상영이 없는 날은 누를 수 없게 한다(지금 보고 있는 날은 빈 화면 안내가 나오므로 그대로 둔다)
+  const hasShows = dates.map((_, i) => groupShowingsByScreen(view, i, i === 0 ? { notBeforeMinutes: nowMinutes } : {}).length > 0);
   const groups = groupShowingsByScreen(view, day, day === 0 ? { notBeforeMinutes: nowMinutes } : {});
   const picked = state.picked;
   const pickedGroup = picked ? groups.find((g) => g.screen.id === picked.screenId) : undefined;
@@ -188,7 +190,8 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
                 type="button"
                 className={styles.date}
                 aria-pressed={i === day}
-                aria-label={`${formatMonthDay(d.iso)}${i === 0 ? " 오늘" : ` ${d.label}요일`}`}
+                disabled={!hasShows[i] && i !== day}
+                aria-label={`${formatMonthDay(d.iso)}${i === 0 ? " 오늘" : ` ${d.label}요일`}${hasShows[i] ? "" : ", 상영 없음"}`}
                 onClick={() => update({ day: i, picked: null })}
               >
                 <span className={styles.dateLabel}>{d.label}</span>
