@@ -1,5 +1,7 @@
 /* 4 · 티켓 장면. 치수·키프레임은 design/flow-a/FlowA1R2.dc.html 의 ptA/ppA/mlA/fpA/cpA 그대로 */
 .stage {
+  /* 발권기에서 나온 티켓이 내려앉는 거리. 휴대폰에서는 남은 화면 가운데까지 내려온다(아래 media) */
+  --drop: 34px;
   position: fixed;
   inset: 0;
   overflow: hidden;
@@ -47,6 +49,10 @@
   left: 50%;
   top: 0;
   margin-left: -125px;
+}
+
+.dropped {
+  transform: translateY(var(--drop));
 }
 
 .perspective {
@@ -114,11 +120,11 @@
     transform: none;
   }
   44% {
-    transform: translateY(46px) scale(1.06);
+    transform: translateY(calc(var(--drop) + 12px)) scale(1.06);
   }
   52%,
   100% {
-    transform: translateY(34px) scale(1);
+    transform: translateY(var(--drop)) scale(1);
   }
 }
 
@@ -192,6 +198,11 @@
 
   .scale {
     transform: scale(0.62);
+  }
+
+  /* 티켓(520px)을 발권기 아래 남은 화면의 가운데로. 크기를 줄인(0.62) 좌표라 나눠서 계산한다 */
+  .stage {
+    --drop: max(34px, calc(((100dvh - 96px) / 0.62 - 520px) / 2));
   }
 }
 

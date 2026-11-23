@@ -81,7 +81,7 @@ export function TicketScene({ theaterId, theaterName, screenName, auditorium, se
       <div className={styles.out}>
         <div className={styles.scale}>
           {/* 오른쪽 장: 입장권 면 그대로 */}
-          <div className={styles.anchor} style={{ transform: "translateY(34px)" }}>
+          <div className={`${styles.anchor} ${styles.dropped}`}>
             <div className={`${styles.copy} ${styles.shadow}`}>
               <TicketPaper info={info} />
             </div>

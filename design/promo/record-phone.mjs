@@ -257,6 +257,43 @@ for (const [name, path, amount] of [
   });
 }
 
+// 8~9) 특별관 더: IMAX(용산 N열 가운데), 메가박스 해운대(장산) 더! 넓은 리클라이너 1관
+async function middleSeatPath(hallPath, frac) {
+  await page.goto(`${BASE}${hallPath}`);
+  await page.waitForTimeout(1500);
+  const label = await page.evaluate((frac) => {
+    const seats = [...document.querySelectorAll("button[aria-label*='열']")].filter((b) => !b.disabled);
+    const ys = seats.map((b) => b.getBoundingClientRect().y), lo = Math.min(...ys), hi = Math.max(...ys);
+    const xs = seats.map((b) => b.getBoundingClientRect().x), l = Math.min(...xs), r = Math.max(...xs);
+    const goal = { x: (l + r) / 2, y: lo + (hi - lo) * frac };
+    let best = null, d = Infinity;
+    for (const b of seats) {
+      const q = b.getBoundingClientRect(), dd = Math.hypot(q.x + q.width / 2 - goal.x, q.y + q.height / 2 - goal.y);
+      if (dd < d) { d = dd; best = b.getAttribute("aria-label"); }
+    }
+    return best;
+  }, frac);
+  const [, row, num] = label.match(/^(\S+)열 (\d+)번/);
+  return `${hallPath}/seats/${row}${num}`;
+}
+for (const [name, hall, frac, amount] of [
+  ["p-imax", "/theaters/cgv-yongsan-ipark-mall/imax", 0.82, 80],
+  ["p-jangsan", "/theaters/megabox-haeundae-jangsan/hall-1", 0.7, 70],
+]) {
+  if (ONLY && !ONLY.includes(name)) continue;
+  const path = await middleSeatPath(hall, frac);
+  console.log(name, path);
+  await page.goto(`${BASE}${path}`);
+  await cine(page);
+  await viewReady(page).catch(() => console.log(name, "not ready"));
+  await page.waitForTimeout(3500);
+  await film(page, name, async () => {
+    await page.waitForTimeout(1200);
+    await lookPhone(amount);
+    await page.waitForTimeout(1000);
+  });
+}
+
 // 6) 자리 옮기기: 일반관(2관) 시야에서 좌석표를 펼치고 앞·옆·뒤로 옮긴다
 if (!ONLY || ONLY.includes("p-hop")) {
   await page.goto(`${BASE}/theaters/cgv-yongsan-ipark-mall/hall-2/seats/H8`);
@@ -320,10 +357,19 @@ if (!ONLY || ONLY.includes("p-showtime")) {
     await mark("seat", seat, 16);
     await page.waitForTimeout(1600);
     console.log("href", await page.getByRole("link", { name: "이 자리에서 보기" }).first().getAttribute("href").catch(() => "none"));
+    await cine(page);
     await tap(page.getByRole("link", { name: "이 자리에서 보기" }).or(page.getByRole("button", { name: "이 자리에서 보기" })).first());
     await page.waitForURL(/\/seats\/[^/]+\?/, { timeout: 30000 }).catch(() => {});
     await viewReady(page).catch(() => {});
-    await page.waitForTimeout(4000);
+    await page.waitForTimeout(3000);
+    // 좌석 시야를 크게 둘러본다(위아래도 조금)
+    await glide(page, W / 2, H * 0.42, 400);
+    await drag(page, { x: W / 2 + 120, y: H * 0.42 }, 1800);
+    await page.waitForTimeout(300);
+    await drag(page, { x: W / 2 - 120, y: H * 0.42 + 30 }, 2600);
+    await page.waitForTimeout(300);
+    await drag(page, { x: W / 2, y: H * 0.42 }, 1600);
+    await page.waitForTimeout(1500);
   });
 }
 
