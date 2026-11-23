@@ -76,6 +76,7 @@ async function seatNear(page, x, y, scope = "body") {
   const label = await page.evaluate(([x, y, scope]) => {
     let best = null, d = Infinity;
     for (const b of document.querySelector(scope).querySelectorAll("button[aria-label*='열']")) {
+      if (b.disabled || b.getAttribute("aria-label").includes("팔린 자리")) continue;
       const r = b.getBoundingClientRect();
       const dd = Math.hypot(r.x + r.width / 2 - x, r.y + r.height / 2 - y);
       if (dd < d) { d = dd; best = b.getAttribute("aria-label"); }
@@ -121,6 +122,17 @@ async function film(page, name, act) {
   console.log(name, frames.length, "frames", (frames.at(-1).t - t0).toFixed(1) + "s");
 }
 
+/** 영화 같은 장면: 3D 화면에서 앱의 글자·버튼·커서를 숨긴다(영상에 넣는 글자와 겹치지 않게). 캔버스가 있을 때만 적용된다. */
+async function cine(page) {
+  await page.evaluate(() => {
+    if (document.getElementById("__cine")) return;
+    const style = document.createElement("style");
+    style.id = "__cine";
+    style.textContent = "body:has(canvas) *:not(:has(canvas)):not(canvas) { visibility: hidden !important; }";
+    document.head.appendChild(style);
+  });
+}
+
 /** 3D 화면에서 천천히 둘러보기: 왼쪽 → 오른쪽 → 가운데 */
 async function lookAround(page, amount = 360) {
   await glide(page, 960, 520, 500);
@@ -158,6 +170,7 @@ await film(page, "pick", async (mark) => {
   const go = page.getByRole("button", { name: "이 자리에서 보기" }).or(page.getByRole("link", { name: "이 자리에서 보기" })).first();
   await glideTo(page, go, 900);
   await page.waitForTimeout(250);
+  await cine(page);
   await click(page);
   await viewReady(page);
   await page.waitForTimeout(2500);
@@ -229,12 +242,95 @@ for (const [name, path, amount] of [
 ]) {
   if (ONLY && !ONLY.includes(name)) continue;
   await page.goto(`${BASE}${path}`);
+  await cine(page);
   await viewReady(page).catch(() => console.log(name, "not ready"));
   await page.waitForTimeout(3500);
   await film(page, name, async () => {
     await page.waitForTimeout(1500);
     await lookAround(page, amount);
     await page.waitForTimeout(1200);
+  });
+}
+
+// 7) 관 고르기: CGV 용산아이파크몰 → IMAX관 → 이 관 좌석 보기
+if (!ONLY || ONLY.includes("halls")) {
+  await page.goto(`${BASE}/theaters/cgv-yongsan-ipark-mall`);
+  await page.waitForTimeout(1500);
+  await page.mouse.move(1500, 900);
+  cursor = { x: 1500, y: 900 };
+  await film(page, "halls", async (mark) => {
+    await page.waitForTimeout(600);
+    const rows = page.getByRole("button").filter({ hasText: /관/ });
+    await glideTo(page, rows.nth(3), 800);
+    await page.waitForTimeout(300);
+    await glideTo(page, rows.nth(1), 600);
+    await page.waitForTimeout(300);
+    const imax = page.getByRole("button", { name: /^IMAX관/ }).first();
+    await glideTo(page, imax, 700);
+    await page.waitForTimeout(200);
+    await click(page);
+    await mark("imax", imax, 12);
+    await page.waitForTimeout(900);
+    const go = page.getByRole("link", { name: "이 관 좌석 보기" }).or(page.getByRole("button", { name: "이 관 좌석 보기" })).first();
+    await glideTo(page, go, 800);
+    await page.waitForTimeout(200);
+    await click(page);
+    await page.waitForURL(/\/imax/);
+    await page.waitForTimeout(2200);
+  });
+}
+
+// 8) 영화·날짜·시간 고르기 → 좌석 → 티켓 → 시야 (메가박스 코엑스, 실시간 시간표)
+if (!ONLY || ONLY.includes("showtime")) {
+  page.on("response", (r) => { if (r.url().includes("/api/live")) console.log("live", r.status()); });
+  page.on("framenavigated", (f) => { if (f === page.mainFrame()) console.log("nav", f.url().replace(BASE, "")); });
+  await page.goto(`${BASE}/theaters/megabox-koekseu`);
+  await page.waitForTimeout(3000);
+  await page.mouse.move(1500, 900);
+  cursor = { x: 1500, y: 900 };
+  await film(page, "showtime", async (mark) => {
+    await page.waitForTimeout(600);
+    const movie = page.getByRole("button", { name: "라라랜드" }).first();
+    await glideTo(page, movie, 900);
+    await page.waitForTimeout(200);
+    await click(page);
+    await mark("movie", movie, 12);
+    await page.waitForTimeout(1000);
+    const day = page.getByRole("button", { name: /11월 24일/ }).first();
+    await glideTo(page, day, 800);
+    await page.waitForTimeout(200);
+    await click(page);
+    await mark("day", day, 12);
+    await page.waitForTimeout(1000);
+    const time = page.getByRole("button", { name: /시작, .*끝/ }).first();
+    await glideTo(page, time, 800);
+    await page.waitForTimeout(200);
+    await click(page);
+    await mark("time", time, 12);
+    await page.waitForTimeout(900);
+    const go = page.getByRole("link", { name: /좌석 보기/ }).or(page.getByRole("button", { name: /좌석 보기/ })).last();
+    await glideTo(page, go, 800);
+    await page.waitForTimeout(200);
+    await click(page);
+    await page.waitForURL(/\/theaters\/megabox-koekseu\/[^/?]+\?/);
+    await page.waitForTimeout(2200);
+    const seats = page.locator("button[aria-label*='열']:not([disabled])");
+    const box = await page.locator("button[aria-label*='열']").first().boundingBox();
+    const last = await page.locator("button[aria-label*='열']").last().boundingBox();
+    const seat = await seatNear(page, 770, box.y + (last.y - box.y) * 0.6);
+    await glideTo(page, seat, 900);
+    await page.waitForTimeout(200);
+    await click(page);
+    await mark("seat", seat, 30);
+    await page.waitForTimeout(1600);
+    console.log("href", await page.getByRole("link", { name: "이 자리에서 보기" }).first().getAttribute("href").catch(() => "none"));
+    const view = page.getByRole("button", { name: "이 자리에서 보기" }).or(page.getByRole("link", { name: "이 자리에서 보기" })).first();
+    await glideTo(page, view, 800);
+    await page.waitForTimeout(200);
+    await click(page);
+    await page.waitForURL(/\/seats\/[^/]+\?/, { timeout: 30000 }).catch(() => {});
+    await viewReady(page).catch(() => {});
+    await page.waitForTimeout(4000);
   });
 }
 

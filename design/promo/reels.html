@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>무비메이트 릴스(세로) 영상</title>
+<script>window.SIZE = { w: 1080, h: 1920 };</script>
+<!-- 같은 폴더의 lib.js(promo-film 스킬 assets/lib.js)와 footage/frames.js(footage.mjs가 만듦)를 쓴다. -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800&display=block" rel="stylesheet">
+<script src="lib.js"></script>
+<script src="footage/frames.js" onerror="window.FRAMES = {}"></script>
+<style>
+  /* 브랜드: src/styles/tokens.css, src/app/icon.svg */
+  :root { --bg: #ffffff; --ink: #141414; --seat: #e9e9ec; --accent: #e5432f; --brand: #A3192E; --dark: #0c0c0d; --on-dark: #f4f4f5; }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--dark); color: var(--ink); font-family: "Noto Sans KR", sans-serif; }
+  .scene { position: absolute; inset: 0; overflow: hidden; opacity: 0; background: var(--bg); transform-origin: 50% 50%; }
+  .cam { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; }
+  .foot { background: var(--dark); }
+  .foot img { position: absolute; left: 0; top: 0; width: 1080px; height: 2342px; }
+  .foot .ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 64px; font-weight: 700; color: #fff; background: #333; }
+
+  /* 그린 장면 · 좌석표: 앱의 좌석표(SeatGrid)를 크게 다시 그린다. 한 칸이 빨갛게 고른 자리가 되고, 카메라가 그 칸 안으로 들어간다. */
+  #grid .seat { position: absolute; width: 66px; height: 66px; border-radius: 15px; background: var(--seat); }
+  #grid .seat.on { background: var(--accent); }
+  #grid svg.screen { position: absolute; left: 0; top: 0; }
+  #grid .fill { position: absolute; background: var(--dark); opacity: 0; }
+  .ptr { position: absolute; left: 0; top: 0; width: 72px; height: 72px; transform-origin: 0 0; z-index: 3; }
+  .ripple { position: absolute; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; background: rgba(20,20,20,.16); opacity: 0; }
+
+  /* 그린 장면 · 불이 꺼진다: 어두운 관에서 스크린 하나가 켜진다 */
+  #lights { background: var(--dark); }
+  #lights .scr { position: absolute; background: #f4f1ea; border-radius: 4px; box-shadow: 0 0 120px 30px rgba(244,241,234,.18); }
+
+  /* 장면 글자: 어디인지(작게)와 한 줄 설명(크게). 3D 장면 왼쪽 아래에만 둔다. */
+  #cap { position: absolute; left: 76px; top: 330px; z-index: 4; color: #fff; text-shadow: 0 2px 22px rgba(0,0,0,.6); pointer-events: none; opacity: 0; }
+  #cap .t { font-size: 68px; font-weight: 700; letter-spacing: -.03em; line-height: 1.2; }
+  #cap .k { font-size: 36px; font-weight: 500; letter-spacing: -.01em; opacity: .86; margin-top: 14px; }
+  #cap .t:empty { display: none; }
+  #cap .t:empty + .k { margin-top: 0; }
+  #cap.mid { left: 0; right: 0; top: 1240px; text-align: center; text-shadow: none; }
+  #dark { position: absolute; inset: 0; background: var(--dark); opacity: 0; }
+  #dot, #endMark, #endWord { z-index: 5; }
+  #dot { position: absolute; left: 526px; top: 946px; width: 28px; height: 28px; background: var(--brand); border-radius: 8px; opacity: 0; }
+  #endMark { position: absolute; top: 860px; width: 200px; height: 200px; overflow: visible; opacity: 0; }
+  #endWord { position: absolute; top: 902px; font-size: 116px; font-weight: 800; letter-spacing: -.04em; color: var(--on-dark); white-space: nowrap; opacity: 0; line-height: 1; }
+</style>
+</head>
+<body>
+<div id="dark"></div>
+
+<div class="scene" id="grid"><div class="cam" id="gridCam">
+  <svg class="screen" width="1080" height="1920"><path id="gridScreen" d="M150 560 Q540 515 930 560" fill="none" stroke="#141414" stroke-width="6" stroke-linecap="round"/></svg>
+  <div class="seats"></div>
+  <div class="fill"></div>
+  <div class="ripple"></div>
+  <svg class="ptr" id="gridPtr" viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.6L10 19z" fill="#151515" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+</div></div>
+
+<div class="scene" id="lights"><div class="cam"><div class="scr"></div></div></div>
+
+<div class="scene foot" id="fs0"><div class="cam"></div></div>
+<div class="scene foot" id="fs1"><div class="cam"></div></div>
+
+<div id="cap"><div class="t"></div><div class="k"></div></div>
+<div id="dot"></div>
+<!-- 로고: src/app/icon.svg 의 티켓(양쪽 반원 홈 + 절취선). 윤곽을 한 획으로 그린 뒤 채운다. -->
+<svg id="endMark" viewBox="0 0 16 16">
+  <path id="emFill" d="M2.5 3H8A2 2 0 0 0 12 3H13.5A1.5 1.5 0 0 1 15 4.5V11.5A1.5 1.5 0 0 1 13.5 13H12A2 2 0 0 0 8 13H2.5A1.5 1.5 0 0 1 1 11.5V4.5A1.5 1.5 0 0 1 2.5 3Z" fill="#A3192E" opacity="0"/>
+  <rect id="emCut" x="9.5" y="5" width="1" height="6" fill="#0c0c0d" opacity="0"/>
+  <path id="emLine" d="M2.5 3H8A2 2 0 0 0 12 3H13.5A1.5 1.5 0 0 1 15 4.5V11.5A1.5 1.5 0 0 1 13.5 13H12A2 2 0 0 0 8 13H2.5A1.5 1.5 0 0 1 1 11.5V4.5A1.5 1.5 0 0 1 2.5 3Z" fill="none" stroke="#f4f4f5" stroke-width=".35"/>
+</svg>
+<div id="endWord">무비메이트</div>
+
+<script>
+  const V = new URLSearchParams(location.search).get("v");
+  const FPS = 60;
+  const TR = 0.6;
+
+  // ── 컷 목록(세로) ─────────────────────────────────
+  // 녹화(1080×2342, 휴대폰 화면): p-flow 자리 누름 12.2 · 시야 15 · 둘러보기 17.5~23 / p-height 키 내림 ~9.5, 올림 ~16
+  // cam: [진행, x, y, 배율] — 녹화 좌표. 화면 밖(위아래 422px 여유)은 자동으로 막는다.
+  const PLOOK = (clip, len, a = 1.4, b = 8.6) => ({ clip, len, from: [[0, a], [len, b]], cam: [[0, 540, 1100, 1.14], [1, 540, 1100, 1.06]] });
+  const VERSIONS = {
+    reels: [
+      { mg: "grid", len: 3.8 },
+      { clip: "p-flow", len: 6.4, from: [[0, 0.4], [1.6, 3.6], [3.2, 8.4], [4.6, 12.6], [5.4, 14.0], [6.4, 15.6]], cam: [[0, 540, 960, 1], [0.6, 540, 960, 1], [0.72, 560, 900, 1.25], [0.86, 540, 1000, 1.02], [1, 540, 1110, 1.1]] },
+      { clip: "p-flow", len: 4.4, from: [[0, 15.8], [4.4, 21.4]], cam: [[0, 540, 1110, 1.12], [1, 540, 1110, 1.04]] },
+      { clip: "p-height", len: 4.4, from: [[0, 8.2], [1.2, 10.4], [4.4, 17.0]], cam: [[0, 540, 1150, 1.18], [1, 540, 1150, 1.12]] },
+      { mg: "lights", len: 1.8 },
+      PLOOK("p-screenx", 3.0, 1.4, 6.2), PLOOK("p-privatebox", 2.8, 1.4, 5.8), PLOOK("p-bed", 2.8, 1.4, 5.8),
+    ],
+  };
+  const CAPS = {
+    reels: [
+      { s: 2, k: "CGV 용산아이파크몰 · IMAX관 N열 23번" },
+      { s: 3, t: "내 키로 앉아 보세요", k: "앞사람 머리에 가리는지까지 미리" },
+      { s: 4, t: "특별관도 그대로", mid: true, a: 0.3, b: 0.3 },
+      { s: 5, k: "CGV 용산아이파크몰 · 14관 SCREENX" },
+      { s: 6, k: "CGV 영등포타임스퀘어 · PRIVATE BOX" },
+      { s: 7, k: "CGV 신세계경기 · TEMPUR CINEMA 침대석" },
+    ],
+  };
+  const SHOTS = VERSIONS[V] ?? VERSIONS.reels;
+  const BRAND_WORD = "무비메이트";
+  const OUTRO = 3.6;
+
+  const MG = {};
+
+  // 좌석표 블록: 4 · 10 · 4칸 × 8줄. 앱 좌석표처럼 가운데 블록이 넓다.
+  MG.grid = (() => {
+    const el = $("#grid");
+    const PICK = [6, 3]; // 고를 자리: 가운데 블록의 줄 5, 칸 7
+    let seats = [], target;
+    return {
+      el,
+      setup() {
+        const S = 66, G = 14, AISLE = 44, cols = [2, 6, 2], rows = 10;
+        const width = cols.reduce((a, c) => a + c * S + (c - 1) * G, 0) + AISLE * 2;
+        let html = "";
+        let x0 = 540 - width / 2;
+        cols.forEach((c, b) => {
+          for (let r = 0; r < rows; r += 1) for (let i = 0; i < c; i += 1) {
+            const x = x0 + i * (S + G), y = 660 + r * (S + G);
+            const on = b === 1 && r === PICK[0] && i === PICK[1];
+            html += `<div class="seat${on ? " on-target" : ""}" data-r="${r}" style="left:${x}px;top:${y}px"></div>`;
+          }
+          x0 += c * S + (c - 1) * G + AISLE;
+        });
+        el.querySelector(".seats").innerHTML = html;
+        seats = $$("#grid .seat").map((s) => ({ s, r: +s.dataset.r }));
+        const t = $("#grid .on-target");
+        target = { el: t, x: parseFloat(t.style.left) + 33, y: parseFloat(t.style.top) + 33 };
+      },
+      draw(lt, len) {
+        // 스크린 선이 그려지고, 줄마다 좌석이 앞에서부터 떠오른다
+        const sl = $("#gridScreen");
+        const L = sl.getTotalLength();
+        sl.style.strokeDasharray = L;
+        sl.style.strokeDashoffset = L * (1 - p(lt, 0.05, 0.7, ease.inOut));
+        for (const { s, r } of seats) {
+          const k = p(lt, 0.25 + r * 0.06, 0.65 + r * 0.06, ease.out);
+          s.style.opacity = k;
+          s.style.transform = `translateY(${(1 - k) * 24}px)`;
+        }
+        // 화살표가 휘어 와서 한 칸을 누른다
+        const T = { fly: [1.0, 2.0], press: 2.1 };
+        const pt = bezier([980, 1750], [900, 1300], [target.x - 4, target.y - 2], p(lt, T.fly[0], T.fly[1], ease.inOut));
+        const press = 1 - 0.14 * pulse(lt, T.press, T.press + 0.22);
+        set("#gridPtr", { transform: `translate(${pt[0] - 5 * 3}px, ${pt[1] - 3 * 3}px) scale(${press})`, opacity: lt < 2.7 ? 1 : 1 - p(lt, 2.7, 2.95) });
+        const on = lt >= T.press + 0.08;
+        target.el.classList.toggle("on", on);
+        target.el.style.transform = `scale(${1 + 0.12 * pulse(lt, T.press + 0.05, T.press + 0.35)})`;
+        const rk = p(lt, T.press, T.press + 0.6, ease.out);
+        set("#grid .ripple", { left: target.x + "px", top: target.y + "px", transform: `scale(${0.3 + rk * 1.3})`, opacity: (1 - rk) * Math.min(1, rk * 6) });
+        // 카메라가 고른 칸 안으로 들어간다. 칸이 화면을 다 채우면 어두워져 관 안으로 이어진다
+        const dive = p(lt, 2.75, len - 0.15, ease.in);
+        const z = Math.exp(lerp(Math.log(1), Math.log(36), dive));
+        const cx = lerp(540, target.x, p(lt, 2.4, 3.4, ease.inOut)), cy = lerp(960, target.y, p(lt, 2.4, 3.4, ease.inOut));
+        const tx = 540 - cx * z, ty = 960 - cy * z;
+        $("#gridCam").style.transform = `translate(${tx}px, ${ty}px) scale(${z})`;
+        set("#grid .fill", { left: target.x - 33 + "px", top: target.y - 33 + "px", width: "66px", height: "66px", borderRadius: "15px", opacity: p(lt, len - 0.9, len - 0.2, ease.inOut) });
+      },
+    };
+  })();
+
+  // 어두운 관에서 스크린이 가로로 켜진다(2.39:1)
+  MG.lights = (() => {
+    const el = $("#lights");
+    return {
+      el,
+      draw(lt, len) {
+        const w = lerp(8, 900, p(lt, 0.3, 1.3, ease.inOut)), h = lerp(8, 376, p(lt, 0.7, 1.6, ease.inOut));
+        set("#lights .scr", { left: 540 - w / 2 + "px", top: 960 - h / 2 + "px", width: w + "px", height: h + "px", opacity: p(lt, 0.1, 0.35) });
+      },
+    };
+  })();
+
+  // ── 엔진: 아래는 보통 고칠 일이 없다 ─────────────────────────
+  // 세로 녹화는 1080×2342라 화면(1080×1920)보다 길다. 그 크기로 가장자리를 막는다.
+  function camTall([cx, cy, z]) {
+    const W = 1080, H = 1920, CW = 1080, CH = 2342;
+    const tx = clamp(W / 2 - cx * z, W - CW * z, 0), ty = clamp(H / 2 - cy * z, H - CH * z, 0);
+    return `translate(${tx}px, ${ty}px) scale(${z})`;
+  }
+  const FRAMES = window.FRAMES || {};
+  let clock = 0, layer = 0;
+  const shots = SHOTS.map((s) => {
+    const shot = { ...s, start: clock, end: clock + s.len, speed: s.speed ?? 1 };
+    if (s.mg) shot.el = MG[s.mg].el;
+    else {
+      shot.el = $("#fs" + (layer++ % 2));
+      shot.map = Array.isArray(s.from) ? smoothMap(s.from) : null;
+    }
+    clock += s.len;
+    return shot;
+  });
+  const END = clock;
+  window.DURATION = END + OUTRO;
+  $("#endWord").textContent = BRAND_WORD;
+
+  const clipTime = (shot, t) => (shot.map ? shot.map(t - shot.start) : shot.from + (t - shot.start) * shot.speed);
+  const frameSrc = (clip, ct) => `footage/${clip}/${FPS}/f${String(Math.min(FRAMES[clip], Math.max(1, Math.floor(ct * FPS) + 1))).padStart(5, "0")}.jpg`;
+
+  // 실제 화면 한 겹: 빨리 감을 때는 셔터를 연 것처럼 몇 프레임을 겹쳐 흐르게 보인다.
+  const STACK = 6;
+  for (const id of ["#fs0", "#fs1"]) $(id + " .cam").innerHTML = Array.from({ length: STACK }, () => "<img>").join("") + '<div class="ph"></div>';
+  async function drawFoot(shot, t) {
+    const cam = shot.el.querySelector(".cam"), ph = cam.querySelector(".ph");
+    const imgs = cam.querySelectorAll("img");
+    if (!FRAMES[shot.clip]) {
+      // 아직 녹화하지 않은 장면은 이름만 보여 준다(구성을 먼저 맞춰 보기).
+      ph.style.display = "flex";
+      ph.textContent = shot.clip;
+      imgs.forEach((im) => (im.style.opacity = 0));
+    } else {
+      ph.style.display = "none";
+      const ct = clipTime(shot, t);
+      const speed = Math.abs(clipTime(shot, t + 1 / 120) - clipTime(shot, t - 1 / 120)) * 60;
+      const n = speed > 1.6 ? Math.min(STACK, Math.ceil(speed / 2)) : 1;
+      const waits = [];
+      imgs.forEach((im, j) => {
+        if (j >= n) { im.style.opacity = 0; return; }
+        const src = frameSrc(shot.clip, n === 1 ? ct : ct + (j / (n - 1) - 0.5) * (speed / FPS));
+        if (im.dataset.src !== src) { im.dataset.src = src; im.src = src; waits.push(im.decode().catch(() => {})); }
+        im.style.opacity = 1 / (j + 1);
+      });
+      await Promise.all(waits);
+    }
+    cam.style.transform = camTall(camAt(shot.cam, clamp((t - shot.start) / (shot.end - shot.start))));
+  }
+
+  const ready = new Set();
+  const SCENE_ELS = [...new Set(shots.map((s) => s.el))];
+  const len = $("#emLine").getTotalLength();
+  $("#emLine").setAttribute("stroke-dasharray", len);
+
+  const capList = (CAPS[V] ?? CAPS.reels).map((c) => {
+    const a = shots[c.s].start + (c.a ?? 0.45), b = shots[c.e ?? c.s].end - (c.b ?? 0.45);
+    return { ...c, from: a, to: b };
+  });
+  function drawCaption(t) {
+    const c = capList.find((x) => t >= x.from - 0.01 && t <= x.to + 0.4);
+    const el = $("#cap");
+    if (!c) { el.style.opacity = 0; return; }
+    if (el.dataset.key !== c.from + "") {
+      el.dataset.key = c.from + "";
+      el.querySelector(".t").textContent = c.t ?? "";
+      el.querySelector(".k").textContent = c.k ?? "";
+      el.className = c.mid ? "mid" : "";
+    }
+    const tin = p(t, c.from, c.from + 0.55, ease.out), kin = p(t, c.from + (c.t ? 0.15 : 0), c.from + (c.t ? 0.7 : 0.55), ease.out);
+    const out = 1 - p(t, c.to, c.to + 0.35, ease.inOut);
+    el.style.opacity = out;
+    set(el.querySelector(".t"), { opacity: tin, transform: `translateY(${(1 - tin) * 18}px)` });
+    set(el.querySelector(".k"), { opacity: kin, transform: `translateY(${(1 - kin) * 14}px)` });
+  }
+
+  window.render = async (t) => {
+    // 컷 사이는 TR초 동안 겹친다: 나가는 컷은 살짝 커지며 흐려지고, 들어오는 컷은 그 위로 작아지며 또렷해진다.
+    const live = shots.filter((s, i) => {
+      const nx = shots[i + 1];
+      const a = i === 0 || s.cut ? s.start : s.start - TR / 2;
+      const b = !nx ? Infinity : nx.cut ? s.end : s.end + TR / 2;
+      return t >= a && t < b;
+    });
+    for (const el of SCENE_ELS) set(el, { opacity: 0, filter: "none", transform: "", zIndex: 0 });
+    for (const shot of live) {
+      const i = shots.indexOf(shot), nx = shots[i + 1];
+      if (shot.mg) {
+        const scene = MG[shot.mg];
+        if (!ready.has(shot.mg)) { set(scene.el, { opacity: 1 }); scene.setup?.(); ready.add(shot.mg); }
+        scene.draw(t - shot.start, shot.len);
+      } else await drawFoot(shot, t);
+      let o = 1, s = 1, blur = 0, z = 1;
+      if (i > 0 && !shot.cut && t < shot.start + TR / 2) {
+        const m = ease.inOut(clamp((t - (shot.start - TR / 2)) / TR));
+        o = m; s = lerp(1.05, 1, m); blur = (1 - m) * 14; z = 2;
+      }
+      if (nx && !nx.cut && t > shot.end - TR / 2) {
+        const m = ease.inOut(clamp((t - (shot.end - TR / 2)) / TR));
+        s *= 1 + 0.05 * m; blur += m * 14;
+      }
+      set(shot.el, { opacity: o, transform: s === 1 ? "" : `scale(${s})`, filter: blur > 0.05 ? `blur(${blur}px)` : "none", zIndex: z });
+    }
+
+    drawCaption(t);
+
+    // 끝: 마지막 화면이 한 점으로 줄어들고, 그 점이 로고로 그려진 뒤 이름이 옆으로 나온다.
+    const last = shots.at(-1).el;
+    if (t >= END) {
+      const k = p(t, END, END + 0.7, ease.inOut), s = lerp(1, 28 / 1080, k);
+      set(last, { opacity: 1 - p(t, END + 0.55, END + 0.75), transformOrigin: "0 0", transform: `translate(${lerp(0, 526, k)}px, ${lerp(0, 960 - (1920 * s) / 2, k)}px) scale(${s})`, borderRadius: lerp(0, 600, k) + "px", filter: "none" });
+    } else set(last, { transformOrigin: "", borderRadius: "0" });
+    set("#dark", { opacity: p(t, END, END + 0.3) });
+    const e0 = END + 0.6;
+    set("#dot", { opacity: show(t, END + 0.5, END + 0.65, e0 + 0.1, e0 + 0.35) });
+    const draw = p(t, e0 + 0.1, e0 + 1.3, ease.inOut), fill = p(t, e0 + 1.1, e0 + 1.6), slide = p(t, e0 + 1.8, e0 + 2.4);
+    const size = 200, gap = 36, wordWidth = $("#endWord").getBoundingClientRect().width || 800;
+    const markLeft = lerp(540 - size / 2, 540 - (size + gap + wordWidth) / 2, slide);
+    set("#endMark", { left: markLeft + "px", opacity: t > e0 ? 1 : 0 });
+    $("#emLine").setAttribute("stroke-dashoffset", len * (1 - draw));
+    $("#emLine").setAttribute("opacity", 1 - p(t, e0 + 1.5, e0 + 1.9));
+    $("#emFill").setAttribute("opacity", fill);
+    $("#emCut").setAttribute("opacity", fill);
+    set("#endWord", { left: markLeft + size + gap + "px", opacity: slide, transform: `translateX(${(1 - slide) * -30}px)` });
+  };
+  window.render(0);
+</script>
+</body>
+</html>
