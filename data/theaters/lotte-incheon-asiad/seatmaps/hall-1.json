@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-1",
+  "theaterId": "lotte-incheon-asiad",
+  "name": "1관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (173석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.sssssssssss.ss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.sssssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.sssssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.sssssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.sssssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.sssssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.sssww..ssss..."
+    },
+    {
+      "label": "H",
+      "cells": "ssss.sssssssssss..."
+    },
+    {
+      "label": "I",
+      "cells": "ssss.sssssssssss..."
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sssssssssss..."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssss..sssss..."
+    }
+  ],
+  "crossAisleAfterRows": [
+    5
+  ]
+}

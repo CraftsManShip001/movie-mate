@@ -6,6 +6,24 @@
   background: var(--color-bg);
 }
 
+/* 화면 높이에 맞춘 틀: 페이지는 고정하고 내용 안쪽만 스크롤 */
+.fit {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.fit .content {
+  min-height: 0;
+}
+
+/* 키가 작은 화면: 고정 부분만으로 꽉 차 안쪽 스크롤 칸이 거의 안 남는다. 페이지 전체를 스크롤한다 */
+@media (max-height: 700px) {
+  .fit {
+    height: auto;
+    overflow: visible;
+  }
+}
+
 .header {
   position: sticky;
   top: 0;
@@ -33,6 +51,18 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* 로고는 뒤로 버튼과 같은 44칸에 두어 제목 위치가 화면마다 같다 */
+.logo {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin-left: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
 }
 
 .headerSpacer {
@@ -186,6 +216,7 @@
 
   .actions > * {
     flex: 1;
+    min-width: 0;
   }
 
   .cta {

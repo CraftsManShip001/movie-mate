@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-sokcho",
+  "chain": "롯데시네마",
+  "branch": "속초",
+  "address": "강원특별자치도 속초시 중앙로121번길 28(금호동), 센텀마크 3층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "cgv-gwangyang-elepeuseukweeo",
+  "name": "6관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (146석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.sssssss.sss."
+    },
+    {
+      "label": "D",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "..ww.sssssss.sss.",
+      "numbers": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    }
+  ]
+}

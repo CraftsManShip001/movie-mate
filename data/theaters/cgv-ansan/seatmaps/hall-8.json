@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-8",
+  "theaterId": "cgv-ansan",
+  "name": "8관[SCREENX] B동",
+  "format": "screenx",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (175석)",
+  "aspectRatio": 1.9,
+  "notes": "SCREENX 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "sss.sssssswww....."
+    },
+    {
+      "label": "B",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "C",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "D",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "E",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "F",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "G",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "H",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "I",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "J",
+      "cells": "sss.ssssssssss...."
+    },
+    {
+      "label": "K",
+      "cells": "sss.ssssssssss.sss"
+    },
+    {
+      "label": "L",
+      "cells": "sss.ssssssssss.sss"
+    },
+    {
+      "label": "M",
+      "cells": "sss.ssssssss...sss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        14,
+        15,
+        16
+      ],
+      "furniture": [
+        [
+          3,
+          8,
+          "couple"
+        ]
+      ]
+    }
+  ]
+}

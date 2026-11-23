@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-mokpopyeonghwagwangjang",
+  "chain": "CGV",
+  "branch": "목포평화광장",
+  "address": "전라남도 목포시 원형동로 53 1129-7 (상동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7",
+    "hall-8"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

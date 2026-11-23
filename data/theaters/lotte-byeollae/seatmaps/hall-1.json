@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-1",
+  "theaterId": "lotte-byeollae",
+  "name": "1관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (181석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.sssssssssww....."
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssssssss...."
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssssssss...."
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssssssss...."
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssssssss...."
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssssssss...."
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssssssss...."
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssssssss.sss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssssssss.sss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssss...sssss.sss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssss...sssss.sss"
+    }
+  ]
+}

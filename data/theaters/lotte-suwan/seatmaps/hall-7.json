@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-7",
+  "theaterId": "lotte-suwan",
+  "name": "7관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (142석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ww.sssssssssss.ss"
+    },
+    {
+      "label": "B",
+      "cells": "ss.sssssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ss.sssssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "ss.sssssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "...sssssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "...sssssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "...sssssssssss.ss"
+    },
+    {
+      "label": "H",
+      "cells": "...sssssssssss.ss"
+    },
+    {
+      "label": "I",
+      "cells": "ss.sssssssssss.ss"
+    },
+    {
+      "label": "J",
+      "cells": "ss.sssssssssss.ss"
+    }
+  ]
+}

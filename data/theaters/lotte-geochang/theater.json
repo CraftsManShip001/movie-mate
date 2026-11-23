@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-geochang",
+  "chain": "롯데시네마",
+  "branch": "거창",
+  "address": "경상남도 거창군 거창읍 중앙로1길 1 8층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

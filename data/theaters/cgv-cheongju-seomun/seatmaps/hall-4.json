@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "cgv-cheongju-seomun",
+  "name": "4관 (리클라이너)",
+  "format": "recliner",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (66석)",
+  "aspectRatio": 1.9,
+  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "sssss.ssssss"
+    },
+    {
+      "label": "B",
+      "cells": "sssss.ssssss"
+    },
+    {
+      "label": "C",
+      "cells": "sssss.ssssss"
+    },
+    {
+      "label": "D",
+      "cells": "sssss.ssssss"
+    },
+    {
+      "label": "E",
+      "cells": "sssss.ssssss"
+    },
+    {
+      "label": "F",
+      "cells": "sssss.ssssss"
+    }
+  ]
+}

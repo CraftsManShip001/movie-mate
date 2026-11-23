@@ -108,7 +108,7 @@ export function groupShowingsByScreen(schedule: Schedule, day: number, options: 
 
 /** 관 줄의 보조 설명. 예: "IMAX 레이저 · 자막 · 1.43:1 · 592석" */
 export function screenMeta(screen: ScreenInfo): string {
-  return [screen.format, screen.subtitle, aspectLabel(screen.aspectRatio), `${screen.seatCount}석`].join(" · ");
+  return [screen.format, screen.subtitle, aspectLabel(screen.aspectRatio), `${screen.seatCount}석`].filter(Boolean).join(" · ");
 }
 
 export interface NextShowDay {

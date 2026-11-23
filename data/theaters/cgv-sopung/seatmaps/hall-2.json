@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "cgv-sopung",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (110석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": ".ssssssssww.."
+    },
+    {
+      "label": "B",
+      "cells": ".ssssssssssss"
+    },
+    {
+      "label": "C",
+      "cells": ".ssssssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.ssss.."
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.ssss.."
+    },
+    {
+      "label": "F",
+      "cells": "ssssss.ssss.."
+    },
+    {
+      "label": "G",
+      "cells": "ssssss.ssss.."
+    },
+    {
+      "label": "H",
+      "cells": "ssssss.ssssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssssss.ssssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssssss.ssssss"
+    }
+  ],
+  "crossAisleAfterRows": [
+    2
+  ]
+}

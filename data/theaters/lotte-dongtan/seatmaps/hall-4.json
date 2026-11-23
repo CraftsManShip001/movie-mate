@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "lotte-dongtan",
+  "name": "4관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (341석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "수퍼플렉스(대형 스크린) 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "...ss..wwsssssssssss.ssssss"
+    },
+    {
+      "label": "B",
+      "cells": "...ss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "C",
+      "cells": "...ss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "D",
+      "cells": "...ss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "E",
+      "cells": "...ss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "F",
+      "cells": "...ss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "G",
+      "cells": "...ss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "H",
+      "cells": "...ss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "I",
+      "cells": "...ss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "J",
+      "cells": "sssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "K",
+      "cells": "sssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "L",
+      "cells": "sssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "M",
+      "cells": "sssss.ssssssssssssss.ssssss"
+    },
+    {
+      "label": "N",
+      "cells": ".ssss.ssssss..ssssss.ssssss",
+      "furniture": [
+        [
+          0,
+          9,
+          "couple"
+        ],
+        [
+          10,
+          10,
+          "couple"
+        ]
+      ]
+    },
+    {
+      "label": "O",
+      "cells": ".ssss.ssssss..ssssss.ssssss",
+      "furniture": [
+        [
+          0,
+          9,
+          "couple"
+        ],
+        [
+          10,
+          10,
+          "couple"
+        ]
+      ]
+    }
+  ],
+  "crossAisleAfterRows": [
+    9,
+    12
+  ]
+}

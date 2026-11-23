@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "id": "s04",
+  "theaterId": "megabox-suwonseutapildeu",
+  "name": "DOLBY VISION+ATMOS",
+  "format": "standard",
+  "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (238석)",
+  "aspectRatio": 1.9,
+  "notes": "Dolby Vision+Atmos 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다. 넓은 좌석은 좌석 데이터의 폭 비율대로 넓게 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "..ww.w.ssssssss.sss...",
+      "numbers": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "spans": [[2, 1.33], [3.33, 1.33], [4.66, 1.33], [6.99, 1], [7.99, 1], [8.99, 1], [9.99, 1], [10.99, 1], [11.99, 1], [12.99, 1], [13.99, 1], [15.99, 1], [16.99, 1], [17.99, 1]]
+    },
+    {
+      "label": "B",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "C",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "D",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "E",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "F",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "G",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "H",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "I",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "J",
+      "cells": "ssssss.ssssssss.sss..."
+    },
+    {
+      "label": "K",
+      "cells": "ssssss.ssssssss.ssssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssssss.ssssssss.ssssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssssss.ssssssss.ssssss"
+    },
+    {
+      "label": "N",
+      "cells": "ssssss...........sssss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "spans": [[0, 1], [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [16.6, 1], [17.6, 1], [18.6, 1], [19.6, 1], [20.6, 1]]
+    }
+  ]
+}

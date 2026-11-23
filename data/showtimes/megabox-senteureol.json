@@ -1,0 +1,1036 @@
+{
+  "schemaVersion": 1,
+  "theaterId": "megabox-senteureol",
+  "movieId": "the-night-orbit",
+  "sample": true,
+  "notes": "관 목록과 좌석 수는 실제 값이고, 상영 시각과 남은 좌석은 가상의 샘플이다. day는 오늘로부터 며칠 뒤인지(0 = 오늘)를 뜻한다.",
+  "screens": [
+    {
+      "id": "s01",
+      "name": "부티크 101호",
+      "format": "2D 더 부티크",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 92,
+      "auditoriumId": "s01"
+    },
+    {
+      "id": "s02",
+      "name": "부티크 102호 [박지현관]",
+      "format": "2D 더 부티크",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 159,
+      "auditoriumId": "s02"
+    },
+    {
+      "id": "s03",
+      "name": "부티크 103호",
+      "format": "2D 더 부티크",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 175,
+      "auditoriumId": "s03"
+    },
+    {
+      "id": "s04",
+      "name": "부티크 104호",
+      "format": "2D 더 부티크",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 136,
+      "auditoriumId": "s04"
+    },
+    {
+      "id": "s05",
+      "name": "부티크 105호",
+      "format": "2D 더 부티크",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 118,
+      "auditoriumId": "s05"
+    }
+  ],
+  "showings": [
+    {
+      "day": 0,
+      "screenId": "s01",
+      "start": "10:55",
+      "end": "13:47",
+      "seatsLeft": 42
+    },
+    {
+      "day": 0,
+      "screenId": "s01",
+      "start": "14:17",
+      "end": "17:09",
+      "seatsLeft": 68
+    },
+    {
+      "day": 0,
+      "screenId": "s01",
+      "start": "17:29",
+      "end": "20:21",
+      "seatsLeft": 54
+    },
+    {
+      "day": 0,
+      "screenId": "s01",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 71
+    },
+    {
+      "day": 0,
+      "screenId": "s02",
+      "start": "09:40",
+      "end": "12:32",
+      "seatsLeft": 97
+    },
+    {
+      "day": 0,
+      "screenId": "s02",
+      "start": "13:02",
+      "end": "15:54",
+      "seatsLeft": 126
+    },
+    {
+      "day": 0,
+      "screenId": "s02",
+      "start": "16:19",
+      "end": "19:11",
+      "seatsLeft": 44
+    },
+    {
+      "day": 0,
+      "screenId": "s02",
+      "start": "19:36",
+      "end": "22:28",
+      "seatsLeft": 97
+    },
+    {
+      "day": 0,
+      "screenId": "s03",
+      "start": "10:30",
+      "end": "13:22",
+      "seatsLeft": 110
+    },
+    {
+      "day": 0,
+      "screenId": "s03",
+      "start": "13:47",
+      "end": "16:39",
+      "seatsLeft": 98
+    },
+    {
+      "day": 0,
+      "screenId": "s03",
+      "start": "17:09",
+      "end": "20:01",
+      "seatsLeft": 77
+    },
+    {
+      "day": 0,
+      "screenId": "s03",
+      "start": "20:26",
+      "end": "23:18",
+      "seatsLeft": 26
+    },
+    {
+      "day": 0,
+      "screenId": "s04",
+      "start": "10:40",
+      "end": "13:32",
+      "seatsLeft": 36
+    },
+    {
+      "day": 0,
+      "screenId": "s04",
+      "start": "14:02",
+      "end": "16:54",
+      "seatsLeft": 43
+    },
+    {
+      "day": 0,
+      "screenId": "s04",
+      "start": "17:19",
+      "end": "20:11",
+      "seatsLeft": 109
+    },
+    {
+      "day": 0,
+      "screenId": "s04",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 61
+    },
+    {
+      "day": 0,
+      "screenId": "s05",
+      "start": "10:15",
+      "end": "13:07",
+      "seatsLeft": 23
+    },
+    {
+      "day": 0,
+      "screenId": "s05",
+      "start": "13:47",
+      "end": "16:39",
+      "seatsLeft": 18
+    },
+    {
+      "day": 0,
+      "screenId": "s05",
+      "start": "17:04",
+      "end": "19:56",
+      "seatsLeft": 46
+    },
+    {
+      "day": 0,
+      "screenId": "s05",
+      "start": "20:21",
+      "end": "23:13",
+      "seatsLeft": 63
+    },
+    {
+      "day": 1,
+      "screenId": "s01",
+      "start": "10:05",
+      "end": "12:57",
+      "seatsLeft": 92
+    },
+    {
+      "day": 1,
+      "screenId": "s01",
+      "start": "13:17",
+      "end": "16:09",
+      "seatsLeft": 91
+    },
+    {
+      "day": 1,
+      "screenId": "s01",
+      "start": "16:39",
+      "end": "19:31",
+      "seatsLeft": 10
+    },
+    {
+      "day": 1,
+      "screenId": "s01",
+      "start": "20:01",
+      "end": "22:53",
+      "seatsLeft": 88
+    },
+    {
+      "day": 1,
+      "screenId": "s02",
+      "start": "10:30",
+      "end": "13:22",
+      "seatsLeft": 54
+    },
+    {
+      "day": 1,
+      "screenId": "s02",
+      "start": "13:42",
+      "end": "16:34",
+      "seatsLeft": 71
+    },
+    {
+      "day": 1,
+      "screenId": "s02",
+      "start": "17:04",
+      "end": "19:56",
+      "seatsLeft": 99
+    },
+    {
+      "day": 1,
+      "screenId": "s02",
+      "start": "20:21",
+      "end": "23:13",
+      "seatsLeft": 109
+    },
+    {
+      "day": 1,
+      "screenId": "s03",
+      "start": "10:50",
+      "end": "13:42",
+      "seatsLeft": 105
+    },
+    {
+      "day": 1,
+      "screenId": "s03",
+      "start": "14:07",
+      "end": "16:59",
+      "seatsLeft": 81
+    },
+    {
+      "day": 1,
+      "screenId": "s03",
+      "start": "17:29",
+      "end": "20:21",
+      "seatsLeft": 172
+    },
+    {
+      "day": 1,
+      "screenId": "s03",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 147
+    },
+    {
+      "day": 1,
+      "screenId": "s04",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 17
+    },
+    {
+      "day": 1,
+      "screenId": "s04",
+      "start": "14:22",
+      "end": "17:14",
+      "seatsLeft": 116
+    },
+    {
+      "day": 1,
+      "screenId": "s04",
+      "start": "17:34",
+      "end": "20:26",
+      "seatsLeft": 112
+    },
+    {
+      "day": 1,
+      "screenId": "s04",
+      "start": "20:46",
+      "end": "23:38",
+      "seatsLeft": 117
+    },
+    {
+      "day": 1,
+      "screenId": "s05",
+      "start": "10:00",
+      "end": "12:52",
+      "seatsLeft": 105
+    },
+    {
+      "day": 1,
+      "screenId": "s05",
+      "start": "13:12",
+      "end": "16:04",
+      "seatsLeft": 100
+    },
+    {
+      "day": 1,
+      "screenId": "s05",
+      "start": "16:24",
+      "end": "19:16",
+      "seatsLeft": 117
+    },
+    {
+      "day": 1,
+      "screenId": "s05",
+      "start": "19:41",
+      "end": "22:33",
+      "seatsLeft": 31
+    },
+    {
+      "day": 2,
+      "screenId": "s01",
+      "start": "10:30",
+      "end": "13:22",
+      "seatsLeft": 26
+    },
+    {
+      "day": 2,
+      "screenId": "s01",
+      "start": "13:42",
+      "end": "16:34",
+      "seatsLeft": 15
+    },
+    {
+      "day": 2,
+      "screenId": "s01",
+      "start": "17:04",
+      "end": "19:56",
+      "seatsLeft": 91
+    },
+    {
+      "day": 2,
+      "screenId": "s01",
+      "start": "20:16",
+      "end": "23:08",
+      "seatsLeft": 46
+    },
+    {
+      "day": 2,
+      "screenId": "s02",
+      "start": "10:10",
+      "end": "13:02",
+      "seatsLeft": 87
+    },
+    {
+      "day": 2,
+      "screenId": "s02",
+      "start": "13:22",
+      "end": "16:14",
+      "seatsLeft": 19
+    },
+    {
+      "day": 2,
+      "screenId": "s02",
+      "start": "16:34",
+      "end": "19:26",
+      "seatsLeft": 84
+    },
+    {
+      "day": 2,
+      "screenId": "s02",
+      "start": "19:56",
+      "end": "22:48",
+      "seatsLeft": 144
+    },
+    {
+      "day": 2,
+      "screenId": "s03",
+      "start": "09:55",
+      "end": "12:47",
+      "seatsLeft": 135
+    },
+    {
+      "day": 2,
+      "screenId": "s03",
+      "start": "13:17",
+      "end": "16:09",
+      "seatsLeft": 94
+    },
+    {
+      "day": 2,
+      "screenId": "s03",
+      "start": "16:44",
+      "end": "19:36",
+      "seatsLeft": 138
+    },
+    {
+      "day": 2,
+      "screenId": "s03",
+      "start": "20:01",
+      "end": "22:53",
+      "seatsLeft": 66
+    },
+    {
+      "day": 2,
+      "screenId": "s04",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 45
+    },
+    {
+      "day": 2,
+      "screenId": "s04",
+      "start": "14:22",
+      "end": "17:14",
+      "seatsLeft": 133
+    },
+    {
+      "day": 2,
+      "screenId": "s04",
+      "start": "17:34",
+      "end": "20:26",
+      "seatsLeft": 136
+    },
+    {
+      "day": 2,
+      "screenId": "s04",
+      "start": "20:56",
+      "end": "23:48",
+      "seatsLeft": 21
+    },
+    {
+      "day": 2,
+      "screenId": "s05",
+      "start": "11:15",
+      "end": "14:07",
+      "seatsLeft": 104
+    },
+    {
+      "day": 2,
+      "screenId": "s05",
+      "start": "14:32",
+      "end": "17:24",
+      "seatsLeft": 71
+    },
+    {
+      "day": 2,
+      "screenId": "s05",
+      "start": "17:49",
+      "end": "20:41",
+      "seatsLeft": 115
+    },
+    {
+      "day": 2,
+      "screenId": "s05",
+      "start": "21:21",
+      "end": "24:13",
+      "seatsLeft": 27
+    },
+    {
+      "day": 3,
+      "screenId": "s01",
+      "start": "10:00",
+      "end": "12:52",
+      "seatsLeft": 28
+    },
+    {
+      "day": 3,
+      "screenId": "s01",
+      "start": "13:17",
+      "end": "16:09",
+      "seatsLeft": 37
+    },
+    {
+      "day": 3,
+      "screenId": "s01",
+      "start": "16:29",
+      "end": "19:21",
+      "seatsLeft": 52
+    },
+    {
+      "day": 3,
+      "screenId": "s01",
+      "start": "20:01",
+      "end": "22:53",
+      "seatsLeft": 10
+    },
+    {
+      "day": 3,
+      "screenId": "s02",
+      "start": "10:45",
+      "end": "13:37",
+      "seatsLeft": 139
+    },
+    {
+      "day": 3,
+      "screenId": "s02",
+      "start": "14:17",
+      "end": "17:09",
+      "seatsLeft": 103
+    },
+    {
+      "day": 3,
+      "screenId": "s02",
+      "start": "17:39",
+      "end": "20:31",
+      "seatsLeft": 112
+    },
+    {
+      "day": 3,
+      "screenId": "s02",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 91
+    },
+    {
+      "day": 3,
+      "screenId": "s03",
+      "start": "11:15",
+      "end": "14:07",
+      "seatsLeft": 58
+    },
+    {
+      "day": 3,
+      "screenId": "s03",
+      "start": "14:32",
+      "end": "17:24",
+      "seatsLeft": 151
+    },
+    {
+      "day": 3,
+      "screenId": "s03",
+      "start": "18:04",
+      "end": "20:56",
+      "seatsLeft": 168
+    },
+    {
+      "day": 3,
+      "screenId": "s03",
+      "start": "21:21",
+      "end": "24:13",
+      "seatsLeft": 36
+    },
+    {
+      "day": 3,
+      "screenId": "s04",
+      "start": "11:15",
+      "end": "14:07",
+      "seatsLeft": 79
+    },
+    {
+      "day": 3,
+      "screenId": "s04",
+      "start": "14:27",
+      "end": "17:19",
+      "seatsLeft": 114
+    },
+    {
+      "day": 3,
+      "screenId": "s04",
+      "start": "17:44",
+      "end": "20:36",
+      "seatsLeft": 34
+    },
+    {
+      "day": 3,
+      "screenId": "s04",
+      "start": "20:56",
+      "end": "23:48",
+      "seatsLeft": 21
+    },
+    {
+      "day": 3,
+      "screenId": "s05",
+      "start": "10:25",
+      "end": "13:17",
+      "seatsLeft": 64
+    },
+    {
+      "day": 3,
+      "screenId": "s05",
+      "start": "13:37",
+      "end": "16:29",
+      "seatsLeft": 56
+    },
+    {
+      "day": 3,
+      "screenId": "s05",
+      "start": "16:54",
+      "end": "19:46",
+      "seatsLeft": 41
+    },
+    {
+      "day": 3,
+      "screenId": "s05",
+      "start": "20:11",
+      "end": "23:03",
+      "seatsLeft": 79
+    },
+    {
+      "day": 4,
+      "screenId": "s01",
+      "start": "10:45",
+      "end": "13:37",
+      "seatsLeft": 77
+    },
+    {
+      "day": 4,
+      "screenId": "s01",
+      "start": "14:07",
+      "end": "16:59",
+      "seatsLeft": 22
+    },
+    {
+      "day": 4,
+      "screenId": "s01",
+      "start": "17:39",
+      "end": "20:31",
+      "seatsLeft": 9
+    },
+    {
+      "day": 4,
+      "screenId": "s01",
+      "start": "21:11",
+      "end": "24:03",
+      "seatsLeft": 28
+    },
+    {
+      "day": 4,
+      "screenId": "s02",
+      "start": "11:15",
+      "end": "14:07",
+      "seatsLeft": 39
+    },
+    {
+      "day": 4,
+      "screenId": "s02",
+      "start": "14:32",
+      "end": "17:24",
+      "seatsLeft": 82
+    },
+    {
+      "day": 4,
+      "screenId": "s02",
+      "start": "18:04",
+      "end": "20:56",
+      "seatsLeft": 36
+    },
+    {
+      "day": 4,
+      "screenId": "s02",
+      "start": "21:26",
+      "end": "24:18",
+      "seatsLeft": 56
+    },
+    {
+      "day": 4,
+      "screenId": "s03",
+      "start": "10:10",
+      "end": "13:02",
+      "seatsLeft": 40
+    },
+    {
+      "day": 4,
+      "screenId": "s03",
+      "start": "13:37",
+      "end": "16:29",
+      "seatsLeft": 90
+    },
+    {
+      "day": 4,
+      "screenId": "s03",
+      "start": "16:54",
+      "end": "19:46",
+      "seatsLeft": 76
+    },
+    {
+      "day": 4,
+      "screenId": "s03",
+      "start": "20:21",
+      "end": "23:13",
+      "seatsLeft": 90
+    },
+    {
+      "day": 4,
+      "screenId": "s04",
+      "start": "10:00",
+      "end": "12:52",
+      "seatsLeft": 114
+    },
+    {
+      "day": 4,
+      "screenId": "s04",
+      "start": "13:32",
+      "end": "16:24",
+      "seatsLeft": 97
+    },
+    {
+      "day": 4,
+      "screenId": "s04",
+      "start": "16:54",
+      "end": "19:46",
+      "seatsLeft": 86
+    },
+    {
+      "day": 4,
+      "screenId": "s04",
+      "start": "20:16",
+      "end": "23:08",
+      "seatsLeft": 39
+    },
+    {
+      "day": 4,
+      "screenId": "s05",
+      "start": "10:35",
+      "end": "13:27",
+      "seatsLeft": 79
+    },
+    {
+      "day": 4,
+      "screenId": "s05",
+      "start": "14:02",
+      "end": "16:54",
+      "seatsLeft": 88
+    },
+    {
+      "day": 4,
+      "screenId": "s05",
+      "start": "17:34",
+      "end": "20:26",
+      "seatsLeft": 17
+    },
+    {
+      "day": 4,
+      "screenId": "s05",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 117
+    },
+    {
+      "day": 5,
+      "screenId": "s01",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 79
+    },
+    {
+      "day": 5,
+      "screenId": "s01",
+      "start": "13:47",
+      "end": "16:39",
+      "seatsLeft": 52
+    },
+    {
+      "day": 5,
+      "screenId": "s01",
+      "start": "17:19",
+      "end": "20:11",
+      "seatsLeft": 91
+    },
+    {
+      "day": 5,
+      "screenId": "s01",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 34
+    },
+    {
+      "day": 5,
+      "screenId": "s02",
+      "start": "09:40",
+      "end": "12:32",
+      "seatsLeft": 154
+    },
+    {
+      "day": 5,
+      "screenId": "s02",
+      "start": "13:02",
+      "end": "15:54",
+      "seatsLeft": 66
+    },
+    {
+      "day": 5,
+      "screenId": "s02",
+      "start": "16:14",
+      "end": "19:06",
+      "seatsLeft": 35
+    },
+    {
+      "day": 5,
+      "screenId": "s02",
+      "start": "19:36",
+      "end": "22:28",
+      "seatsLeft": 92
+    },
+    {
+      "day": 5,
+      "screenId": "s03",
+      "start": "09:50",
+      "end": "12:42",
+      "seatsLeft": 21
+    },
+    {
+      "day": 5,
+      "screenId": "s03",
+      "start": "13:02",
+      "end": "15:54",
+      "seatsLeft": 84
+    },
+    {
+      "day": 5,
+      "screenId": "s03",
+      "start": "16:19",
+      "end": "19:11",
+      "seatsLeft": 105
+    },
+    {
+      "day": 5,
+      "screenId": "s03",
+      "start": "19:41",
+      "end": "22:33",
+      "seatsLeft": 144
+    },
+    {
+      "day": 5,
+      "screenId": "s04",
+      "start": "09:35",
+      "end": "12:27",
+      "seatsLeft": 114
+    },
+    {
+      "day": 5,
+      "screenId": "s04",
+      "start": "13:07",
+      "end": "15:59",
+      "seatsLeft": 132
+    },
+    {
+      "day": 5,
+      "screenId": "s04",
+      "start": "16:34",
+      "end": "19:26",
+      "seatsLeft": 42
+    },
+    {
+      "day": 5,
+      "screenId": "s04",
+      "start": "19:51",
+      "end": "22:43",
+      "seatsLeft": 45
+    },
+    {
+      "day": 5,
+      "screenId": "s05",
+      "start": "10:10",
+      "end": "13:02",
+      "seatsLeft": 55
+    },
+    {
+      "day": 5,
+      "screenId": "s05",
+      "start": "13:22",
+      "end": "16:14",
+      "seatsLeft": 93
+    },
+    {
+      "day": 5,
+      "screenId": "s05",
+      "start": "16:44",
+      "end": "19:36",
+      "seatsLeft": 67
+    },
+    {
+      "day": 5,
+      "screenId": "s05",
+      "start": "19:56",
+      "end": "22:48",
+      "seatsLeft": 118
+    },
+    {
+      "day": 6,
+      "screenId": "s01",
+      "start": "09:50",
+      "end": "12:42",
+      "seatsLeft": 22
+    },
+    {
+      "day": 6,
+      "screenId": "s01",
+      "start": "13:22",
+      "end": "16:14",
+      "seatsLeft": 46
+    },
+    {
+      "day": 6,
+      "screenId": "s01",
+      "start": "16:39",
+      "end": "19:31",
+      "seatsLeft": 45
+    },
+    {
+      "day": 6,
+      "screenId": "s01",
+      "start": "20:01",
+      "end": "22:53",
+      "seatsLeft": 85
+    },
+    {
+      "day": 6,
+      "screenId": "s02",
+      "start": "10:55",
+      "end": "13:47",
+      "seatsLeft": 135
+    },
+    {
+      "day": 6,
+      "screenId": "s02",
+      "start": "14:07",
+      "end": "16:59",
+      "seatsLeft": 123
+    },
+    {
+      "day": 6,
+      "screenId": "s02",
+      "start": "17:34",
+      "end": "20:26",
+      "seatsLeft": 108
+    },
+    {
+      "day": 6,
+      "screenId": "s02",
+      "start": "20:56",
+      "end": "23:48",
+      "seatsLeft": 85
+    },
+    {
+      "day": 6,
+      "screenId": "s03",
+      "start": "10:25",
+      "end": "13:17",
+      "seatsLeft": 132
+    },
+    {
+      "day": 6,
+      "screenId": "s03",
+      "start": "13:47",
+      "end": "16:39",
+      "seatsLeft": 25
+    },
+    {
+      "day": 6,
+      "screenId": "s03",
+      "start": "17:04",
+      "end": "19:56",
+      "seatsLeft": 50
+    },
+    {
+      "day": 6,
+      "screenId": "s03",
+      "start": "20:21",
+      "end": "23:13",
+      "seatsLeft": 168
+    },
+    {
+      "day": 6,
+      "screenId": "s04",
+      "start": "10:00",
+      "end": "12:52",
+      "seatsLeft": 20
+    },
+    {
+      "day": 6,
+      "screenId": "s04",
+      "start": "13:17",
+      "end": "16:09",
+      "seatsLeft": 117
+    },
+    {
+      "day": 6,
+      "screenId": "s04",
+      "start": "16:39",
+      "end": "19:31",
+      "seatsLeft": 79
+    },
+    {
+      "day": 6,
+      "screenId": "s04",
+      "start": "19:51",
+      "end": "22:43",
+      "seatsLeft": 84
+    },
+    {
+      "day": 6,
+      "screenId": "s05",
+      "start": "10:35",
+      "end": "13:27",
+      "seatsLeft": 43
+    },
+    {
+      "day": 6,
+      "screenId": "s05",
+      "start": "14:07",
+      "end": "16:59",
+      "seatsLeft": 61
+    },
+    {
+      "day": 6,
+      "screenId": "s05",
+      "start": "17:34",
+      "end": "20:26",
+      "seatsLeft": 23
+    },
+    {
+      "day": 6,
+      "screenId": "s05",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 52
+    }
+  ]
+}

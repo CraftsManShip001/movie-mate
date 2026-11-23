@@ -1,3 +1,4 @@
+import type { Auditorium } from "./types";
 import { describe, expect, it } from "vitest";
 import { makeTestAuditorium } from "./fixtures";
 import { listSourcedValues, validateAuditorium } from "./validation";
@@ -42,6 +43,17 @@ describe("validateAuditorium", () => {
       layout: { ...base.layout, verticalAisles: [{ afterColumn: 4, width: { value: 1000, source: "measured" } }] },
     });
     expect(validateAuditorium(hall).join()).toContain("afterColumn");
+  });
+
+  it("spans 는 좌석 수와 같아야 하고, 범위 안에서 서로 겹치지 않아야 한다", () => {
+    const withC = (c: Auditorium["rows"][number]) => {
+      const base = makeTestAuditorium();
+      return makeTestAuditorium({ rows: [base.rows[0], base.rows[1], c] });
+    };
+    expect(validateAuditorium(withC({ label: "C", cells: "s..s.", spans: [[0, 2], [3, 2]] }))).toEqual([]);
+    expect(validateAuditorium(withC({ label: "C", cells: "s..s.", spans: [[0, 2]] })).join()).toContain("spans 개수");
+    expect(validateAuditorium(withC({ label: "C", cells: "s..s.", spans: [[0, 2], [1.5, 2]] })).join()).toContain("겹칩니다");
+    expect(validateAuditorium(withC({ label: "C", cells: "s..s.", spans: [[0, 2], [4, 2]] })).join()).toContain("범위");
   });
 });
 

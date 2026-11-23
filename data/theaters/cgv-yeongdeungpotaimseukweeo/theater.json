@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-yeongdeungpotaimseukweeo",
+  "chain": "CGV",
+  "branch": "영등포타임스퀘어",
+  "address": "서울 영등포구 영중로 15 (영등포동4가, 타임스퀘어 4~8층)",
+  "auditoriumIds": [
+    "hall-1",
+    "s002",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-7",
+    "hall-8",
+    "hall-9",
+    "s010",
+    "s011",
+    "s017"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

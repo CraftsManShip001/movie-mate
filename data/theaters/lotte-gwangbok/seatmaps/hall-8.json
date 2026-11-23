@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-8",
+  "theaterId": "lotte-gwangbok",
+  "name": "8관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (407석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.sssswwww.wwwwwwwww.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "M",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "N",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "O",
+      "cells": "ssss.ssssssss.sssssssss.ssss"
+    },
+    {
+      "label": "P",
+      "cells": "ssss.ssss..........ssss.ssss"
+    },
+    {
+      "label": "Q",
+      "cells": "ssss.ssss..........ssss.ssss"
+    }
+  ],
+  "crossAisleAfterRows": [
+    3
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-dongtangeurangpasajyu",
+  "chain": "CGV",
+  "branch": "동탄그랑파사쥬",
+  "address": "경기도 화성시 동탄대로 5길 9 5064호, 5001호, 6001호 (송동, 더샵동탄센텀폴리스)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

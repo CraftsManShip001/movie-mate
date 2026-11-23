@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-cheongju-seomun",
+  "chain": "CGV",
+  "branch": "청주(서문)",
+  "address": "충청북도 청주시 상당구 상당로81번길 63 (서문동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "s007",
+    "hall-8",
+    "hall-9",
+    "hall-10"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

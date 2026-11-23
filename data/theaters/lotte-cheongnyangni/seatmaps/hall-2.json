@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-2",
+  "theaterId": "lotte-cheongnyangni",
+  "name": "2관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (208석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "....wwwssssssss.sss"
+    },
+    {
+      "label": "B",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "C",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "D",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "E",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "F",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "G",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "H",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "I",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "J",
+      "cells": "....sssssssssss.sss"
+    },
+    {
+      "label": "K",
+      "cells": "sss.sssssssssss.sss"
+    },
+    {
+      "label": "L",
+      "cells": "sss.sssssssssss.sss"
+    },
+    {
+      "label": "M",
+      "cells": "sss.sssssssssss.sss"
+    },
+    {
+      "label": "N",
+      "cells": "sss.sssssssssss.sss"
+    }
+  ]
+}

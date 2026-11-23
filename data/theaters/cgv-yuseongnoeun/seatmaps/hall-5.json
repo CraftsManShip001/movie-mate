@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "cgv-yuseongnoeun",
+  "name": "5관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (228석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "wwww.ssssssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssssss.sss."
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssssss.ss.."
+    },
+    {
+      "label": "K",
+      "cells": "ssss.ssssssss.s..."
+    },
+    {
+      "label": "L",
+      "cells": "ssss.ssssssss.s..."
+    },
+    {
+      "label": "M",
+      "cells": "ssss.ssssssss....."
+    },
+    {
+      "label": "N",
+      "cells": "...ssss.sssss....."
+    },
+    {
+      "label": "O",
+      "cells": "...ssss.sssss....."
+    },
+    {
+      "label": "P",
+      "cells": "...ssss.ssss......"
+    },
+    {
+      "label": "Q",
+      "cells": "...ssss.sss......."
+    }
+  ],
+  "crossAisleAfterRows": [
+    12
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-dongbaek",
+  "chain": "CGV",
+  "branch": "동백",
+  "address": "경기도 용인시 기흥구 동백죽전대로 444 쥬네브썬월드 7001 (중동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7",
+    "hall-8"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

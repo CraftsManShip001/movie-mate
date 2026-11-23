@@ -1,0 +1,1241 @@
+{
+  "schemaVersion": 1,
+  "theaterId": "cgv-yeouido",
+  "movieId": "the-night-orbit",
+  "sample": true,
+  "notes": "관 목록과 좌석 수는 실제 값이고, 상영 시각과 남은 좌석은 가상의 샘플이다. day는 오늘로부터 며칠 뒤인지(0 = 오늘)를 뜻한다.",
+  "screens": [
+    {
+      "id": "hall-1",
+      "name": "1관[DOLBY ATMOS] (리클라이너)",
+      "format": "리클라이너 DOLBY ATMOS 2D",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 107,
+      "auditoriumId": "hall-1"
+    },
+    {
+      "id": "hall-2",
+      "name": "2관 (리클라이너)",
+      "format": "리클라이너 2D",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 106,
+      "auditoriumId": "hall-2"
+    },
+    {
+      "id": "hall-3",
+      "name": "3관[CGV아트하우스]",
+      "format": "2D",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 73,
+      "auditoriumId": "hall-3"
+    },
+    {
+      "id": "s006",
+      "name": "4DX관",
+      "format": "4DX 2D",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 120,
+      "auditoriumId": "s006"
+    },
+    {
+      "id": "hall-6",
+      "name": "6관 (리클라이너)",
+      "format": "리클라이너 2D",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 100,
+      "auditoriumId": "hall-6"
+    },
+    {
+      "id": "hall-7",
+      "name": "7관 (리클라이너)",
+      "format": "리클라이너 2D",
+      "subtitle": "자막",
+      "aspectRatio": 1.9,
+      "seatCount": 106,
+      "auditoriumId": "hall-7"
+    }
+  ],
+  "showings": [
+    {
+      "day": 0,
+      "screenId": "hall-1",
+      "start": "10:35",
+      "end": "13:27",
+      "seatsLeft": 100
+    },
+    {
+      "day": 0,
+      "screenId": "hall-1",
+      "start": "14:02",
+      "end": "16:54",
+      "seatsLeft": 50
+    },
+    {
+      "day": 0,
+      "screenId": "hall-1",
+      "start": "17:29",
+      "end": "20:21",
+      "seatsLeft": 71
+    },
+    {
+      "day": 0,
+      "screenId": "hall-1",
+      "start": "21:01",
+      "end": "23:53",
+      "seatsLeft": 52
+    },
+    {
+      "day": 0,
+      "screenId": "hall-2",
+      "start": "11:20",
+      "end": "14:12",
+      "seatsLeft": 53
+    },
+    {
+      "day": 0,
+      "screenId": "hall-2",
+      "start": "14:47",
+      "end": "17:39",
+      "seatsLeft": 88
+    },
+    {
+      "day": 0,
+      "screenId": "hall-2",
+      "start": "18:09",
+      "end": "21:01",
+      "seatsLeft": 86
+    },
+    {
+      "day": 0,
+      "screenId": "hall-2",
+      "start": "21:36",
+      "end": "24:28",
+      "seatsLeft": 104
+    },
+    {
+      "day": 0,
+      "screenId": "hall-3",
+      "start": "10:55",
+      "end": "13:47",
+      "seatsLeft": 33
+    },
+    {
+      "day": 0,
+      "screenId": "hall-3",
+      "start": "14:27",
+      "end": "17:19",
+      "seatsLeft": 25
+    },
+    {
+      "day": 0,
+      "screenId": "hall-3",
+      "start": "17:59",
+      "end": "20:51",
+      "seatsLeft": 46
+    },
+    {
+      "day": 0,
+      "screenId": "hall-3",
+      "start": "21:16",
+      "end": "24:08",
+      "seatsLeft": 25
+    },
+    {
+      "day": 0,
+      "screenId": "hall-6",
+      "start": "09:40",
+      "end": "12:32",
+      "seatsLeft": 90
+    },
+    {
+      "day": 0,
+      "screenId": "hall-6",
+      "start": "13:02",
+      "end": "15:54",
+      "seatsLeft": 66
+    },
+    {
+      "day": 0,
+      "screenId": "hall-6",
+      "start": "16:29",
+      "end": "19:21",
+      "seatsLeft": 34
+    },
+    {
+      "day": 0,
+      "screenId": "hall-6",
+      "start": "19:51",
+      "end": "22:43",
+      "seatsLeft": 60
+    },
+    {
+      "day": 0,
+      "screenId": "hall-7",
+      "start": "09:40",
+      "end": "12:32",
+      "seatsLeft": 52
+    },
+    {
+      "day": 0,
+      "screenId": "hall-7",
+      "start": "13:12",
+      "end": "16:04",
+      "seatsLeft": 27
+    },
+    {
+      "day": 0,
+      "screenId": "hall-7",
+      "start": "16:29",
+      "end": "19:21",
+      "seatsLeft": 51
+    },
+    {
+      "day": 0,
+      "screenId": "hall-7",
+      "start": "19:46",
+      "end": "22:38",
+      "seatsLeft": 47
+    },
+    {
+      "day": 0,
+      "screenId": "s006",
+      "start": "10:50",
+      "end": "13:42",
+      "seatsLeft": 65
+    },
+    {
+      "day": 0,
+      "screenId": "s006",
+      "start": "14:17",
+      "end": "17:09",
+      "seatsLeft": 77
+    },
+    {
+      "day": 0,
+      "screenId": "s006",
+      "start": "17:39",
+      "end": "20:31",
+      "seatsLeft": 57
+    },
+    {
+      "day": 0,
+      "screenId": "s006",
+      "start": "20:56",
+      "end": "23:48",
+      "seatsLeft": 64
+    },
+    {
+      "day": 1,
+      "screenId": "hall-1",
+      "start": "10:45",
+      "end": "13:37",
+      "seatsLeft": 86
+    },
+    {
+      "day": 1,
+      "screenId": "hall-1",
+      "start": "14:12",
+      "end": "17:04",
+      "seatsLeft": 85
+    },
+    {
+      "day": 1,
+      "screenId": "hall-1",
+      "start": "17:39",
+      "end": "20:31",
+      "seatsLeft": 62
+    },
+    {
+      "day": 1,
+      "screenId": "hall-1",
+      "start": "21:01",
+      "end": "23:53",
+      "seatsLeft": 65
+    },
+    {
+      "day": 1,
+      "screenId": "hall-2",
+      "start": "10:30",
+      "end": "13:22",
+      "seatsLeft": 62
+    },
+    {
+      "day": 1,
+      "screenId": "hall-2",
+      "start": "13:57",
+      "end": "16:49",
+      "seatsLeft": 82
+    },
+    {
+      "day": 1,
+      "screenId": "hall-2",
+      "start": "17:19",
+      "end": "20:11",
+      "seatsLeft": 61
+    },
+    {
+      "day": 1,
+      "screenId": "hall-2",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 79
+    },
+    {
+      "day": 1,
+      "screenId": "hall-3",
+      "start": "09:35",
+      "end": "12:27",
+      "seatsLeft": 52
+    },
+    {
+      "day": 1,
+      "screenId": "hall-3",
+      "start": "12:52",
+      "end": "15:44",
+      "seatsLeft": 52
+    },
+    {
+      "day": 1,
+      "screenId": "hall-3",
+      "start": "16:19",
+      "end": "19:11",
+      "seatsLeft": 9
+    },
+    {
+      "day": 1,
+      "screenId": "hall-3",
+      "start": "19:51",
+      "end": "22:43",
+      "seatsLeft": 72
+    },
+    {
+      "day": 1,
+      "screenId": "hall-6",
+      "start": "11:10",
+      "end": "14:02",
+      "seatsLeft": 94
+    },
+    {
+      "day": 1,
+      "screenId": "hall-6",
+      "start": "14:32",
+      "end": "17:24",
+      "seatsLeft": 94
+    },
+    {
+      "day": 1,
+      "screenId": "hall-6",
+      "start": "18:04",
+      "end": "20:56",
+      "seatsLeft": 31
+    },
+    {
+      "day": 1,
+      "screenId": "hall-6",
+      "start": "21:26",
+      "end": "24:18",
+      "seatsLeft": 12
+    },
+    {
+      "day": 1,
+      "screenId": "hall-7",
+      "start": "09:45",
+      "end": "12:37",
+      "seatsLeft": 73
+    },
+    {
+      "day": 1,
+      "screenId": "hall-7",
+      "start": "13:02",
+      "end": "15:54",
+      "seatsLeft": 37
+    },
+    {
+      "day": 1,
+      "screenId": "hall-7",
+      "start": "16:14",
+      "end": "19:06",
+      "seatsLeft": 70
+    },
+    {
+      "day": 1,
+      "screenId": "hall-7",
+      "start": "19:26",
+      "end": "22:18",
+      "seatsLeft": 105
+    },
+    {
+      "day": 1,
+      "screenId": "s006",
+      "start": "10:05",
+      "end": "12:57",
+      "seatsLeft": 112
+    },
+    {
+      "day": 1,
+      "screenId": "s006",
+      "start": "13:32",
+      "end": "16:24",
+      "seatsLeft": 90
+    },
+    {
+      "day": 1,
+      "screenId": "s006",
+      "start": "17:04",
+      "end": "19:56",
+      "seatsLeft": 73
+    },
+    {
+      "day": 1,
+      "screenId": "s006",
+      "start": "20:21",
+      "end": "23:13",
+      "seatsLeft": 34
+    },
+    {
+      "day": 2,
+      "screenId": "hall-1",
+      "start": "11:10",
+      "end": "14:02",
+      "seatsLeft": 81
+    },
+    {
+      "day": 2,
+      "screenId": "hall-1",
+      "start": "14:27",
+      "end": "17:19",
+      "seatsLeft": 65
+    },
+    {
+      "day": 2,
+      "screenId": "hall-1",
+      "start": "17:39",
+      "end": "20:31",
+      "seatsLeft": 89
+    },
+    {
+      "day": 2,
+      "screenId": "hall-1",
+      "start": "21:06",
+      "end": "23:58",
+      "seatsLeft": 80
+    },
+    {
+      "day": 2,
+      "screenId": "hall-2",
+      "start": "10:50",
+      "end": "13:42",
+      "seatsLeft": 97
+    },
+    {
+      "day": 2,
+      "screenId": "hall-2",
+      "start": "14:07",
+      "end": "16:59",
+      "seatsLeft": 70
+    },
+    {
+      "day": 2,
+      "screenId": "hall-2",
+      "start": "17:19",
+      "end": "20:11",
+      "seatsLeft": 96
+    },
+    {
+      "day": 2,
+      "screenId": "hall-2",
+      "start": "20:36",
+      "end": "23:28",
+      "seatsLeft": 17
+    },
+    {
+      "day": 2,
+      "screenId": "hall-3",
+      "start": "10:20",
+      "end": "13:12",
+      "seatsLeft": 14
+    },
+    {
+      "day": 2,
+      "screenId": "hall-3",
+      "start": "13:32",
+      "end": "16:24",
+      "seatsLeft": 19
+    },
+    {
+      "day": 2,
+      "screenId": "hall-3",
+      "start": "16:44",
+      "end": "19:36",
+      "seatsLeft": 71
+    },
+    {
+      "day": 2,
+      "screenId": "hall-3",
+      "start": "20:06",
+      "end": "22:58",
+      "seatsLeft": 43
+    },
+    {
+      "day": 2,
+      "screenId": "hall-6",
+      "start": "09:30",
+      "end": "12:22",
+      "seatsLeft": 61
+    },
+    {
+      "day": 2,
+      "screenId": "hall-6",
+      "start": "12:52",
+      "end": "15:44",
+      "seatsLeft": 53
+    },
+    {
+      "day": 2,
+      "screenId": "hall-6",
+      "start": "16:14",
+      "end": "19:06",
+      "seatsLeft": 57
+    },
+    {
+      "day": 2,
+      "screenId": "hall-6",
+      "start": "19:31",
+      "end": "22:23",
+      "seatsLeft": 64
+    },
+    {
+      "day": 2,
+      "screenId": "hall-7",
+      "start": "10:25",
+      "end": "13:17",
+      "seatsLeft": 21
+    },
+    {
+      "day": 2,
+      "screenId": "hall-7",
+      "start": "13:52",
+      "end": "16:44",
+      "seatsLeft": 46
+    },
+    {
+      "day": 2,
+      "screenId": "hall-7",
+      "start": "17:14",
+      "end": "20:06",
+      "seatsLeft": 31
+    },
+    {
+      "day": 2,
+      "screenId": "hall-7",
+      "start": "20:46",
+      "end": "23:38",
+      "seatsLeft": 87
+    },
+    {
+      "day": 2,
+      "screenId": "s006",
+      "start": "11:20",
+      "end": "14:12",
+      "seatsLeft": 61
+    },
+    {
+      "day": 2,
+      "screenId": "s006",
+      "start": "14:52",
+      "end": "17:44",
+      "seatsLeft": 112
+    },
+    {
+      "day": 2,
+      "screenId": "s006",
+      "start": "18:14",
+      "end": "21:06",
+      "seatsLeft": 55
+    },
+    {
+      "day": 2,
+      "screenId": "s006",
+      "start": "21:46",
+      "end": "24:38",
+      "seatsLeft": 46
+    },
+    {
+      "day": 3,
+      "screenId": "hall-1",
+      "start": "11:15",
+      "end": "14:07",
+      "seatsLeft": 63
+    },
+    {
+      "day": 3,
+      "screenId": "hall-1",
+      "start": "14:47",
+      "end": "17:39",
+      "seatsLeft": 30
+    },
+    {
+      "day": 3,
+      "screenId": "hall-1",
+      "start": "18:19",
+      "end": "21:11",
+      "seatsLeft": 32
+    },
+    {
+      "day": 3,
+      "screenId": "hall-1",
+      "start": "21:31",
+      "end": "24:23",
+      "seatsLeft": 12
+    },
+    {
+      "day": 3,
+      "screenId": "hall-2",
+      "start": "09:35",
+      "end": "12:27",
+      "seatsLeft": 69
+    },
+    {
+      "day": 3,
+      "screenId": "hall-2",
+      "start": "12:57",
+      "end": "15:49",
+      "seatsLeft": 17
+    },
+    {
+      "day": 3,
+      "screenId": "hall-2",
+      "start": "16:24",
+      "end": "19:16",
+      "seatsLeft": 26
+    },
+    {
+      "day": 3,
+      "screenId": "hall-2",
+      "start": "19:56",
+      "end": "22:48",
+      "seatsLeft": 69
+    },
+    {
+      "day": 3,
+      "screenId": "hall-3",
+      "start": "10:50",
+      "end": "13:42",
+      "seatsLeft": 28
+    },
+    {
+      "day": 3,
+      "screenId": "hall-3",
+      "start": "14:12",
+      "end": "17:04",
+      "seatsLeft": 66
+    },
+    {
+      "day": 3,
+      "screenId": "hall-3",
+      "start": "17:44",
+      "end": "20:36",
+      "seatsLeft": 33
+    },
+    {
+      "day": 3,
+      "screenId": "hall-3",
+      "start": "21:01",
+      "end": "23:53",
+      "seatsLeft": 61
+    },
+    {
+      "day": 3,
+      "screenId": "hall-6",
+      "start": "10:55",
+      "end": "13:47",
+      "seatsLeft": 100
+    },
+    {
+      "day": 3,
+      "screenId": "hall-6",
+      "start": "14:27",
+      "end": "17:19",
+      "seatsLeft": 83
+    },
+    {
+      "day": 3,
+      "screenId": "hall-6",
+      "start": "17:44",
+      "end": "20:36",
+      "seatsLeft": 71
+    },
+    {
+      "day": 3,
+      "screenId": "hall-6",
+      "start": "21:16",
+      "end": "24:08",
+      "seatsLeft": 70
+    },
+    {
+      "day": 3,
+      "screenId": "hall-7",
+      "start": "09:50",
+      "end": "12:42",
+      "seatsLeft": 15
+    },
+    {
+      "day": 3,
+      "screenId": "hall-7",
+      "start": "13:12",
+      "end": "16:04",
+      "seatsLeft": 15
+    },
+    {
+      "day": 3,
+      "screenId": "hall-7",
+      "start": "16:34",
+      "end": "19:26",
+      "seatsLeft": 50
+    },
+    {
+      "day": 3,
+      "screenId": "hall-7",
+      "start": "20:06",
+      "end": "22:58",
+      "seatsLeft": 39
+    },
+    {
+      "day": 3,
+      "screenId": "s006",
+      "start": "11:10",
+      "end": "14:02",
+      "seatsLeft": 49
+    },
+    {
+      "day": 3,
+      "screenId": "s006",
+      "start": "14:37",
+      "end": "17:29",
+      "seatsLeft": 25
+    },
+    {
+      "day": 3,
+      "screenId": "s006",
+      "start": "17:49",
+      "end": "20:41",
+      "seatsLeft": 118
+    },
+    {
+      "day": 3,
+      "screenId": "s006",
+      "start": "21:11",
+      "end": "24:03",
+      "seatsLeft": 92
+    },
+    {
+      "day": 4,
+      "screenId": "hall-1",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 80
+    },
+    {
+      "day": 4,
+      "screenId": "hall-1",
+      "start": "14:17",
+      "end": "17:09",
+      "seatsLeft": 59
+    },
+    {
+      "day": 4,
+      "screenId": "hall-1",
+      "start": "17:29",
+      "end": "20:21",
+      "seatsLeft": 90
+    },
+    {
+      "day": 4,
+      "screenId": "hall-1",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 77
+    },
+    {
+      "day": 4,
+      "screenId": "hall-2",
+      "start": "10:35",
+      "end": "13:27",
+      "seatsLeft": 64
+    },
+    {
+      "day": 4,
+      "screenId": "hall-2",
+      "start": "13:47",
+      "end": "16:39",
+      "seatsLeft": 49
+    },
+    {
+      "day": 4,
+      "screenId": "hall-2",
+      "start": "17:19",
+      "end": "20:11",
+      "seatsLeft": 61
+    },
+    {
+      "day": 4,
+      "screenId": "hall-2",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 60
+    },
+    {
+      "day": 4,
+      "screenId": "hall-3",
+      "start": "09:55",
+      "end": "12:47",
+      "seatsLeft": 11
+    },
+    {
+      "day": 4,
+      "screenId": "hall-3",
+      "start": "13:07",
+      "end": "15:59",
+      "seatsLeft": 59
+    },
+    {
+      "day": 4,
+      "screenId": "hall-3",
+      "start": "16:24",
+      "end": "19:16",
+      "seatsLeft": 42
+    },
+    {
+      "day": 4,
+      "screenId": "hall-3",
+      "start": "19:46",
+      "end": "22:38",
+      "seatsLeft": 43
+    },
+    {
+      "day": 4,
+      "screenId": "hall-6",
+      "start": "11:20",
+      "end": "14:12",
+      "seatsLeft": 24
+    },
+    {
+      "day": 4,
+      "screenId": "hall-6",
+      "start": "14:52",
+      "end": "17:44",
+      "seatsLeft": 34
+    },
+    {
+      "day": 4,
+      "screenId": "hall-6",
+      "start": "18:24",
+      "end": "21:16",
+      "seatsLeft": 82
+    },
+    {
+      "day": 4,
+      "screenId": "hall-6",
+      "start": "21:36",
+      "end": "24:28",
+      "seatsLeft": 95
+    },
+    {
+      "day": 4,
+      "screenId": "hall-7",
+      "start": "10:00",
+      "end": "12:52",
+      "seatsLeft": 41
+    },
+    {
+      "day": 4,
+      "screenId": "hall-7",
+      "start": "13:22",
+      "end": "16:14",
+      "seatsLeft": 100
+    },
+    {
+      "day": 4,
+      "screenId": "hall-7",
+      "start": "16:49",
+      "end": "19:41",
+      "seatsLeft": 103
+    },
+    {
+      "day": 4,
+      "screenId": "hall-7",
+      "start": "20:06",
+      "end": "22:58",
+      "seatsLeft": 87
+    },
+    {
+      "day": 4,
+      "screenId": "s006",
+      "start": "10:55",
+      "end": "13:47",
+      "seatsLeft": 86
+    },
+    {
+      "day": 4,
+      "screenId": "s006",
+      "start": "14:07",
+      "end": "16:59",
+      "seatsLeft": 116
+    },
+    {
+      "day": 4,
+      "screenId": "s006",
+      "start": "17:39",
+      "end": "20:31",
+      "seatsLeft": 102
+    },
+    {
+      "day": 4,
+      "screenId": "s006",
+      "start": "21:01",
+      "end": "23:53",
+      "seatsLeft": 16
+    },
+    {
+      "day": 5,
+      "screenId": "hall-1",
+      "start": "09:35",
+      "end": "12:27",
+      "seatsLeft": 93
+    },
+    {
+      "day": 5,
+      "screenId": "hall-1",
+      "start": "12:52",
+      "end": "15:44",
+      "seatsLeft": 31
+    },
+    {
+      "day": 5,
+      "screenId": "hall-1",
+      "start": "16:04",
+      "end": "18:56",
+      "seatsLeft": 14
+    },
+    {
+      "day": 5,
+      "screenId": "hall-1",
+      "start": "19:26",
+      "end": "22:18",
+      "seatsLeft": 11
+    },
+    {
+      "day": 5,
+      "screenId": "hall-2",
+      "start": "09:30",
+      "end": "12:22",
+      "seatsLeft": 65
+    },
+    {
+      "day": 5,
+      "screenId": "hall-2",
+      "start": "12:57",
+      "end": "15:49",
+      "seatsLeft": 97
+    },
+    {
+      "day": 5,
+      "screenId": "hall-2",
+      "start": "16:09",
+      "end": "19:01",
+      "seatsLeft": 96
+    },
+    {
+      "day": 5,
+      "screenId": "hall-2",
+      "start": "19:21",
+      "end": "22:13",
+      "seatsLeft": 37
+    },
+    {
+      "day": 5,
+      "screenId": "hall-3",
+      "start": "10:15",
+      "end": "13:07",
+      "seatsLeft": 56
+    },
+    {
+      "day": 5,
+      "screenId": "hall-3",
+      "start": "13:47",
+      "end": "16:39",
+      "seatsLeft": 51
+    },
+    {
+      "day": 5,
+      "screenId": "hall-3",
+      "start": "17:19",
+      "end": "20:11",
+      "seatsLeft": 35
+    },
+    {
+      "day": 5,
+      "screenId": "hall-3",
+      "start": "20:51",
+      "end": "23:43",
+      "seatsLeft": 60
+    },
+    {
+      "day": 5,
+      "screenId": "hall-6",
+      "start": "10:55",
+      "end": "13:47",
+      "seatsLeft": 50
+    },
+    {
+      "day": 5,
+      "screenId": "hall-6",
+      "start": "14:07",
+      "end": "16:59",
+      "seatsLeft": 54
+    },
+    {
+      "day": 5,
+      "screenId": "hall-6",
+      "start": "17:34",
+      "end": "20:26",
+      "seatsLeft": 60
+    },
+    {
+      "day": 5,
+      "screenId": "hall-6",
+      "start": "20:46",
+      "end": "23:38",
+      "seatsLeft": 19
+    },
+    {
+      "day": 5,
+      "screenId": "hall-7",
+      "start": "10:55",
+      "end": "13:47",
+      "seatsLeft": 58
+    },
+    {
+      "day": 5,
+      "screenId": "hall-7",
+      "start": "14:12",
+      "end": "17:04",
+      "seatsLeft": 19
+    },
+    {
+      "day": 5,
+      "screenId": "hall-7",
+      "start": "17:24",
+      "end": "20:16",
+      "seatsLeft": 87
+    },
+    {
+      "day": 5,
+      "screenId": "hall-7",
+      "start": "20:56",
+      "end": "23:48",
+      "seatsLeft": 46
+    },
+    {
+      "day": 5,
+      "screenId": "s006",
+      "start": "11:05",
+      "end": "13:57",
+      "seatsLeft": 114
+    },
+    {
+      "day": 5,
+      "screenId": "s006",
+      "start": "14:32",
+      "end": "17:24",
+      "seatsLeft": 64
+    },
+    {
+      "day": 5,
+      "screenId": "s006",
+      "start": "17:49",
+      "end": "20:41",
+      "seatsLeft": 35
+    },
+    {
+      "day": 5,
+      "screenId": "s006",
+      "start": "21:16",
+      "end": "24:08",
+      "seatsLeft": 89
+    },
+    {
+      "day": 6,
+      "screenId": "hall-1",
+      "start": "09:35",
+      "end": "12:27",
+      "seatsLeft": 29
+    },
+    {
+      "day": 6,
+      "screenId": "hall-1",
+      "start": "12:47",
+      "end": "15:39",
+      "seatsLeft": 106
+    },
+    {
+      "day": 6,
+      "screenId": "hall-1",
+      "start": "15:59",
+      "end": "18:51",
+      "seatsLeft": 95
+    },
+    {
+      "day": 6,
+      "screenId": "hall-1",
+      "start": "19:26",
+      "end": "22:18",
+      "seatsLeft": 63
+    },
+    {
+      "day": 6,
+      "screenId": "hall-2",
+      "start": "10:55",
+      "end": "13:47",
+      "seatsLeft": 68
+    },
+    {
+      "day": 6,
+      "screenId": "hall-2",
+      "start": "14:17",
+      "end": "17:09",
+      "seatsLeft": 38
+    },
+    {
+      "day": 6,
+      "screenId": "hall-2",
+      "start": "17:34",
+      "end": "20:26",
+      "seatsLeft": 70
+    },
+    {
+      "day": 6,
+      "screenId": "hall-2",
+      "start": "20:56",
+      "end": "23:48",
+      "seatsLeft": 43
+    },
+    {
+      "day": 6,
+      "screenId": "hall-3",
+      "start": "11:00",
+      "end": "13:52",
+      "seatsLeft": 70
+    },
+    {
+      "day": 6,
+      "screenId": "hall-3",
+      "start": "14:12",
+      "end": "17:04",
+      "seatsLeft": 25
+    },
+    {
+      "day": 6,
+      "screenId": "hall-3",
+      "start": "17:44",
+      "end": "20:36",
+      "seatsLeft": 9
+    },
+    {
+      "day": 6,
+      "screenId": "hall-3",
+      "start": "21:11",
+      "end": "24:03",
+      "seatsLeft": 57
+    },
+    {
+      "day": 6,
+      "screenId": "hall-6",
+      "start": "09:55",
+      "end": "12:47",
+      "seatsLeft": 98
+    },
+    {
+      "day": 6,
+      "screenId": "hall-6",
+      "start": "13:12",
+      "end": "16:04",
+      "seatsLeft": 67
+    },
+    {
+      "day": 6,
+      "screenId": "hall-6",
+      "start": "16:39",
+      "end": "19:31",
+      "seatsLeft": 57
+    },
+    {
+      "day": 6,
+      "screenId": "hall-6",
+      "start": "20:11",
+      "end": "23:03",
+      "seatsLeft": 91
+    },
+    {
+      "day": 6,
+      "screenId": "hall-7",
+      "start": "11:15",
+      "end": "14:07",
+      "seatsLeft": 58
+    },
+    {
+      "day": 6,
+      "screenId": "hall-7",
+      "start": "14:47",
+      "end": "17:39",
+      "seatsLeft": 29
+    },
+    {
+      "day": 6,
+      "screenId": "hall-7",
+      "start": "18:09",
+      "end": "21:01",
+      "seatsLeft": 70
+    },
+    {
+      "day": 6,
+      "screenId": "hall-7",
+      "start": "21:41",
+      "end": "24:33",
+      "seatsLeft": 98
+    },
+    {
+      "day": 6,
+      "screenId": "s006",
+      "start": "10:30",
+      "end": "13:22",
+      "seatsLeft": 112
+    },
+    {
+      "day": 6,
+      "screenId": "s006",
+      "start": "14:02",
+      "end": "16:54",
+      "seatsLeft": 102
+    },
+    {
+      "day": 6,
+      "screenId": "s006",
+      "start": "17:24",
+      "end": "20:16",
+      "seatsLeft": 17
+    },
+    {
+      "day": 6,
+      "screenId": "s006",
+      "start": "20:56",
+      "end": "23:48",
+      "seatsLeft": 101
+    }
+  ]
+}

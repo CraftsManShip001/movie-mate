@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-gumi-central",
+  "chain": "롯데시네마",
+  "branch": "프리미엄구미센트럴",
+  "address": "경상북도 구미시 원평동 구미중앙로 17길 16 (매표 / 매점 3층)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

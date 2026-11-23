@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-yeonnam",
+  "chain": "CGV",
+  "branch": "연남",
+  "address": "서울특별시 마포구 동교동 167-13 7층",
+  "auditoriumIds": [
+    "s001",
+    "hall-2",
+    "s003",
+    "hall-4",
+    "hall-5",
+    "hall-6"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

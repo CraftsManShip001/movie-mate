@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-ssinedeuswepeu-senteom",
+  "chain": "CGV",
+  "branch": "씨네드쉐프 센텀",
+  "address": "부산광역시 해운대구 센텀남대로 35 (우동) 신세계백화점 서관 5층",
+  "auditoriumIds": [
+    "s001",
+    "s002"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

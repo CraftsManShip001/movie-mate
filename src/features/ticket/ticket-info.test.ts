@@ -18,17 +18,22 @@ describe("buildTicketInfo", () => {
       seatCode: "J14",
       dateLine: "2026.11.16 MON",
       time: "13:40",
-      bandDate: "2026.11.16 (월) 13:40",
+      posterUrl: "/p.svg",
       view: "75° / 20°",
       distance: "15.5m",
     });
+  });
+
+  it("티켓 앞면에는 큰 포스터를 쓰고, 목록용 포스터를 대신할 그림으로 둔다", () => {
+    const info = buildTicketInfo({ ...base, movie: { ...base.movie, ticketPosterUrl: "/p-large.jpg" }, date: null, time: null });
+    expect(info.posterUrl).toBe("/p-large.jpg");
+    expect(info.posterFallbackUrl).toBe("/p.svg");
   });
 
   it("상영 정보 없이 들어와도 깨지지 않는다", () => {
     const info = buildTicketInfo({ ...base, date: null, time: null, numbers: null });
     expect(info.ticketNo).toBe("1014");
     expect(info.dateLine).toBe("");
-    expect(info.bandDate).toBe("");
     expect(info.view).toBe("");
   });
 });

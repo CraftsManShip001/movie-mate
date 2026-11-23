@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-yangsansamho",
+  "chain": "CGV",
+  "branch": "양산삼호",
+  "address": "경남 양산시 삼호 1길 42 더 퍼스트 6층 CGV양산삼호 ",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

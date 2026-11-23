@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "cgv-changwonsangnam",
+  "name": "4관",
+  "format": "standard",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (96석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "B",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "C",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "H",
+      "cells": "sss........ww",
+      "numbers": [
+        1,
+        2,
+        3,
+        12,
+        13
+      ]
+    }
+  ]
+}

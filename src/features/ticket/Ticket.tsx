@@ -1,14 +1,17 @@
-import { useId } from "react";
+import { useId, useState } from "react";
 import { ticketOutlinePath } from "./ticket-shape";
 import styles from "./Ticket.module.css";
 
-/** 티켓에 찍는 내용 (4번 화면, 5번 미니 티켓) */
+/** 티켓 뒷면(입장권)에 찍는 내용 */
 export interface TicketInfo {
   ticketNo: string;
   movieTitle: string;
   /** "THE NIGHT ORBIT · 2026" */
   movieTitleEn: string;
+  /** 앞면 포스터(큰 그림이 있으면 큰 그림) */
   posterUrl: string;
+  /** 큰 포스터를 불러오지 못했을 때 쓰는 목록용 포스터 */
+  posterFallbackUrl: string;
   /** "J14" */
   seatCode: string;
   theaterName: string;
@@ -17,8 +20,6 @@ export interface TicketInfo {
   dateLine: string;
   /** "13:40" */
   time: string;
-  /** "2026.11.16 (월) 13:40" */
-  bandDate: string;
   /** "75° / 20°" */
   view: string;
   /** "15.5m" */
@@ -45,9 +46,20 @@ function Barcode() {
   );
 }
 
-/** 입장권 면 (종이). 디자인 문서의 "뒷면". */
+/** 좌석 번호가 길면(AA114 등) 글자를 줄여 SEAT 라벨과 한 줄에 둔다 */
+function seatCodeSize(code: string): number {
+  if (code.length <= 4) return 104;
+  if (code.length === 5) return 84;
+  return 68;
+}
+
+/**
+ * 입장권 면. 디자인 문서의 "뒷면" (B-1 블랙 에디션).
+ * 영화관·상영관·좌석·일시는 모두 이 면에 둔다.
+ */
 export function TicketPaper({ info }: { info: TicketInfo }) {
   const clipId = useId();
+  const outline = ticketOutlinePath(TICKET_W, TICKET_H);
   const rows: [string, string][] = [
     ["THEATER", info.theaterName],
     ["SCREEN", info.screenName],
@@ -61,21 +73,27 @@ export function TicketPaper({ info }: { info: TicketInfo }) {
       <svg width={TICKET_W} height={TICKET_H} viewBox={`0 0 ${TICKET_W} ${TICKET_H}`} className={styles.shape} aria-hidden="true">
         <defs>
           <clipPath id={clipId}>
-            <path d={ticketOutlinePath(TICKET_W, TICKET_H)} />
+            <path d={outline} />
           </clipPath>
         </defs>
-        <rect width={TICKET_W} height={TICKET_H} style={{ fill: "var(--color-paper)" }} clipPath={`url(#${clipId})`} />
+        <g clipPath={`url(#${clipId})`}>
+          <rect width={TICKET_W} height={TICKET_H} style={{ fill: "var(--color-paper)" }} />
+          {/* 안쪽으로만 보이는 테두리(선 폭의 절반이 잘린다) */}
+          <path d={outline} fill="none" style={{ stroke: "var(--color-paper-edge)" }} strokeWidth={2} />
+        </g>
       </svg>
       <div className={styles.paper}>
         <div className={styles.paperTop}>
-          <span>MOVIE MATE ORIGINAL</span>
+          <span>MOVIE MATE</span>
           <span>No. {info.ticketNo}</span>
         </div>
         <div className={styles.paperTitle}>{info.movieTitle}</div>
         <div className={styles.paperTitleEn}>{info.movieTitleEn}</div>
         <div className={styles.paperSeat}>
           <span className={styles.paperSeatLabel}>SEAT</span>
-          <span className={styles.paperSeatCode}>{info.seatCode}</span>
+          <span className={styles.paperSeatCode} style={{ fontSize: seatCodeSize(info.seatCode) }}>
+            {info.seatCode}
+          </span>
         </div>
         <dl className={styles.paperRows}>
           {rows.map(([label, value]) => (
@@ -99,26 +117,26 @@ export function TicketPaper({ info }: { info: TicketInfo }) {
 }
 
 /**
- * 포스터 면. 위쪽 2:3 포스터 + 아래 띠(상영 일시·극장 두 줄). 디자인 문서의 "앞면".
+ * 포스터 면. 디자인 문서의 "앞면". 포스터만 담고 글자는 넣지 않는다.
+ * 2:3 포스터가 티켓 전체를 채우므로 양옆이 조금 잘린다.
  * width를 바꾸면 같은 비율로 작게 그린다(5번 화면 미니 티켓은 84).
  */
 export function TicketPoster({
   posterUrl,
-  bandDate,
-  bandTheater,
+  fallbackUrl,
   width = TICKET_W,
   alt,
 }: {
   posterUrl: string;
-  bandDate: string;
-  bandTheater: string;
+  fallbackUrl?: string;
   width?: number;
   alt?: string;
 }) {
   const clipId = useId();
-  const k = width / TICKET_W;
-  const height = Math.round(TICKET_H * k);
-  const posterH = width * 1.5;
+  // 큰 포스터 주소는 이름 규칙으로 만든 것이라 없을 수 있다. 실패하면 목록용 포스터로 바꾼다.
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  const href = failedUrl === posterUrl && fallbackUrl ? fallbackUrl : posterUrl;
+  const height = Math.round(TICKET_H * (width / TICKET_W));
   return (
     <svg
       width={width}
@@ -135,31 +153,17 @@ export function TicketPoster({
         </clipPath>
       </defs>
       <g clipPath={`url(#${clipId})`}>
-        <image href={posterUrl} x="0" y="0" width={width} height={posterH} preserveAspectRatio="xMidYMid slice" />
-        <rect x="0" y={posterH} width={width} height={height - posterH} style={{ fill: "var(--color-poster-band)" }} />
-        <line x1={16 * k} y1={posterH + k} x2={width - 16 * k} y2={posterH + k} style={{ stroke: "var(--color-poster-line)" }} strokeWidth={1.2 * k} />
-        <text
-          x={width / 2}
-          y={posterH + 68.5 * k}
-          textAnchor="middle"
-          fontSize={10 * k}
-          letterSpacing={2 * k}
-          style={{ fill: "var(--color-poster-text)" }}
-          className={styles.monoText}
-        >
-          {bandDate}
-        </text>
-        <text
-          x={width / 2}
-          y={posterH + 88.5 * k}
-          textAnchor="middle"
-          fontSize={8.5 * k}
-          letterSpacing={1.5 * k}
-          style={{ fill: "var(--color-poster-sub)" }}
-          className={styles.monoText}
-        >
-          {bandTheater}
-        </text>
+        {/* 포스터를 불러오기 전에 보이는 종이 */}
+        <rect width={width} height={height} style={{ fill: "var(--color-paper)" }} />
+        <image
+          href={href}
+          x="0"
+          y="0"
+          width={width}
+          height={height}
+          preserveAspectRatio="xMidYMid slice"
+          onError={() => setFailedUrl(posterUrl)}
+        />
       </g>
     </svg>
   );

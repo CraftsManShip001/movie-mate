@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  formatBandDate,
   formatMonthDay,
   formatTicketDate,
   formatViewNumbers,
@@ -16,7 +15,6 @@ describe("날짜 문구", () => {
   it("화면과 티켓 형식", () => {
     expect(formatMonthDay("2026-11-16")).toBe("11월 16일");
     expect(formatTicketDate("2026-11-16")).toBe("2026.11.16 MON");
-    expect(formatBandDate("2026-11-16", "13:40")).toBe("2026.11.16 (월) 13:40");
   });
 
   it("nowInSeoul은 서울 시각 기준", () => {

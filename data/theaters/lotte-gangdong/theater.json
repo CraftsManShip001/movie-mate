@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-gangdong",
+  "chain": "롯데시네마",
+  "branch": "강동",
+  "address": "서울특별시 강동구 천호옛길 85",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-10"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-18)로 옮겼고, 크기는 좌석표로 추정했다. 지점 상세에는 10개 관이 있지만, 2026-11-18부터 2주 동안 상영이 없는 3개 관은 좌석표를 볼 수 없어 뺐다."
+}

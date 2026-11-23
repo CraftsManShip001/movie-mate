@@ -1,8 +1,18 @@
 import { Fragment, type CSSProperties } from "react";
 import { seatName } from "@/lib/format";
-import { listSeats } from "@/lib/domain/geometry";
-import type { Auditorium, Seat } from "@/lib/domain/types";
+import { boxSeats, listSeats } from "@/lib/domain/geometry";
+import type { Auditorium, Seat, SeatFurniture } from "@/lib/domain/types";
 import styles from "./SeatGrid.module.css";
+
+/** 의자가 아닌 좌석 이름(읽어 주기용) */
+const FURNITURE_LABEL: Record<SeatFurniture, string> = {
+  couple: "커플석",
+  sofa: "소파석",
+  bed: "침대",
+  beanbag: "빈백",
+  mat: "매트",
+  cabana: "카바나",
+};
 
 interface SeatGridProps {
   auditorium: Auditorium;
@@ -16,20 +26,32 @@ interface SeatGridProps {
   minSeat?: number;
   /** 스크린 곡선 표시 */
   showScreen?: boolean;
+  /** 이 회차에 이미 팔린 좌석 id */
+  soldSeatIds?: ReadonlySet<string>;
 }
 
 /**
  * 고를 수 있는 좌석표. 폭에 맞춰 좌석 크기가 줄어든다(컨테이너 쿼리).
  * 위쪽이 스크린, 왼쪽이 관객 기준 왼쪽이다.
  */
-export function SeatGrid({ auditorium, selectedSeatId, onSelect, tone = "light", maxSeat = 24, minSeat = 0, showScreen = false }: SeatGridProps) {
+export function SeatGrid({
+  auditorium,
+  selectedSeatId,
+  onSelect,
+  tone = "light",
+  maxSeat = 24,
+  minSeat = 0,
+  showScreen = false,
+  soldSeatIds,
+}: SeatGridProps) {
   const seats = listSeats(auditorium);
-  const seatAt = new Map(seats.map((seat) => [`${seat.rowIndex}:${seat.columnIndex}`, seat]));
-  const aisleAfterColumn = new Set(auditorium.layout.verticalAisles.map((a) => a.afterColumn));
+  const aisleColumns = auditorium.layout.verticalAisles.map((a) => a.afterColumn);
   const aisleAfterRow = new Set(auditorium.layout.crossAisles.map((a) => a.afterRow));
   const columns = auditorium.rows[0]?.cells.length ?? 0;
-  const units = columns + aisleAfterColumn.size;
+  const units = columns + aisleColumns.length;
   const style = { "--units": units, "--seat-max": `${maxSeat}px`, "--seat-min": `${minSeat}px` } as CSSProperties;
+  /** 칸 단위 위치 → 통로 칸을 더한 화면 위치(칸 단위). 3D의 unitX 와 같은 규칙이다. */
+  const place = (unit: number) => unit + aisleColumns.filter((after) => after + 1 <= unit).length;
 
   return (
     <div className={`${styles.wrap} ${tone === "dark" ? styles.dark : ""}`} style={style}>
@@ -44,41 +66,64 @@ export function SeatGrid({ auditorium, selectedSeatId, onSelect, tone = "light",
         ) : null}
         {auditorium.rows.map((row, rowIndex) => (
           <Fragment key={row.label}>
+            {row.zone && row.zone !== auditorium.rows[rowIndex - 1]?.zone ? (
+              <div className={styles.zone}>{row.zone}</div>
+            ) : null}
             <div className={styles.row}>
               <span className={styles.label} aria-hidden="true">
                 {row.label}
               </span>
-              {[...row.cells].map((_, columnIndex) => {
-                const seat = seatAt.get(`${rowIndex}:${columnIndex}`);
-                const aisle = aisleAfterColumn.has(columnIndex) ? <span className={styles.aisle} /> : null;
-                if (!seat) {
+              <div className={styles.seats}>
+                {/* 칸막이로 둘러싼 박스석 */}
+                {row.boxes?.map((box) => {
+                  // 박스는 안에 든 좌석의 화면 위치를 따라 그린다(통로 경계에 걸쳐도 좌석과 맞게)
+                  const rowSeats = seats.filter((seat) => seat.rowIndex === rowIndex);
+                  const inside = boxSeats(rowSeats, box);
+                  const at = (seat: Seat) => place(seat.left + seat.span / 2) - seat.span / 2;
+                  const x0 = inside ? at(inside.first) - inside.padLeft : place(box[0] + box[1] / 2) - box[1] / 2;
+                  const x1 = inside ? at(inside.last) + inside.last.span + inside.padRight : x0 + box[1];
                   return (
-                    <Fragment key={columnIndex}>
-                      <span className={styles.empty} />
-                      {aisle}
-                    </Fragment>
+                    <span
+                      key={box[0]}
+                      className={styles.box}
+                      style={{ "--x": x0, "--w": x1 - x0 } as CSSProperties}
+                      aria-hidden="true"
+                    />
                   );
-                }
-                const label = `${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}`;
-                const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : ""].join(" ");
-                return (
-                  <Fragment key={columnIndex}>
-                    {onSelect ? (
+                })}
+                {seats
+                  .filter((seat) => seat.rowIndex === rowIndex)
+                  .map((seat) => {
+                    const sold = soldSeatIds?.has(seat.id) ?? false;
+                    const wide = seat.span >= 1.5;
+                    const label = `${row.zone ? `${row.zone} ` : ""}${seatName(seat)}${seat.kind === "w" ? " 휠체어석" : ""}${seat.furniture ? ` ${FURNITURE_LABEL[seat.furniture]}` : wide ? " 넓은 좌석" : ""}${sold ? ", 팔린 자리" : ""}`;
+                    const furnitureClass = seat.furniture ? (styles[`furniture-${seat.furniture}`] ?? "") : "";
+                    const className = [styles.seat, seat.kind === "w" ? styles.wheelchair : "", furnitureClass, sold ? styles.sold : ""].join(" ");
+                    // 가운데 위치는 통로를 반영하고, 폭은 좌석이 차지한 칸 수 그대로다
+                    const x = place(seat.left + seat.span / 2) - seat.span / 2;
+                    const seatStyle = { "--x": x, "--w": seat.span } as CSSProperties;
+                    return onSelect ? (
                       <button
+                        key={seat.id}
                         type="button"
                         className={className}
+                        style={seatStyle}
                         aria-label={label}
                         aria-pressed={seat.id === selectedSeatId}
                         disabled={seat.kind === "x"}
                         onClick={() => onSelect(seat)}
                       />
                     ) : (
-                      <span className={className} data-selected={seat.id === selectedSeatId || undefined} aria-label={label} />
-                    )}
-                    {aisle}
-                  </Fragment>
-                );
-              })}
+                      <span
+                        key={seat.id}
+                        className={className}
+                        style={seatStyle}
+                        data-selected={seat.id === selectedSeatId || undefined}
+                        aria-label={label}
+                      />
+                    );
+                  })}
+              </div>
             </div>
             {aisleAfterRow.has(rowIndex) ? <div className={styles.crossAisle} /> : null}
           </Fragment>

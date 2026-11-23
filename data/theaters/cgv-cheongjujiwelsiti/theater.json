@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-cheongjujiwelsiti",
+  "chain": "CGV",
+  "branch": "청주지웰시티",
+  "address": "충청북도 청주시 흥덕구 대농로 47-1 3,4층",
+  "auditoriumIds": [
+    "s001",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "s005",
+    "hall-6",
+    "hall-7",
+    "hall-8"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

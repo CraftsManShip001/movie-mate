@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-1",
+  "theaterId": "megabox-byeolnae",
+  "name": "1관(리클라이너)",
+  "format": "recliner",
+  "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (90석)",
+  "aspectRatio": 1.9,
+  "notes": "컴포트 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.ssssssssww..ss"
+    },
+    {
+      "label": "B",
+      "cells": ".s.sssssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ss.sssssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": "ss.sssssssssss.ss"
+    },
+    {
+      "label": "E",
+      "cells": "ss.sssssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "ss.sssssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "ss..............."
+    }
+  ]
+}

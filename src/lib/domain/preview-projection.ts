@@ -4,7 +4,7 @@
  * 가로 시야각 같음)로 계산하므로 스크린이 보이는 크기·기울기가 실제 3D 화면과 맞는다.
  */
 import { DEFAULT_STATURE_CM } from "./anthropometry";
-import { eyePosition, listSeats, mmToM, screenRect, seatFloorPosition } from "./geometry";
+import { eyePosition, listSeats, mmToM, screenRect, seatFloorPosition, seatWidthM } from "./geometry";
 import type { Auditorium, Seat, Vec3 } from "./types";
 
 export interface PreviewCamera {
@@ -114,12 +114,12 @@ export function seatPreviewShapes(
   });
 
   const all = listSeats(auditorium);
-  const { seatBackHeight, seatWidth } = auditorium.layout;
+  const { seatBackHeight } = auditorium.layout;
   const seatBacks = all
     .filter((s) => s.rowIndex === seat.rowIndex - 1 && s.kind !== "x")
     .map((s) => {
       const floor = seatFloorPosition(auditorium, s);
-      const w = mmToM(seatWidth.value) * 0.9;
+      const w = seatWidthM(auditorium, s) * 0.9;
       const top = { x: floor.x, y: floor.y + mmToM(seatBackHeight.value), z: floor.z + 0.28 };
       const left = projectPoint(camera, { ...top, x: top.x - w / 2 });
       const right = projectPoint(camera, { ...top, x: top.x + w / 2 });

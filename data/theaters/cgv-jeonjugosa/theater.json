@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-jeonjugosa",
+  "chain": "CGV",
+  "branch": "전주고사",
+  "address": "전라북도 전주시 완산구 전주객사3길 72 (고사동)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7",
+    "s008"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

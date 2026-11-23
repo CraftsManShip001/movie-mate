@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "s005",
+  "theaterId": "cgv-cheongjujiwelsiti",
+  "name": "SCREENX관 (리클라이너)",
+  "format": "screenx",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (158석)",
+  "aspectRatio": 1.9,
+  "notes": "SCREENX 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssssssssssssss.ssssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssssssssssssss.ssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssssssssssss.ssssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssssssssssssss.ssss.."
+    },
+    {
+      "label": "E",
+      "cells": "ssssssssssssss.ssssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssssssssssssss.ssssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssssssssssssss.ssssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssssssssssssss.ssssss"
+    }
+  ],
+  "crossAisleAfterRows": [
+    2
+  ]
+}

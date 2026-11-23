@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-4",
+  "theaterId": "lotte-seoul-natl-univ",
+  "name": "4관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (107석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.sssssss.w.ss"
+    },
+    {
+      "label": "B",
+      "cells": "ss.sssssssss.ss"
+    },
+    {
+      "label": "C",
+      "cells": "ss.sssssssss.ss"
+    },
+    {
+      "label": "D",
+      "cells": ".s.sssssssss.s."
+    },
+    {
+      "label": "E",
+      "cells": "ss.sssssssss.ss"
+    },
+    {
+      "label": "F",
+      "cells": "ss.sssssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "ss.sssssssss.ss"
+    },
+    {
+      "label": "H",
+      "cells": "ss.sssssssss.ss"
+    },
+    {
+      "label": "I",
+      "cells": "ss...........ss"
+    },
+    {
+      "label": "J",
+      "cells": "ss............."
+    }
+  ]
+}

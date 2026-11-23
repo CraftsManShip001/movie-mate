@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "megabox-jeonjugaeksa",
+  "name": "컴포트5관(리클라이너)",
+  "format": "recliner",
+  "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (60석)",
+  "aspectRatio": 1.9,
+  "notes": "컴포트 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ss.ssssss..."
+    },
+    {
+      "label": "B",
+      "cells": "ss.ssssss..."
+    },
+    {
+      "label": "C",
+      "cells": "ss.ssssss..."
+    },
+    {
+      "label": "D",
+      "cells": "ss.ssssss..."
+    },
+    {
+      "label": "E",
+      "cells": "ss.ssssss..."
+    },
+    {
+      "label": "F",
+      "cells": "ss.ssssss.ss"
+    },
+    {
+      "label": "G",
+      "cells": "ss.ssssss.ss"
+    }
+  ]
+}

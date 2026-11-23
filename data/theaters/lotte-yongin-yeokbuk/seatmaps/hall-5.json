@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-5",
+  "theaterId": "lotte-yongin-yeokbuk",
+  "name": "5관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (276석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "...ss.ww..ssssssssss.sssss"
+    },
+    {
+      "label": "B",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "C",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "D",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "E",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "F",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "G",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "H",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "I",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "J",
+      "cells": "...ss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "K",
+      "cells": "sssss.ssssssssssssss.sssss"
+    },
+    {
+      "label": "L",
+      "cells": "sssss.ssssss..ssssss.sssss"
+    },
+    {
+      "label": "M",
+      "cells": "sssss.ssssss..ssssss.sssss"
+    }
+  ]
+}

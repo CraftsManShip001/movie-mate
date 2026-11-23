@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { LogoMark } from "@/features/brand/Logo";
 import styles from "./Frame.module.css";
 
 export { styles as frameStyles };
@@ -20,14 +21,18 @@ export function ChevronRight({ size = 18, color = "currentColor" }: { size?: num
   );
 }
 
-/** 헤더: "‹ 뒤로 + 제목" 하나. 높이 72. backHref가 없으면 뒤로 버튼 없이 제목만 */
-export function FrameHeader({ title, backHref }: { title: string; backHref?: string }) {
+/** 헤더: "‹ 뒤로 + 제목" 하나. 높이 72. backHref가 없으면 뒤로 버튼 없이 제목만, logo면 제목 앞에 작은 로고 */
+export function FrameHeader({ title, backHref, logo = false }: { title: string; backHref?: string; logo?: boolean }) {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
         {backHref ? (
           <Link href={backHref} className={styles.back} aria-label="뒤로">
             <ChevronLeft />
+          </Link>
+        ) : logo ? (
+          <Link href="/" className={styles.logo}>
+            <LogoMark size={28} label="movie mate 처음으로" />
           </Link>
         ) : (
           <div className={styles.headerSpacer} />
@@ -38,9 +43,20 @@ export function FrameHeader({ title, backHref }: { title: string; backHref?: str
   );
 }
 
-export function Frame({ header, children, bottom }: { header: ReactNode; children: ReactNode; bottom?: ReactNode }) {
+/** fit: 화면 높이에 딱 맞추고 페이지 전체는 스크롤하지 않는다. 안쪽에서 스크롤할 곳을 따로 정한다. */
+export function Frame({
+  header,
+  children,
+  bottom,
+  fit = false,
+}: {
+  header: ReactNode;
+  children: ReactNode;
+  bottom?: ReactNode;
+  fit?: boolean;
+}) {
   return (
-    <div className={styles.frame}>
+    <div className={fit ? `${styles.frame} ${styles.fit}` : styles.frame}>
       {header}
       <main className={styles.content}>{children}</main>
       {bottom ? (

@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-7",
+  "theaterId": "megabox-namchuncheon",
+  "name": "7관",
+  "format": "standard",
+  "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (172석)",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다. 가로 통로는 좌석 데이터의 열 간격이 넓은 곳에 넣었다. 칸은 좌석 데이터의 좌표로 정했고, 번호가 칸 순서와 다른 열은 번호를 따로 적었다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": ".sss..ssssss..ww",
+      "numbers": [
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "B",
+      "cells": "ssss..sssssss...",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "C",
+      "cells": "ssss..sssssss...",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "D",
+      "cells": "ssss..sssssss...",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "E",
+      "cells": "ssss..sssssss...",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    {
+      "label": "F",
+      "cells": "ssss..sssssss.ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "G",
+      "cells": "ssss..sssssss.ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "H",
+      "cells": "ssss..sssssss.ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "I",
+      "cells": "ssss..sssssss.ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "J",
+      "cells": "ssss..sssssss.ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "K",
+      "cells": "ssss..sssssss.ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "L",
+      "cells": "ssss..sssssss.ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "M",
+      "cells": "ssss..sssssss.ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15,
+        16
+      ]
+    },
+    {
+      "label": "N",
+      "cells": "ssss.sssssss..ss",
+      "numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        15,
+        16
+      ]
+    }
+  ],
+  "crossAisleAfterRows": [
+    0
+  ]
+}

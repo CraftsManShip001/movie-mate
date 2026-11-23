@@ -3,10 +3,12 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { ChevronLeft, ChevronRight } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
+import { useLiveShow } from "@/features/flow/useLiveShow";
 import { SeatGrid } from "@/features/seat-map/SeatGrid";
+import { FROM_PICKER_KEY } from "@/features/seat-picker/SeatPicker";
 import { TicketPoster } from "@/features/ticket/Ticket";
 import { buildTicketInfo } from "@/features/ticket/ticket-info";
 import { eyePosition, findSeat } from "@/lib/domain/geometry";
@@ -21,6 +23,21 @@ import styles from "./SeatViewer.module.css";
 import { useSeatView } from "./useSeatView";
 import { SCREEN_VIDEO_CREDIT, SCREEN_VIDEO_URL } from "./video-source";
 
+/** 휴대폰 폭(720px 이하): 좌석·티켓 패널이 화면을 거의 덮으므로 처음엔 접어 두고 3D 시야부터 보여 준다 */
+const PHONE_QUERY = "(max-width: 720px)";
+function subscribePhone(onChange: () => void) {
+  const query = window.matchMedia(PHONE_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+function useIsPhone(): boolean {
+  return useSyncExternalStore(
+    subscribePhone,
+    () => window.matchMedia(PHONE_QUERY).matches,
+    () => false,
+  );
+}
+
 const Scene = dynamic(() => import("./Scene"), {
   ssr: false,
   loading: () => <div className={styles.placeholder}>시야를 불러오고 있어요</div>,
@@ -33,7 +50,8 @@ interface SeatViewerProps {
   screenName: string;
   auditorium: Auditorium;
   seatId: string;
-  movie: Movie;
+  /** 실제 회차의 영화. 없으면(CGV 등) 티켓 없이 좌석표만 보여 준다 */
+  movie: Movie | null;
 }
 
 /** 5 · 시야. 3D 시야가 화면 전체를 채우고 그 위에 정보·조작을 얹는다. */
@@ -44,23 +62,43 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const seat = useMemo(() => findSeat(auditorium, seatId), [auditorium, seatId]);
   const { stature, numbers } = useSeatView(auditorium, seat);
   const [showHeads, setShowHeads] = useState(true);
-  const [panelOpen, setPanelOpen] = useState(true);
+  // null = 아직 직접 고르지 않음: 데스크톱은 펼치고 휴대폰은 접는다
+  const [panelChoice, setPanelChoice] = useState<boolean | null>(null);
+  const isPhone = useIsPhone();
+  const panelOpen = panelChoice ?? !isPhone;
   const [videoStatus, setVideoStatus] = useState<ScreenVideoStatus>("loading");
   const [playRequest, setPlayRequest] = useState(0);
   const [recenterRequest, setRecenterRequest] = useState(0);
   const [turnedAway, setTurnedAway] = useState(false);
   const [failed, setFailed] = useState(false);
+  // 3D 첫 장면을 그릴 때까지(큰 관은 몇 초) 검은 화면 대신 불러오는 중 표시를 둔다
+  const [ready, setReady] = useState(false);
+  const onReady = useCallback(() => setReady(true), []);
   const [attempt, setAttempt] = useState(0);
   const onVideoStatus = useCallback((status: ScreenVideoStatus) => setVideoStatus(status), []);
   const eye = useMemo(() => (seat ? eyePosition(auditorium, seat, stature) : null), [auditorium, seat, stature]);
+  // 실제 회차(영화가 있을 때)면 미니 좌석표에도 팔린 자리를 표시한다
+  const { sold } = useLiveShow(theaterId, auditorium.id, show.date, show.seq, movie != null);
 
   const booking = bookingLink(chain);
   const base = `/theaters/${theaterId}/${auditorium.id}`;
   const backHref = `${base}${showQueryString(show, seat ? { seat: seat.id } : {})}`;
 
+  // Esc: 뒤로(좌석 화면). 3D 화면은 키보드로 다른 할 일이 없어 바로 돌아간다
+  const backRef = useRef<HTMLAnchorElement>(null);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !event.defaultPrevented) backRef.current?.click();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   if (!seat || !eye) return null;
 
-  const info = buildTicketInfo({ movie, theaterName, screenName, seat, date: show.date, time: show.time, numbers });
+  // 팔린 자리는 내 티켓이 될 수 없으므로 티켓 없이 좌석표만 보여 준다
+  const seatSold = sold?.has(seat.id) ?? false;
+  const info = movie && !seatSold && buildTicketInfo({ movie, theaterName, screenName, seat, date: show.date, time: show.time, numbers });
   const pickSeat = (next: Seat) => {
     if (next.id === seat.id) return;
     router.replace(`${base}/seats/${next.id}${showQueryString(show)}`, { scroll: false });
@@ -102,14 +140,39 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
               onVideoStatus={onVideoStatus}
               recenterRequest={recenterRequest}
               onTurnedAwayChange={setTurnedAway}
+              onReady={onReady}
             />
           </SceneErrorBoundary>
+          {ready ? null : (
+            <div className={`${styles.placeholder} ${styles.loadingCover}`} role="status">
+              시야를 그리고 있어요
+            </div>
+          )}
         </div>
       )}
 
       <div className={styles.top}>
         <div className={styles.titleBar}>
-          <Link href={backHref} className={styles.back} aria-label="뒤로">
+          <Link
+            ref={backRef}
+            href={backHref}
+            className={styles.back}
+            aria-label="뒤로"
+            onClick={(event) => {
+              // 좌석 화면에서 왔으면 기록을 쌓지 않고 돌아간다(브라우저 뒤로 가기가 다시 시야로 오지 않게)
+              let fromPicker = false;
+              try {
+                fromPicker = sessionStorage.getItem(FROM_PICKER_KEY) === base;
+                sessionStorage.removeItem(FROM_PICKER_KEY);
+              } catch {
+                fromPicker = false;
+              }
+              if (fromPicker && window.history.length > 1) {
+                event.preventDefault();
+                router.back();
+              }
+            }}
+          >
             <ChevronLeft />
           </Link>
           <h1 className={styles.title}>
@@ -117,8 +180,15 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
           </h1>
         </div>
         {failed ? null : (
-          <a href={booking.href} target="_blank" rel="noopener noreferrer" className={styles.booking}>
-            {booking.label}
+          <a
+            href={booking.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.booking}
+            aria-label={`${booking.label} (새 창)`}
+          >
+            <span className={styles.bookingLong}>{booking.label}</span>
+            <span className={styles.bookingShort}>예매</span>
             <ChevronRight />
           </a>
         )}
@@ -151,32 +221,42 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
 
           <div className={styles.right}>
             {panelOpen ? (
-              <section id="seat-ticket-panel" className={styles.panel} aria-label="내 티켓과 좌석표">
-                <div className={styles.ticketRow}>
-                  <div className={styles.miniTicket}>
-                    <TicketPoster
-                      width={84}
-                      posterUrl={info.posterUrl}
-                      bandDate={info.bandDate}
-                      bandTheater={`${theaterName} · ${screenName}`}
-                      alt={`${movie.title} 티켓`}
-                    />
-                  </div>
-                  <div className={styles.ticketText}>
-                    <span className={styles.ticketNo}>No. {info.ticketNo}</span>
-                    <span className={styles.ticketSeat}>{info.seatCode}</span>
-                    <span className={styles.ticketLine}>
-                      {movie.title}
-                      {show.time ? ` · ${show.time}` : ""}
-                    </span>
-                    <span className={styles.ticketLine}>
-                      {theaterName} {screenName}
-                    </span>
-                  </div>
-                </div>
-                <div className={styles.divider} />
+              <section id="seat-ticket-panel" className={styles.panel} aria-label={info ? "내 티켓과 좌석표" : "좌석표"}>
+                {movie && info ? (
+                  <>
+                    <div className={styles.ticketRow}>
+                      <div className={styles.miniTicket}>
+                        <TicketPoster
+                          width={84}
+                          posterUrl={info.posterUrl}
+                          fallbackUrl={info.posterFallbackUrl}
+                          alt={`${movie.title} 티켓`}
+                        />
+                      </div>
+                      <div className={styles.ticketText}>
+                        <span className={styles.ticketNo}>No. {info.ticketNo}</span>
+                        <span className={styles.ticketSeat}>{info.seatCode}</span>
+                        <span className={styles.ticketLine}>
+                          {movie.title}
+                          {show.time ? ` · ${show.time}` : ""}
+                        </span>
+                        <span className={styles.ticketLine}>
+                          {theaterName} {screenName}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={styles.divider} />
+                  </>
+                ) : null}
                 <div className={styles.miniMap}>
-                  <SeatGrid auditorium={auditorium} selectedSeatId={seat.id} onSelect={pickSeat} tone="dark" maxSeat={11} />
+                  <SeatGrid
+                    auditorium={auditorium}
+                    selectedSeatId={seat.id}
+                    onSelect={pickSeat}
+                    tone="dark"
+                    maxSeat={11}
+                    soldSeatIds={sold}
+                  />
                 </div>
               </section>
             ) : null}
@@ -200,9 +280,9 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                 className={styles.control}
                 aria-expanded={panelOpen}
                 aria-controls="seat-ticket-panel"
-                onClick={() => setPanelOpen((v) => !v)}
+                onClick={() => setPanelChoice(!panelOpen)}
               >
-                {panelOpen ? "좌석·티켓 숨기기" : "좌석·티켓 보기"}
+                {panelOpen ? (info ? "좌석·티켓 숨기기" : "좌석표 숨기기") : info ? "좌석·티켓 보기" : "좌석표 보기"}
               </button>
             </div>
           </div>

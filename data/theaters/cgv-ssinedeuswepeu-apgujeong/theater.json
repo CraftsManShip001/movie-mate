@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "cgv-ssinedeuswepeu-apgujeong",
+  "chain": "CGV",
+  "branch": "씨네드쉐프 압구정",
+  "address": "서울특별시 강남구 압구정로30길 45 (신사동) 지하 5층",
+  "auditoriumIds": [
+    "s001",
+    "s002"
+  ],
+  "sample": false,
+  "notes": "상영관은 CGV 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

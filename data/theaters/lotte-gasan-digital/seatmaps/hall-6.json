@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "lotte-gasan-digital",
+  "name": "6관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-18 (184석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.ssssss.ssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": ".................ssss"
+    }
+  ]
+}

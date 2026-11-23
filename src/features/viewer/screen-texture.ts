@@ -4,7 +4,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CanvasTexture, SRGBColorSpace, VideoTexture, type Texture } from "three";
 import { coverUv } from "@/lib/domain/texture-fit";
 import { aspectLabel } from "@/lib/labels";
-import { SCREEN_VIDEO_TIMEOUT_MS } from "./video-source";
+import { SCREEN_VIDEO_RANGE, SCREEN_VIDEO_TIMEOUT_MS } from "./video-source";
+
+/** 영상 불러오기에 실패하면 다시 시도하는 횟수 */
+const VIDEO_RETRIES = 2;
 
 export type ScreenVideoStatus = "loading" | "playing" | "blocked" | "fallback";
 
@@ -87,7 +90,8 @@ export function useScreenTexture(
     const el = document.createElement("video");
     el.crossOrigin = "anonymous";
     el.muted = true;
-    el.loop = true;
+    // 반복은 SCREEN_VIDEO_RANGE 구간으로 직접 한다(끝의 자막을 건너뛰려고)
+    el.loop = false;
     el.playsInline = true;
     el.preload = "auto";
     el.src = url;
@@ -123,18 +127,46 @@ export function useScreenTexture(
         },
       );
     };
-    const onError = () => settle("fallback");
+    // 영상 서버(Wikimedia)가 잠깐 503 을 줄 때가 있어 두 번까지 다시 받아 본다
+    let retries = 0;
+    let retryTimer = 0;
+    const onError = () => {
+      if (settled) return;
+      if (retries < VIDEO_RETRIES) {
+        retries += 1;
+        retryTimer = window.setTimeout(() => el.load(), 1500 * retries);
+        return;
+      }
+      settle("fallback");
+    };
     const onPlaying = () => settle("playing");
+    const { start, loopFrom, loopTo } = SCREEN_VIDEO_RANGE;
+    const onMetadata = () => {
+      if (el.duration > start) el.currentTime = start;
+    };
+    const restart = () => {
+      el.currentTime = loopFrom;
+      el.play().catch(() => undefined);
+    };
+    const onTimeUpdate = () => {
+      if (el.currentTime >= Math.min(loopTo, el.duration || loopTo)) restart();
+    };
 
+    el.addEventListener("loadedmetadata", onMetadata, { once: true });
     el.addEventListener("loadeddata", onLoaded, { once: true });
     el.addEventListener("playing", onPlaying);
     el.addEventListener("error", onError);
+    el.addEventListener("timeupdate", onTimeUpdate);
+    el.addEventListener("ended", restart);
     timer = window.setTimeout(() => settle("fallback"), SCREEN_VIDEO_TIMEOUT_MS);
 
     return () => {
       window.clearTimeout(timer);
+      window.clearTimeout(retryTimer);
       el.removeEventListener("playing", onPlaying);
       el.removeEventListener("error", onError);
+      el.removeEventListener("timeupdate", onTimeUpdate);
+      el.removeEventListener("ended", restart);
       el.pause();
       el.removeAttribute("src");
       el.load();

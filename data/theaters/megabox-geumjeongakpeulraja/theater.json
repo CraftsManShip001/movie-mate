@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "megabox-geumjeongakpeulraja",
+  "chain": "메가박스",
+  "branch": "금정AK플라자",
+  "address": "경기도 군포시 엘에스로143, (금정동) AK플라자금정 1층",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5",
+    "hall-6",
+    "hall-7"
+  ],
+  "sample": false,
+  "notes": "상영관은 메가박스 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

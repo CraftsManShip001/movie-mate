@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-3",
+  "theaterId": "megabox-kintekseu",
+  "name": "컴포트 3관",
+  "format": "recliner",
+  "seatMapSource": "메가박스 예매 좌석 선택 화면, 2026-11-19 (130석)",
+  "aspectRatio": 1.9,
+  "notes": "컴포트 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "B",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "C",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "D",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "E",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "F",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "G",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "H",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "I",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "J",
+      "cells": "sssssssssssss"
+    },
+    {
+      "label": "K",
+      "cells": "sssssssssssss"
+    }
+  ]
+}

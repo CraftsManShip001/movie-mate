@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "lotte-ansan-jungang",
+  "name": "6관",
+  "format": "standard",
+  "seatMapSource": "롯데시네마 예매 좌석 데이터, 2026-11-19 (151석)",
+  "seatNumbering": "column",
+  "aspectRatio": 1.9,
+  "notes": "스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": "ww...sssssss.ssss"
+    },
+    {
+      "label": "B",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "D",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "E",
+      "cells": ".....sssssss.ssss"
+    },
+    {
+      "label": "F",
+      "cells": ".....sssssss.ssss"
+    },
+    {
+      "label": "G",
+      "cells": ".....sssssss.ssss"
+    },
+    {
+      "label": "H",
+      "cells": ".....sssssss.ssss"
+    },
+    {
+      "label": "I",
+      "cells": ".....sssssss.ssss"
+    },
+    {
+      "label": "J",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "K",
+      "cells": "ssss.sssssss.ssss"
+    },
+    {
+      "label": "L",
+      "cells": "ssss.........ssss"
+    }
+  ]
+}

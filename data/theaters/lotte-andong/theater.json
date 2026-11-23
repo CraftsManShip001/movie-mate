@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "lotte-andong",
+  "chain": "롯데시네마",
+  "branch": "프리미엄안동",
+  "address": "경상북도 안동시 경북대로 418, A동 401, 501호 (옥동, 테마프라자 매표/매점 5층)",
+  "auditoriumIds": [
+    "hall-1",
+    "hall-2",
+    "hall-3",
+    "hall-4",
+    "hall-5"
+  ],
+  "sample": false,
+  "notes": "상영관은 롯데시네마 예매 좌석 데이터(2026-11-19)로 옮겼고, 크기는 좌석표로 추정했다."
+}

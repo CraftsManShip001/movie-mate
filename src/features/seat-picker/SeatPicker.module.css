@@ -80,10 +80,55 @@
   color: var(--color-sub);
 }
 
-.note {
+/* 안내 문구는 패널 맨 아래에 한 덩어리로 모은다 */
+.notes {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notes:empty {
+  display: none;
+}
+
+.note {
   font-size: var(--text-sm);
   color: var(--color-sub);
+}
+
+.legend {
+  display: flex;
+  gap: 20px;
+  margin-top: 24px;
+  list-style: none;
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 좌석표(SeatGrid.module.css)의 칸 모양과 같게 그린다 */
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px 3px 1px 1px;
+}
+
+.swatchFree {
+  background: var(--color-seat);
+}
+
+.swatchSold {
+  box-shadow: inset 0 0 0 1.5px var(--color-seat);
+}
+
+.swatchOn {
+  background: var(--color-accent);
 }
 
 .skeleton {

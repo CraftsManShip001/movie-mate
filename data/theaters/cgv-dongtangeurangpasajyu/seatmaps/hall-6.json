@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "hall-6",
+  "theaterId": "cgv-dongtangeurangpasajyu",
+  "name": "6관 (리클라이너)",
+  "format": "recliner",
+  "seatMapSource": "CGV 예매 좌석 선택 화면, 2026-11-19 (104석)",
+  "aspectRatio": 1.9,
+  "notes": "리클라이너 상영관. 스크린 크기는 공개 수치가 없어 객석 폭으로 추정했고, 화면비 1.90:1은 추정값이다.",
+  "rows": [
+    {
+      "label": "A",
+      "cells": ".ssssssssssww."
+    },
+    {
+      "label": "B",
+      "cells": "ssssssssssssss"
+    },
+    {
+      "label": "C",
+      "cells": "ssssssssssssss"
+    },
+    {
+      "label": "D",
+      "cells": ".ssssssssssss."
+    },
+    {
+      "label": "E",
+      "cells": ".ssssssssssss."
+    },
+    {
+      "label": "F",
+      "cells": "ssssssssssssss"
+    },
+    {
+      "label": "G",
+      "cells": ".ssssssssssss."
+    },
+    {
+      "label": "H",
+      "cells": "ssssssssssssss"
+    }
+  ]
+}
