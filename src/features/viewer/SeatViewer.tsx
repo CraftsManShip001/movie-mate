@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { ChevronLeft, ChevronRight } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
 import { useLiveShow } from "@/features/flow/useLiveShow";
@@ -84,6 +84,16 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const base = `/theaters/${theaterId}/${auditorium.id}`;
   const backHref = `${base}${showQueryString(show, seat ? { seat: seat.id } : {})}`;
 
+  // Esc: 뒤로(좌석 화면). 3D 화면은 키보드로 다른 할 일이 없어 바로 돌아간다
+  const backRef = useRef<HTMLAnchorElement>(null);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && !event.defaultPrevented) backRef.current?.click();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   if (!seat || !eye) return null;
 
   // 팔린 자리는 내 티켓이 될 수 없으므로 티켓 없이 좌석표만 보여 준다
@@ -144,6 +154,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
       <div className={styles.top}>
         <div className={styles.titleBar}>
           <Link
+            ref={backRef}
             href={backHref}
             className={styles.back}
             aria-label="뒤로"

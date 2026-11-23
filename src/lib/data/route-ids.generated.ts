@@ -55,8 +55,6 @@ export const ROUTE_IDS: Record<string, readonly string[]> = {
   "cgv-dongtangeurangpasajyu": ["hall-1", "hall-2", "hall-3", "hall-4", "hall-5", "hall-6", "hall-7"],
   "cgv-dongtanhosugongwon": ["hall-1", "hall-2", "hall-3", "hall-4", "hall-5", "hall-6"],
   "cgv-dongtanyeok": ["hall-1", "hall-2", "hall-3", "hall-4", "hall-5", "hall-6", "s007"],
-  "cgv-drive-in-yeongdo": ["s001"],
-  "cgv-drive-in-yongin-keuraeksaideu": ["s001"],
   "cgv-gangbyeon": ["hall-10", "hall-2", "hall-3", "hall-5", "hall-6", "hall-7", "hall-8", "hall-9", "s001", "s004", "s011"],
   "cgv-gangnam": ["hall-1", "hall-3", "hall-4", "hall-5", "hall-6"],
   "cgv-gangreung": ["hall-1", "hall-2", "hall-3", "hall-4", "hall-5", "hall-6", "hall-7", "hall-8"],

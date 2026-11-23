@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { preconnect } from "react-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
@@ -9,6 +10,7 @@ import { useLiveShow } from "@/features/flow/useLiveShow";
 import { SeatGrid, SeatGridSkeleton } from "@/features/seat-map/SeatGrid";
 import { SeatPreview } from "@/features/seat-preview/SeatPreview";
 import { useSeatView } from "@/features/viewer/useSeatView";
+import { SCREEN_VIDEO_ORIGIN } from "@/features/viewer/video-source";
 import { findSeat } from "@/lib/domain/geometry";
 import type { Auditorium, Seat } from "@/lib/domain/types";
 import { asOfLabel, formatMonthDay, seatName } from "@/lib/format";
@@ -28,6 +30,8 @@ interface SeatPickerProps {
 
 /** 3 · 좌석. 고른 자리는 주소(?seat=J14)에 남겨 4·5번에서 뒤로 왔을 때 그대로 보인다. */
 export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPickerProps) {
+  // 다음 화면(시야)에서 받을 스크린 영상 서버와 미리 연결해 둔다
+  preconnect(SCREEN_VIDEO_ORIGIN, { crossOrigin: "anonymous" });
   const searchParams = useSearchParams();
   const show = readShowQuery(searchParams);
   const [seatId, setSeatId] = useState<string | null>(() => searchParams.get("seat"));

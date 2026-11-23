@@ -1,10 +1,12 @@
+import type { Metadata } from "next";
+import { SHARE_IMAGE } from "@/lib/site";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { Suspense, type ReactNode } from "react";
 import { Frame, FrameHeader } from "@/features/flow/Frame";
 import { HallPicker, type HallOption } from "@/features/hall-picker/HallPicker";
 import { ShowtimePicker } from "@/features/showtimes/ShowtimePicker";
-import { getAuditoriums, getTheater, getTheaters } from "@/lib/data/registry";
+import { getAuditoriums, getListedTheaters, getTheater } from "@/lib/data/registry";
 import { screenNameForAuditorium } from "@/lib/data/showtimes";
 import { listSeats } from "@/lib/domain/geometry";
 import { nowInSeoul } from "@/lib/format";
@@ -12,7 +14,21 @@ import { formatLabel } from "@/lib/labels";
 import { getLiveSchedule, hasLive } from "@/lib/live";
 
 export function generateStaticParams() {
-  return getTheaters().map((theater) => ({ theaterId: theater.id }));
+  return getListedTheaters().map((theater) => ({ theaterId: theater.id }));
+}
+
+export async function generateMetadata({ params }: PageProps<"/theaters/[theaterId]">): Promise<Metadata> {
+  const theater = getTheater((await params).theaterId);
+  if (!theater) return {};
+  const name = `${theater.chain} ${theater.branch}`;
+  const formats = [...new Set(getAuditoriums(theater.id).map((a) => a.format).filter((f) => f !== "standard").map(formatLabel))];
+  const description = `${name} 상영관 ${theater.auditoriumIds.length}곳${formats.length ? `(${formats.join("·")})` : ""}의 좌석 배치도와 자리마다 보이는 스크린 시야를 3D로 미리 보세요.`;
+  return {
+    title: `${name} 좌석 시야`,
+    description,
+    alternates: { canonical: `/theaters/${theater.id}` },
+    openGraph: { title: `${name} 좌석 시야`, description, url: `/theaters/${theater.id}`, images: [SHARE_IMAGE] },
+  };
 }
 
 /**

@@ -33,7 +33,13 @@ function guardLive(request: NextRequest) {
   ) {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
-  const ip = headers.get("cf-connecting-ip") ?? headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? headers.get("x-real-ip") ?? "unknown";
+  // Cloudflare를 거치면 cf-connecting-ip 가 실제 사용자 IP다. 그다음은 Vercel이 직접 채우는 x-real-ip.
+  // x-forwarded-for 는 요청하는 쪽이 앞부분을 꾸밀 수 있어 마지막으로 본다.
+  const ip =
+    headers.get("cf-connecting-ip") ??
+    headers.get("x-real-ip") ??
+    headers.get("x-forwarded-for")?.split(",").at(-1)?.trim() ??
+    "unknown";
   const verdict = allowRequest(ip, Date.now());
   if (!verdict.ok) {
     return NextResponse.json(

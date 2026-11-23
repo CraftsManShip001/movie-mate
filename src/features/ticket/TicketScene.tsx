@@ -1,9 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { preconnect } from "react-dom";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
 import { useSeatView } from "@/features/viewer/useSeatView";
+import { SCREEN_VIDEO_ORIGIN } from "@/features/viewer/video-source";
 import { findSeat } from "@/lib/domain/geometry";
 import type { Auditorium } from "@/lib/domain/types";
 import { seatName } from "@/lib/format";
@@ -31,6 +33,8 @@ interface TicketSceneProps {
  * 뒤로 가기를 했을 때 이 장면을 다시 보지 않도록 replace로 이동한다.
  */
 export function TicketScene({ theaterId, theaterName, screenName, auditorium, seatId, movie }: TicketSceneProps) {
+  // 다음 화면(시야)에서 받을 스크린 영상 서버와 미리 연결해 둔다
+  preconnect(SCREEN_VIDEO_ORIGIN, { crossOrigin: "anonymous" });
   const router = useRouter();
   const searchParams = useSearchParams();
   const show = readShowQuery(searchParams);

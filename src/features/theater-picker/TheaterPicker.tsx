@@ -7,6 +7,9 @@ import { withSubject } from "@/lib/format";
 import { REGIONS, type Region } from "@/lib/regions";
 import styles from "./TheaterPicker.module.css";
 
+const NOTICE =
+  "무비메이트는 비공식·비상업 서비스예요. 시간표와 좌석은 각 영화관 예매 화면을 기준으로 보여 주고, 예매는 각 영화관에서 해요.";
+
 export interface ChainOption {
   name: string;
   theaters: { id: string; name: string; region: Region; formats: string }[];
@@ -84,9 +87,7 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
               </button>
             ))}
           </div>
-          <p className={styles.notice}>
-            무비메이트는 비공식·비상업 서비스예요. 시간표와 좌석은 각 영화관 예매 화면을 기준으로 보여 주고, 예매는 각 영화관에서 해요.
-          </p>
+          <p className={styles.notice}>{NOTICE}</p>
         </div>
 
         {chain.theaters.length > 0 ? (
@@ -128,6 +129,8 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
                   </button>
                 </li>
               ))}
+              {/* 휴대폰: 안내는 목록 맨 끝에 둔다(위에 두면 키 작은 화면에서 목록이 한 줄만 보인다) */}
+              <li className={styles.noticeNarrow}>{NOTICE}</li>
             </ul>
           </section>
         ) : (

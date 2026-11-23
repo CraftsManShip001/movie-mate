@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 import { listSeats } from "@/lib/domain/geometry";
 import { CHAIN_SEAT_TOTALS } from "./chains.generated";
 import { LOTTE_SEAT_TOTALS } from "./lotte.generated";
-import { getAllAuditoriums, getAuditorium, getAuditoriums, getTheaters } from "./registry";
+import { getAllAuditoriums, getAuditorium, getAuditoriums, getListedTheaters, getTheaters } from "./registry";
 import { regionOf } from "@/lib/regions";
 import { ROUTE_IDS } from "./route-ids.generated";
 
@@ -124,7 +124,7 @@ describe("data/theaters", () => {
   });
 
   it("주소 검사용 id 목록(route-ids.generated.ts)이 실제 데이터와 같다", () => {
-    const fromData = Object.fromEntries(getTheaters().map((t) => [t.id, [...t.auditoriumIds].sort()]));
+    const fromData = Object.fromEntries(getListedTheaters().map((t) => [t.id, [...t.auditoriumIds].sort()]));
     expect(ROUTE_IDS).toEqual(fromData);
   });
 

@@ -4,7 +4,7 @@ import { AuditoriumEditor } from "@/features/editor/AuditoriumEditor";
 import { getAllAuditoriums } from "@/lib/data/registry";
 
 export const metadata: Metadata = {
-  title: "좌석 에디터 · movie mate",
+  title: "좌석 에디터",
   robots: { index: false, follow: false },
 };
 

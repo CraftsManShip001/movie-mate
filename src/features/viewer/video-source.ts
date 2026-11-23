@@ -16,6 +16,8 @@
 export const SCREEN_VIDEO_URL =
   "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a5/Spring_-_Blender_Open_Movie.webm/Spring_-_Blender_Open_Movie.webm.720p.vp9.webm";
 
+export const SCREEN_VIDEO_ORIGIN = new URL(SCREEN_VIDEO_URL).origin;
+
 export const SCREEN_VIDEO_CREDIT = "영상: Spring (c) Blender Foundation, cloud.blender.org/spring, CC BY 4.0";
 
 /**

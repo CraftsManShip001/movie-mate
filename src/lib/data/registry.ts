@@ -63,6 +63,20 @@ export function getTheaters(): Theater[] {
   return theaters;
 }
 
+/**
+ * 자동차상영관(드라이브인)만 있는 극장. 차 안에서 야외 스크린을 보는 곳이라 3D 실내 시야로 보여 줄 수 없어,
+ * 처음 화면·사이트맵에서 빼고 주소도 404로 보낸다(scripts/gen-route-ids.mjs 가 같은 기준을 쓴다).
+ */
+export function isDriveInOnly(theaterId: string): boolean {
+  const halls = getAuditoriums(theaterId);
+  return halls.length > 0 && halls.every((a) => a.name.includes("자동차상영관"));
+}
+
+/** 사용자에게 보여 주는 극장(자동차상영관만 있는 곳 제외) */
+export function getListedTheaters(): Theater[] {
+  return theaters.filter((theater) => !isDriveInOnly(theater.id));
+}
+
 export function getTheater(theaterId: string): Theater | undefined {
   return theaters.find((theater) => theater.id === theaterId);
 }

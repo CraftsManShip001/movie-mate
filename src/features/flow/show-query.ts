@@ -3,6 +3,8 @@
  * 예: ?date=2026-11-16&time=13:40&seq=3
  * seq는 실제 시간표(롯데시네마·메가박스)에서만 붙는다. 팔린 좌석과 영화를 다시 찾을 때 쓴다.
  */
+import { nowInSeoul } from "@/lib/format";
+
 export interface ShowQuery {
   date: string | null;
   time: string | null;
@@ -10,7 +12,18 @@ export interface ShowQuery {
 }
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
-const TIME = /^\d{2}:\d{2}$/;
+/** 심야 상영은 24:10, 25:30 처럼 적으므로 29시까지 받는다 */
+const TIME = /^([01]\d|2\d):[0-5]\d$/;
+
+/** 실제 날짜이고, 시간표가 있는 범위(어제~6일 뒤, 서울 기준) 안일 때만 받는다. 오래된 링크나 꾸민 값은 상영 없이 연다. */
+function isShowDate(value: string): boolean {
+  if (!DATE.test(value)) return false;
+  const d = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== value) return false;
+  const { todayIso } = nowInSeoul(new Date());
+  const days = (d.getTime() - Date.parse(`${todayIso}T00:00:00Z`)) / 86_400_000;
+  return days >= -1 && days <= 6;
+}
 const SEQ = /^\d{1,20}$/;
 
 export function readShowQuery(params: { get(name: string): string | null }): ShowQuery {
@@ -18,7 +31,7 @@ export function readShowQuery(params: { get(name: string): string | null }): Sho
   const time = params.get("time");
   const seq = params.get("seq");
   return {
-    date: date && DATE.test(date) ? date : null,
+    date: date && isShowDate(date) ? date : null,
     time: time && TIME.test(time) ? time : null,
     seq: seq && SEQ.test(seq) ? seq : null,
   };

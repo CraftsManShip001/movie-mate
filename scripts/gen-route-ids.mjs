@@ -9,6 +9,12 @@ for (const dir of readdirSync(root).sort()) {
   const theaterFile = join(root, dir, "theater.json");
   if (!existsSync(theaterFile)) continue;
   const theater = JSON.parse(readFileSync(theaterFile, "utf8"));
+  // 자동차상영관만 있는 극장은 주소를 404로 보낸다(registry.ts isDriveInOnly 와 같은 기준)
+  const names = theater.auditoriumIds.map((id) => {
+    const file = join(root, dir, "seatmaps", `${id}.json`);
+    return existsSync(file) ? JSON.parse(readFileSync(file, "utf8")).name ?? "" : "";
+  });
+  if (names.length > 0 && names.every((n) => n.includes("자동차상영관"))) continue;
   ids[theater.id] = [...theater.auditoriumIds].sort();
 }
 const body = Object.entries(ids)

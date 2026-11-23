@@ -65,7 +65,11 @@ function readPicked(params: URLSearchParams, schedule: Schedule, todayIso: strin
       };
     }
   }
-  const day = Number(params.get("day") ?? 0);
+  // 날짜는 실제 날짜(?date=)로 남긴다. 예전 링크의 ?day=(오늘부터 며칠째)도 읽는다.
+  const dateParam = params.get("date");
+  const day = dateParam
+    ? (Date.parse(`${dateParam}T00:00:00Z`) - Date.parse(`${todayIso}T00:00:00Z`)) / 86_400_000
+    : Number(params.get("day") ?? 0);
   const show = params.get("show");
   const [screenId, start] = show ? show.split("@") : [];
   return {
@@ -75,9 +79,9 @@ function readPicked(params: URLSearchParams, schedule: Schedule, todayIso: strin
   };
 }
 
-function writePicked({ day, movieId, picked }: PickState) {
+function writePicked({ day, movieId, picked }: PickState, todayIso: string) {
   const params = new URLSearchParams();
-  if (day > 0) params.set("day", String(day));
+  if (day > 0) params.set("date", addDays(todayIso, day));
   if (movieId) params.set("movie", movieId);
   if (picked) params.set("show", `${picked.screenId}@${picked.start}`);
   const query = params.toString();
@@ -107,7 +111,7 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
   const update = (next: Partial<PickState>) => {
     const merged = { ...state, movieId: movies ? currentMovie.id : null, ...next };
     setState(merged);
-    writePicked(merged);
+    writePicked(merged, todayIso);
   };
 
   let bottom = null;

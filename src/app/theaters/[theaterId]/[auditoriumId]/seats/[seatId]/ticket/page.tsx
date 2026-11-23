@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 import { TicketScene } from "@/features/ticket/TicketScene";
 import { getSeatContext } from "@/lib/data/flow-context";
+
+export const metadata: Metadata = { title: "티켓", robots: { index: false, follow: false } };
 
 /** 4 · 티켓 (지나가는 장면, 끝나면 5번으로 자동 이동) */
 export default function TicketPage({ params, searchParams }: PageProps<"/theaters/[theaterId]/[auditoriumId]/seats/[seatId]/ticket">) {

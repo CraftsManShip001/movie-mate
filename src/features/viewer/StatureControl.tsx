@@ -55,11 +55,17 @@ export function StatureControl() {
             <span>
               {MIN_STATURE_CM}cm ~ {MAX_STATURE_CM}cm
             </span>
-            {stature !== DEFAULT_STATURE_CM ? (
-              <button type="button" className={styles.statureReset} onClick={() => setStature(DEFAULT_STATURE_CM)}>
-                평균 키로
-              </button>
-            ) : null}
+            {/* 자리는 늘 둔다. 키를 처음 바꿀 때 버튼이 생기며 슬라이더가 끄는 도중에 위로 밀리지 않게 */}
+            <button
+              type="button"
+              className={styles.statureReset}
+              onClick={() => setStature(DEFAULT_STATURE_CM)}
+              data-idle={stature === DEFAULT_STATURE_CM || undefined}
+              aria-hidden={stature === DEFAULT_STATURE_CM || undefined}
+              tabIndex={stature === DEFAULT_STATURE_CM ? -1 : undefined}
+            >
+              평균 키로
+            </button>
           </div>
         </div>
       ) : null}

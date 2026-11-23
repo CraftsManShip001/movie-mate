@@ -424,6 +424,11 @@
   font-size: 12px;
 }
 
+/* 평균 키일 때는 보이지 않게만 하고 자리는 둔다(StatureControl) */
+.statureReset[data-idle] {
+  visibility: hidden;
+}
+
 /* 휴대폰 키 패널: 버튼 기준이면 화면 왼쪽 밖으로 나간다. 조작 줄 전체 폭에 맞춰 연다(위 기본값보다 뒤에 둔다) */
 @media (max-width: 720px) {
   .controls {

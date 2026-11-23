@@ -32,6 +32,10 @@
   color: var(--color-sub);
 }
 
+.noticeNarrow {
+  display: none;
+}
+
 .chains {
   display: flex;
   flex-direction: column;
@@ -214,6 +218,18 @@
 
   .side {
     width: 100%;
+  }
+
+  .notice {
+    display: none;
+  }
+
+  .noticeNarrow {
+    display: block;
+    padding: 20px 0 28px;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--color-sub);
   }
 
   .title {
