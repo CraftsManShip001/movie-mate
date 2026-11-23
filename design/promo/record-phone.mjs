@@ -257,4 +257,74 @@ for (const [name, path, amount] of [
   });
 }
 
+// 6) 자리 옮기기: 일반관(2관) 시야에서 좌석표를 펼치고 앞·옆·뒤로 옮긴다
+if (!ONLY || ONLY.includes("p-hop")) {
+  await page.goto(`${BASE}/theaters/cgv-yongsan-ipark-mall/hall-2/seats/H8`);
+  await viewReady(page);
+  await page.waitForTimeout(3500);
+  await page.mouse.move(W * 0.8, H * 0.6);
+  cursor = { x: W * 0.8, y: H * 0.6 };
+  await film(page, "p-hop", async (mark) => {
+    await page.waitForTimeout(500);
+    await tap(page.getByRole("button", { name: /좌석표 보기|좌석·티켓 보기/ }), 700);
+    await page.locator("section#seat-ticket-panel [class*=grid]").first().waitFor({ timeout: 5000 }).catch(async () => {
+      console.log("panel not open, clicking directly");
+      await page.getByRole("button", { name: /좌석표 보기|좌석·티켓 보기/ }).click();
+    });
+    await page.waitForTimeout(900);
+    const panel = "section#seat-ticket-panel";
+    for (const [fx, fy] of [[0.5, 0.08], [0.15, 0.5], [0.6, 0.95], [0.5, 0.55]]) {
+      // 자리를 옮기면 휴대폰에서는 좌석표가 다시 접힌다
+      if (!(await page.locator(`${panel} [class*=grid]`).first().isVisible().catch(() => false))) {
+        await tap(page.getByRole("button", { name: /좌석표 보기|좌석·티켓 보기/ }), 600);
+        await page.waitForTimeout(700);
+      }
+      const box = await page.locator(`${panel} [class*=grid]`).first().boundingBox();
+      const seat = await seatNear(page, box.x + box.width * fx, box.y + box.height * fy, panel);
+      await glideTo(page, seat, 700);
+      await page.waitForTimeout(150);
+      await click(page);
+      await mark("hop", seat, 12);
+      await page.waitForTimeout(400);
+      await viewReady(page);
+      await page.waitForTimeout(2400);
+    }
+  });
+}
+
+// 7) 영화·날짜·시간 → 좌석 → 티켓 → 시야 (메가박스 코엑스)
+if (!ONLY || ONLY.includes("p-showtime")) {
+  await page.goto(`${BASE}/theaters/megabox-koekseu`);
+  await page.waitForTimeout(3000);
+  await page.mouse.move(W * 0.8, H * 0.7);
+  cursor = { x: W * 0.8, y: H * 0.7 };
+  await film(page, "p-showtime", async (mark) => {
+    await page.waitForTimeout(500);
+    const movie = page.getByRole("button", { name: "라라랜드" }).first();
+    await movie.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
+    await tap(movie, 800);
+    await mark("movie", movie, 8);
+    await page.waitForTimeout(900);
+    await tap(page.getByRole("button", { name: /11월 24일/ }).first(), 700);
+    await page.waitForTimeout(900);
+    await tap(page.getByRole("button", { name: /시작, .*끝/ }).first(), 700);
+    await page.waitForTimeout(800);
+    await tap(page.getByRole("link", { name: /좌석 보기/ }).or(page.getByRole("button", { name: /좌석 보기/ })).last());
+    await page.waitForURL(/\/theaters\/megabox-koekseu\/[^/?]+\?/);
+    await page.waitForTimeout(2200);
+    const first = await page.locator("button[aria-label*='열']").first().boundingBox();
+    const last = await page.locator("button[aria-label*='열']").last().boundingBox();
+    const seat = await seatNear(page, W / 2, first.y + (last.y - first.y) * 0.6);
+    await tap(seat, 900);
+    await mark("seat", seat, 16);
+    await page.waitForTimeout(1600);
+    console.log("href", await page.getByRole("link", { name: "이 자리에서 보기" }).first().getAttribute("href").catch(() => "none"));
+    await tap(page.getByRole("link", { name: "이 자리에서 보기" }).or(page.getByRole("button", { name: "이 자리에서 보기" })).first());
+    await page.waitForURL(/\/seats\/[^/]+\?/, { timeout: 30000 }).catch(() => {});
+    await viewReady(page).catch(() => {});
+    await page.waitForTimeout(4000);
+  });
+}
+
 await browser.close();
