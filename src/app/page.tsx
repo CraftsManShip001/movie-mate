@@ -10,6 +10,8 @@ export default function HomePage() {
     name: chain,
     theaters: theaters
       .filter((t) => t.chain === chain)
+      // 자동차상영관(드라이브인)은 차 안에서 야외 스크린을 보는 곳이라 3D 실내 시야로 보여 줄 수 없어 뺀다
+      .filter((t) => !getAuditoriums(t.id).every((a) => a.name.includes("자동차상영관")))
       .map((t) => ({ theater: t, auditoriums: getAuditoriums(t.id) }))
       .filter(({ auditoriums }) => auditoriums.length > 0)
       .map(({ theater, auditoriums }) => ({

@@ -24,6 +24,14 @@
   margin-bottom: 18px;
 }
 
+/* 비공식·비상업 안내: 왼쪽 열 맨 아래 */
+.notice {
+  margin-top: auto;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--color-sub);
+}
+
 .chains {
   display: flex;
   flex-direction: column;

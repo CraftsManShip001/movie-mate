@@ -30,7 +30,17 @@ export async function getLiveShow(
   todayIso: string,
   options: { withSeats?: boolean } = {},
 ): Promise<LiveShow | null> {
+  // 시간표가 있는 7일(어제 심야 회차~6일 뒤) 밖의 날짜는 영화관에 묻지 않는다.
+  // 날짜마다 따로 저장되므로, 아무 날짜나 받으면 요청을 바꿔 가며 영화관 서버를 계속 부를 수 있다.
+  if (!withinWeek(dateIso, todayIso)) return null;
   if (hasLotteLive(theaterId)) return getLotteShow(theaterId, auditoriumId, dateIso, seq, options);
   if (hasMegaboxLive(theaterId)) return getMegaboxShow(theaterId, auditoriumId, dateIso, seq, todayIso, options);
   return null;
+}
+
+/** dateIso 가 어제(자정 넘긴 심야 회차)부터 6일 뒤까지인지 */
+export function withinWeek(dateIso: string, todayIso: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateIso) || !/^\d{4}-\d{2}-\d{2}$/.test(todayIso)) return false;
+  const days = (Date.parse(`${dateIso}T00:00:00Z`) - Date.parse(`${todayIso}T00:00:00Z`)) / 86_400_000;
+  return days >= -1 && days <= 6;
 }
