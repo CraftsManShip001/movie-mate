@@ -3,6 +3,8 @@
 //   서버: npx next start -p 3100
 //   실행: PLAYWRIGHT_FROM=<playwright 가 깔린 폴더> node design/promo/reels-demo.mjs [반복 횟수=99]
 //   확인용(창 없이 장면 사진만): HEADLESS=1 node design/promo/reels-demo.mjs 1
+//   흐름: 기본은 메가박스 코엑스 영화 → 시간 → 좌석 → 티켓 → 시야(참고 릴스와 같은 순서, 약 30초).
+//         FLOW=cgv 면 CGV 용산 IMAX 자리 → 시야 → 키 조절. MOVIE="영화 제목"으로 영화를 바꾼다.
 import { mkdir } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { join } from "node:path";
@@ -97,7 +99,58 @@ await viewReady().catch(() => {});
 await wait(HEADLESS ? 3000 : 10000);
 await page.evaluate(() => localStorage.removeItem("movie-mate:stature-cm"));
 
+// 참고 릴스(경기장 → 구역 → 좌석 → 시야 → 결제 완료)와 같은 흐름: 영화 → 시간 → 좌석 → 시야 미리보기 → 티켓 → 3D 시야
+async function ticketLoop() {
+  await page.goto(`${BASE}/theaters/megabox-koekseu`);
+  await wait(2200);
+  await check("t-showtimes");
+  const movie = page.getByRole("button", { name: process.env.MOVIE ?? "라라랜드" }).first();
+  await tap(movie, 900);
+  await wait(900);
+  const tomorrow = page.getByRole("button", { name: /\d+월 \d+일 (?!오늘)(?!.*상영 없음)/ }).first();
+  await tap(tomorrow, 700);
+  await wait(900);
+  await tap(page.getByRole("button", { name: /시작, .*끝/ }).first(), 700);
+  await wait(700);
+  await check("t-time");
+  await tap(page.getByRole("link", { name: /좌석 보기/ }).or(page.getByRole("button", { name: /좌석 보기/ })).last());
+  await page.waitForURL(/\/theaters\/megabox-koekseu\/[^/?]+\?/);
+  await wait(2000);
+  // 팔리지 않은 가운데 뒤쪽 자리
+  const label = await page.evaluate(() => {
+    const seats = [...document.querySelectorAll("button[aria-label*='열']")].filter((b) => !b.disabled && !b.getAttribute("aria-label").includes("팔린 자리"));
+    const ys = seats.map((b) => b.getBoundingClientRect().y), lo = Math.min(...ys), hi = Math.max(...ys);
+    const goal = { x: innerWidth / 2, y: lo + (hi - lo) * 0.62 };
+    let best = null, d = Infinity;
+    for (const b of seats) {
+      const r = b.getBoundingClientRect(), dd = Math.hypot(r.x + r.width / 2 - goal.x, r.y + r.height / 2 - goal.y);
+      if (dd < d) { d = dd; best = b.getAttribute("aria-label"); }
+    }
+    return best;
+  });
+  await tap(page.locator(`button[aria-label="${label}"]`).first(), 900);
+  await wait(1500);
+  await check("t-seat");
+  await tap(page.getByRole("link", { name: "이 자리에서 보기" }).or(page.getByRole("button", { name: "이 자리에서 보기" })).first());
+  await wait(2500);
+  await check("t-ticket");
+  await viewReady().catch(() => {});
+  await wait(2500);
+  await check("t-view");
+  await glide(W / 2, H * 0.42, 600);
+  await drag(90, 0, 1500);
+  await wait(300);
+  await drag(-180, 0, 2000);
+  await wait(300);
+  await drag(90, 0, 1300);
+  await wait(2000);
+}
+
 for (let loop = 0; loop < LOOPS; loop += 1) {
+  if (process.env.FLOW !== "cgv") {
+    await ticketLoop();
+    continue;
+  }
   // 1 · 영화관: CGV → 서울 → 용산아이파크몰
   await page.goto(`${BASE}/`);
   await wait(1600);
