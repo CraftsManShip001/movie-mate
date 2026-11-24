@@ -71,13 +71,16 @@
 }
 
 /* 첫 화면 */
+/* 첫 화면은 헤더 아래 화면 높이를 다 채운다. 아래 섹션은 스크롤해야 보인다 */
 .hero {
+  min-height: calc(100svh - var(--header-h));
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 680px);
   gap: 40px;
   align-items: center;
-  padding-top: 88px;
-  padding-bottom: 24px;
+  align-content: center;
+  padding-top: 40px;
+  padding-bottom: 72px;
 }
 
 .heroText {
@@ -120,11 +123,14 @@
   display: none;
 }
 
-/* 좌석표: 누르면 그 자리 시야로 간다 */
-.seatMapLink {
-  display: block;
-  text-decoration: none;
-  border-radius: var(--radius-lg);
+/* 좌석표: 누르면 고른 자리만 바뀐다(다른 화면으로 가지 않는다) */
+.seatMapBox {
+  min-width: 0;
+}
+
+.seatCaption {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
 }
 
 .seatMap {
@@ -162,12 +168,23 @@
 
 .seat {
   aspect-ratio: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
   border-radius: 2px;
   background: var(--color-seat);
+  cursor: pointer;
+  transition: background-color 120ms ease, transform 120ms ease;
 }
 
-.seatPicked {
+.seat:hover {
+  background: var(--color-sub);
+}
+
+.seatPicked,
+.seatPicked:hover {
   background: var(--color-accent);
+  transform: scale(1.25);
 }
 
 /* 지원 범위 */
@@ -327,7 +344,6 @@
   color: var(--color-sub);
 }
 
-.seatMapLink:hover .seat:not(.seatPicked),
 .movie:hover .poster {
   filter: brightness(0.96);
 }
@@ -340,7 +356,7 @@
     padding-top: 48px;
   }
 
-  .seatMapLink {
+  .seatMapBox {
     max-width: 680px;
   }
 
