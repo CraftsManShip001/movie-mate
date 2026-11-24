@@ -11,5 +11,5 @@ export const SHARE_IMAGE = {
   url: "/opengraph-image.jpg",
   width: 1200,
   height: 630,
-  alt: "좌석에 앉았을 때 보이는 ScreenX 상영관 3D 시야와 무비메이트 소개 문구",
+  alt: "CGV 용산 IMAX N열 23번의 3D 시야와 좌석표를 담은 휴대폰 화면, 무비메이트 소개 문구",
 };
