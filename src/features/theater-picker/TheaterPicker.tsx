@@ -16,9 +16,16 @@ export interface ChainOption {
   theaters: { id: string; name: string; region: Region; formats: string }[];
 }
 
-export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
+/** 실제 시간표가 있는 브랜드. 랜딩에서 영화를 골라 왔을 때 이 브랜드를 먼저 연다(CGV는 시간표가 없다). */
+const LIVE_FIRST = "메가박스";
+
+/**
+ * movieTitle: 랜딩의 "지금 많이 보는 영화"에서 고른 영화(/theaters?title=). 있으면 고른 극장의 시간표에서 이 영화가 미리 골라진다.
+ */
+export function TheaterPicker({ chains, movieTitle = null }: { chains: ChainOption[]; movieTitle?: string | null }) {
   const firstWithTheaters = chains.find((c) => c.theaters.length > 0) ?? chains[0];
-  const [chainName, setChainName] = useState(firstWithTheaters.name);
+  const liveFirst = movieTitle ? chains.find((c) => c.name === LIVE_FIRST && c.theaters.length > 0) : undefined;
+  const [chainName, setChainName] = useState((liveFirst ?? firstWithTheaters).name);
   const chain = chains.find((c) => c.name === chainName) ?? firstWithTheaters;
   // 극장이 있는 지역만, 정해진 순서로
   const regions = REGIONS.map((name) => ({ name, count: chain.theaters.filter((t) => t.region === name).length })).filter(
@@ -61,7 +68,7 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
             </div>
             <div className={frameStyles.actions}>
               <Link
-                href={`/theaters/${selected.id}`}
+                href={`/theaters/${selected.id}${movieTitle ? `?title=${encodeURIComponent(movieTitle)}` : ""}`}
                 className={frameStyles.cta}
                 onClick={() => track("select_theater", { theater_id: selected.id })}
               >
@@ -75,9 +82,19 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
       <div className={styles.layout}>
         <div className={styles.side}>
           <h2 className={styles.title}>
-            어느 영화관에서
-            <br />
-            보세요?
+            {movieTitle ? (
+              <>
+                {movieTitle},
+                <br />
+                어디서 보세요?
+              </>
+            ) : (
+              <>
+                어느 영화관에서
+                <br />
+                보세요?
+              </>
+            )}
           </h2>
           <div className={styles.chains} role="group" aria-label="영화관 브랜드">
             {chains.map((c) => (

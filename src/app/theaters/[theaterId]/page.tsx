@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps<"/theaters/[theater
  */
 export default function TheaterPage({ params }: PageProps<"/theaters/[theaterId]">) {
   return (
-    <Suspense fallback={<Frame header={<FrameHeader title="" backHref="/" />}>{null}</Frame>}>
+    <Suspense fallback={<Frame header={<FrameHeader title="" backHref="/theaters" />}>{null}</Frame>}>
       {params.then(({ theaterId }) => (
         <TheaterContent theaterId={theaterId} />
       ))}
@@ -67,7 +67,7 @@ async function TheaterContent({ theaterId }: { theaterId: string }) {
   if (!hasLive(theater.id)) return halls;
 
   const fallback = (
-    <Frame header={<FrameHeader title={info.name} backHref="/" />}>
+    <Frame header={<FrameHeader title={info.name} backHref="/theaters" />}>
       <span className="visually-hidden">상영 시간을 불러오고 있어요</span>
     </Frame>
   );

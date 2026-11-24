@@ -73,6 +73,17 @@ describe("buildLotteSchedule", () => {
     expect(schedule.showings.filter((s) => s.day === 1)).toHaveLength(1);
     expect(schedule.live).toEqual({ source: "롯데시네마", fetchedAt: "2026-11-19T05:00:00.000Z" });
   });
+
+  it("같은 회차가 두 번 오면 한 번만 넣는다", () => {
+    const twice = buildLotteSchedule({
+      theaterId: "lotte-suwon",
+      mapping,
+      knownScreens: [],
+      fetchedAt: "2026-11-19T05:00:00.000Z",
+      days: [{ day: 0, items: [item({ StartTime: "19:40", PlaySequence: 5 }), item({ StartTime: "19:40", PlaySequence: 5 })] }],
+    });
+    expect(twice.showings).toHaveLength(1);
+  });
 });
 
 describe("parseBookedSeats", () => {

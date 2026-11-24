@@ -15,6 +15,8 @@ export const GA_ID =
  * 매개변수는 GA에서 "맞춤 측정기준"으로 등록해야 보고서에서 나눠 볼 수 있다.
  */
 export type AnalyticsEvent =
+  // 랜딩
+  | { name: "landing_click"; params: { target: "start" | "start_bottom" | "seat_map" | "recent_seat" | "movie"; movie_id?: string } }
   // 핵심 흐름
   | { name: "select_chain"; params: { chain: string } }
   | { name: "select_theater"; params: { theater_id: string } }

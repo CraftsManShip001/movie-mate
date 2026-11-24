@@ -17,6 +17,7 @@ import {
   isFewSeatsLeft,
   screenMeta,
 } from "@/lib/showtimes/schedule";
+import { findMovieByTitle } from "@/lib/showtimes/title";
 import type { Movie, Schedule } from "@/lib/showtimes/types";
 import styles from "./ShowtimePicker.module.css";
 
@@ -75,7 +76,8 @@ function readPicked(params: URLSearchParams, schedule: Schedule, todayIso: strin
   const [screenId, start] = show ? show.split("@") : [];
   return {
     day: Number.isInteger(day) && day >= 0 && day < DAYS ? day : 0,
-    movieId: params.get("movie"),
+    // ?movie=(이 극장의 영화 id)가 없으면 ?title=(랜딩→극장 고르기에서 넘어온 제목)으로 찾는다
+    movieId: params.get("movie") ?? findMovieByTitle(schedule.movies, params.get("title"))?.id ?? null,
     picked: screenId && start ? { screenId, start } : null,
   };
 }
@@ -169,7 +171,7 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
   }
 
   return (
-    <Frame header={<FrameHeader title={theater.name} backHref="/" />} bottom={bottom}>
+    <Frame header={<FrameHeader title={theater.name} backHref="/theaters" />} bottom={bottom}>
       <div className={styles.body}>
         {movies ? (
           <div className={styles.movies} role="group" aria-label="영화">
@@ -240,12 +242,13 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
                   )}
                 </div>
                 <div className={styles.times}>
-                  {group.showings.map((s) => {
+                  {group.showings.map((s, i) => {
                     const few = isFewSeatsLeft(s.seatsLeft);
                     const isPicked = picked?.screenId === group.screen.id && picked.start === s.start;
                     return (
                       <button
-                        key={s.start}
+                        // 같은 관·같은 시각 회차가 둘 올 때가 있다(롯데시네마 무대인사 회차 등)
+                        key={`${s.start}-${s.seq ?? i}`}
                         type="button"
                         className={styles.time}
                         aria-pressed={isPicked}

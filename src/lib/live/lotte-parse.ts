@@ -105,12 +105,17 @@ export function buildLotteSchedule(input: {
   const screens = new Map<string, ScreenInfo & { order: number }>();
   const movies = new Map<string, Movie & { count: number }>();
   const showings: Showing[] = [];
+  // 롯데시네마는 같은 회차(같은 날·같은 관·같은 회차 번호)를 두 번 보낼 때가 있다. 한 번만 넣는다
+  const seen = new Set<string>();
 
   for (const { day, items } of days) {
     for (const item of items) {
       const movieId = String(item.RepresentationMovieCode ?? "").trim();
       const start = startMinutes(item.StartTime);
       if (!movieId || !item.MovieNameKR || start === null) continue;
+      const showKey = `${day}|${item.ScreenID}|${item.PlaySequence}|${start}`;
+      if (seen.has(showKey)) continue;
+      seen.add(showKey);
       const end = endMinutes(item.EndTime, start) ?? start;
 
       const sid = String(item.ScreenID);

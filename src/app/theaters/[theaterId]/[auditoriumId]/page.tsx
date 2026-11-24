@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps<"/theaters/[theater
 /** 3 · 좌석. 주소 값(params)은 Suspense 안에서 읽는다(Cache Components). */
 export default function AuditoriumPage({ params }: PageProps<"/theaters/[theaterId]/[auditoriumId]">) {
   return (
-    <Suspense fallback={<SeatPickerSkeleton title="" backHref="/" />}>
+    <Suspense fallback={<SeatPickerSkeleton title="" backHref="/theaters" />}>
       {params.then(({ theaterId, auditoriumId }) => (
         <AuditoriumContent theaterId={theaterId} auditoriumId={auditoriumId} />
       ))}

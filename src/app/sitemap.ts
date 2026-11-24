@@ -7,7 +7,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const theaters = getListedTheaters();
   const ids = new Set(theaters.map((t) => t.id));
   return [
-    { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
+    { url: SITE_URL, changeFrequency: "daily", priority: 1 },
+    { url: `${SITE_URL}/theaters`, changeFrequency: "weekly", priority: 0.9 },
     ...theaters.map((t) => ({ url: `${SITE_URL}/theaters/${t.id}`, changeFrequency: "daily" as const, priority: 0.8 })),
     ...getAllAuditoriums()
       .filter((a) => ids.has(a.theaterId))

@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore
 import { ChevronLeft, ChevronRight } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
 import { useLiveShow } from "@/features/flow/useLiveShow";
+import { saveRecentSeat } from "@/features/landing/recent-seat";
 import { SeatGrid } from "@/features/seat-map/SeatGrid";
 import { FROM_PICKER_KEY } from "@/features/seat-picker/SeatPicker";
 import { TicketPoster } from "@/features/ticket/Ticket";
@@ -91,6 +92,12 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   useEffect(() => {
     track("view_3d", { chain, theater_id: theaterId, auditorium_id: auditorium.id, seat_id: seatId });
   }, [chain, theaterId, auditorium.id, seatId]);
+
+  // 랜딩의 "이어 보기" 줄에 쓸 마지막 자리
+  useEffect(() => {
+    if (!seat) return;
+    saveRecentSeat({ theaterId, auditoriumId: auditorium.id, seatId: seat.id, theaterName, screenName, seatName: seatName(seat) });
+  }, [theaterId, auditorium.id, seat, theaterName, screenName]);
 
   // Esc: 뒤로(좌석 화면). 3D 화면은 키보드로 다른 할 일이 없어 바로 돌아간다
   const backRef = useRef<HTMLAnchorElement>(null);
