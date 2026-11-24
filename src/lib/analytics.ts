@@ -1,7 +1,14 @@
 import { sendGAEvent } from "@next/third-parties/google";
 
-/** GA4 측정 ID. 비어 있으면(로컬·미리 보기) 아무것도 보내지 않는다. */
-export const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
+/** GA4 "무비메이트 웹" 스트림의 측정 ID(페이지에 그대로 보이는 공개 값) */
+const PRODUCTION_GA_ID = "G-YLGXM7YLT1";
+
+/**
+ * GA4 측정 ID. 환경 변수가 있으면 그것을, 없으면 Vercel 운영 배포에서만 위 ID를 쓴다.
+ * 비어 있으면(로컬·미리 보기 배포) 아무것도 보내지 않는다.
+ */
+export const GA_ID =
+  process.env.NEXT_PUBLIC_GA_ID ?? (process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ? PRODUCTION_GA_ID : "");
 
 /**
  * 무비메이트에서 남기는 이벤트. GA4 보고서 > 이벤트에서 이 이름으로 보인다.
