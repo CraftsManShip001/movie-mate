@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CanvasTexture, SRGBColorSpace, VideoTexture, type Texture } from "three";
 import { coverUv } from "@/lib/domain/texture-fit";
 import { aspectLabel } from "@/lib/labels";
-import { pickScreenVideoUrl, SCREEN_VIDEO_RANGE, SCREEN_VIDEO_TIMEOUT_MS } from "./video-source";
+import { SCREEN_VIDEO_RANGE, SCREEN_VIDEO_TIMEOUT_MS } from "./video-source";
 
 /** 영상 불러오기에 실패하면 다시 시도하는 횟수 */
 const VIDEO_RETRIES = 2;
@@ -90,11 +90,11 @@ export function useScreenTexture(
     const el = document.createElement("video");
     el.crossOrigin = "anonymous";
     el.muted = true;
-    // 반복은 SCREEN_VIDEO_RANGE 구간으로 직접 한다(끝의 자막을 건너뛰려고)
+    // 반복은 SCREEN_VIDEO_RANGE 구간으로 직접 한다
     el.loop = false;
     el.playsInline = true;
     el.preload = "auto";
-    el.src = pickScreenVideoUrl(el, url);
+    el.src = url;
     videoRef.current = el;
 
     let settled = false;
