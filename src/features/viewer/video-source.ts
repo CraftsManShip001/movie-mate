@@ -16,6 +16,19 @@
 export const SCREEN_VIDEO_URL =
   "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a5/Spring_-_Blender_Open_Movie.webm/Spring_-_Blender_Open_Movie.webm.720p.vp9.webm";
 
+/**
+ * WebM(VP9)을 못 트는 브라우저(아이폰 Safari 일부 등)용 같은 영상의 다른 변환본.
+ * Wikimedia가 주는 MPEG-4 Part 2(.mov, 640×268). 아이폰이 기본으로 재생하는 형식이다.
+ */
+export const SCREEN_VIDEO_FALLBACK_URL =
+  "https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a5/Spring_-_Blender_Open_Movie.webm/Spring_-_Blender_Open_Movie.webm.360p.mpeg4.mov";
+
+/** 이 브라우저가 WebM(VP9)을 틀 수 있으면 기본 영상, 아니면 .mov 변환본 */
+export function pickScreenVideoUrl(el: HTMLVideoElement, url: string): string {
+  if (url !== SCREEN_VIDEO_URL) return url;
+  return el.canPlayType('video/webm; codecs="vp9, opus"') ? url : SCREEN_VIDEO_FALLBACK_URL;
+}
+
 export const SCREEN_VIDEO_ORIGIN = new URL(SCREEN_VIDEO_URL).origin;
 
 export const SCREEN_VIDEO_CREDIT = "영상: Spring (c) Blender Foundation, cloud.blender.org/spring, CC BY 4.0";
