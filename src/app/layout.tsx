@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   formatDetection: { telephone: false },
+  // 네이버 서치어드바이저 소유 확인(구글은 stalemate.kr DNS TXT로 확인해 태그가 필요 없다)
+  verification: { other: { "naver-site-verification": "1159fba0e89182db31af8a6ec13869bf500367db" } },
 };
 
 export const viewport: Viewport = {
