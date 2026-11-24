@@ -4,10 +4,11 @@ import { LogoMark } from "@/features/brand/Logo";
 import { SCREEN_VIDEO_CREDIT } from "@/features/viewer/video-source";
 import { getAuditorium, getAuditoriums, getListedTheaters } from "@/lib/data/registry";
 import { listSeats } from "@/lib/domain/geometry";
-import { nowInSeoul } from "@/lib/format";
+import { nowInSeoul, seatName } from "@/lib/format";
 import { CHAINS } from "@/lib/labels";
 import { getRanking } from "@/lib/live/ranking";
 import { LandingLink, RecentSeatRow } from "./LandingLinks";
+import { PlaySeatMap } from "./PlaySeatMap";
 import styles from "./Landing.module.css";
 
 /**
@@ -16,9 +17,8 @@ import styles from "./Landing.module.css";
  * "좌석 찾아보기"는 극장 선택(/theaters)으로 간다.
  */
 
-/** 첫 화면 좌석표: CGV 용산아이파크몰 IMAX관, 고른 자리 N열 23번 */
+/** 첫 화면 좌석표: CGV 용산아이파크몰 IMAX관, 처음 고른 자리 N열 23번 */
 const DEMO = { theaterId: "cgv-yongsan-ipark-mall", auditoriumId: "imax", seatId: "N23" } as const;
-const DEMO_HREF = `/theaters/${DEMO.theaterId}/${DEMO.auditoriumId}/seats/${DEMO.seatId}`;
 
 export function Landing() {
   return (
@@ -46,14 +46,9 @@ export function Landing() {
               좌석 찾아보기
             </LandingLink>
           </div>
-          <LandingLink
-            href={DEMO_HREF}
-            target="seat_map"
-            className={styles.seatMapLink}
-            ariaLabel="CGV 용산아이파크몰 IMAX관 N열 23번 시야 보기"
-          >
+          <div className={styles.seatMapBox}>
             <DemoSeatMap />
-          </LandingLink>
+          </div>
           <LandingLink href="/theaters" target="start" className={`${styles.cta} ${styles.heroCtaPhone}`}>
             좌석 찾아보기
           </LandingLink>
@@ -92,34 +87,19 @@ export function Landing() {
   );
 }
 
-/** 실제 좌석 데이터로 그린 좌석표. 고른 자리 하나만 강조색이다. */
+/** 실제 좌석 데이터로 그린 좌석표. 누르면 고른 자리만 바뀌고 다른 화면으로 가지 않는다. */
 function DemoSeatMap() {
   const auditorium = getAuditorium(DEMO.theaterId, DEMO.auditoriumId);
   if (!auditorium) return null;
-  const seats = listSeats(auditorium);
+  const seats = listSeats(auditorium).map((seat) => ({
+    id: seat.id,
+    name: seatName(seat),
+    row: seat.rowIndex,
+    column: seat.columnIndex,
+    span: Math.max(1, Math.round(seat.span)),
+  }));
   const columns = Math.max(...auditorium.rows.map((r) => r.cells.length));
-  return (
-    <figure className={styles.seatMap}>
-      <div className={styles.screen} aria-hidden="true">
-        <span className={styles.screenLine} />
-        <span className={styles.screenLabel}>스크린</span>
-      </div>
-      <div
-        className={styles.seatGrid}
-        style={{ gridTemplateColumns: `repeat(${columns}, 1fr)`, gridTemplateRows: `repeat(${auditorium.rows.length}, auto)` }}
-        aria-hidden="true"
-      >
-        {seats.map((seat) => (
-          <span
-            key={seat.id}
-            className={seat.id === DEMO.seatId ? `${styles.seat} ${styles.seatPicked}` : styles.seat}
-            style={{ gridRow: seat.rowIndex + 1, gridColumn: `${seat.columnIndex + 1} / span ${Math.max(1, Math.round(seat.span))}` }}
-          />
-        ))}
-      </div>
-      <figcaption className="visually-hidden">CGV 용산아이파크몰 IMAX관 좌석표, N열 23번 선택</figcaption>
-    </figure>
-  );
+  return <PlaySeatMap seats={seats} rows={auditorium.rows.length} columns={columns} initialId={DEMO.seatId} />;
 }
 
 /** 시야를 볼 수 있는 극장(상영관이 하나라도 있는 곳)과 상영관 수 */
