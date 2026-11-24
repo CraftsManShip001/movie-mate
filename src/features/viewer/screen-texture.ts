@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { CanvasTexture, SRGBColorSpace, VideoTexture, type Texture } from "three";
 import { coverUv } from "@/lib/domain/texture-fit";
 import { aspectLabel } from "@/lib/labels";
-import { SCREEN_VIDEO_RANGE, SCREEN_VIDEO_TIMEOUT_MS } from "./video-source";
+import { pickScreenVideoUrl, SCREEN_VIDEO_RANGE, SCREEN_VIDEO_TIMEOUT_MS } from "./video-source";
 
 /** 영상 불러오기에 실패하면 다시 시도하는 횟수 */
 const VIDEO_RETRIES = 2;
@@ -94,7 +94,7 @@ export function useScreenTexture(
     el.loop = false;
     el.playsInline = true;
     el.preload = "auto";
-    el.src = url;
+    el.src = pickScreenVideoUrl(el, url);
     videoRef.current = el;
 
     let settled = false;
@@ -159,6 +159,8 @@ export function useScreenTexture(
     el.addEventListener("timeupdate", onTimeUpdate);
     el.addEventListener("ended", restart);
     timer = window.setTimeout(() => settle("fallback"), SCREEN_VIDEO_TIMEOUT_MS);
+    // 아이폰 Safari는 preload를 무시해 play()를 부르기 전까지 받지 않으므로(loadeddata가 오지 않음) 바로 재생을 건다
+    onLoaded();
 
     return () => {
       window.clearTimeout(timer);
