@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { showQueryString } from "@/features/flow/show-query";
+import { track } from "@/lib/analytics";
 import { asOfLabel, formatMonthDay, withTopic } from "@/lib/format";
 import { bookingLink } from "@/lib/labels";
 import {
@@ -141,12 +142,19 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
               <Link
                 href={`/theaters/${theater.id}/${auditoriumId}${showQueryString({ date: dateIso, time: pickedShowing.start, seq: pickedShowing.seq ?? null })}`}
                 className={frameStyles.cta}
+                onClick={() => track("showtime_view_seats", { theater_id: theater.id, auditorium_id: auditoriumId })}
               >
                 이 시간으로 좌석 보기
               </Link>
             ) : (
               <>
-                <a href={booking.href} target="_blank" rel="noopener noreferrer" className={frameStyles.secondary}>
+                <a
+                  href={booking.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={frameStyles.secondary}
+                  onClick={() => track("booking_click", { chain: theater.chain, from: "showtime" })}
+                >
                   {booking.label}
                 </a>
                 <button type="button" className={frameStyles.cta} disabled>
@@ -171,7 +179,10 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
                 type="button"
                 className={styles.movieOption}
                 aria-pressed={m.id === currentMovie.id}
-                onClick={() => update({ movieId: m.id, picked: null })}
+                onClick={() => {
+                  update({ movieId: m.id, picked: null });
+                  track("select_movie", { theater_id: theater.id, movie_id: m.id });
+                }}
               >
                 <Poster movie={m} className={styles.optionPoster} />
                 <span className={styles.optionTitle}>{m.title}</span>
@@ -196,7 +207,10 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
                 aria-pressed={i === day}
                 disabled={!hasShows[i] && i !== day}
                 aria-label={`${formatMonthDay(d.iso)}${i === 0 ? " 오늘" : ` ${d.label}요일`}${hasShows[i] ? "" : ", 상영 없음"}`}
-                onClick={() => update({ day: i, picked: null })}
+                onClick={() => {
+                  update({ day: i, picked: null });
+                  track("select_day", { theater_id: theater.id, day: i });
+                }}
               >
                 <span className={styles.dateLabel}>{d.label}</span>
                 <span className={styles.dateDay}>{d.day}</span>
@@ -236,7 +250,10 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
                         className={styles.time}
                         aria-pressed={isPicked}
                         aria-label={`${group.screen.name} ${s.start} 시작, ${s.end} 끝, ${s.seatsLeft}석 남음`}
-                        onClick={() => update({ picked: { screenId: group.screen.id, start: s.start } })}
+                        onClick={() => {
+                          update({ picked: { screenId: group.screen.id, start: s.start } });
+                          track("select_showtime", { theater_id: theater.id, screen_id: group.screen.id, start: s.start });
+                        }}
                       >
                         <span className={styles.timeStart}>{s.start}</span>
                         <span className={styles.timeSub}>~{s.end}</span>

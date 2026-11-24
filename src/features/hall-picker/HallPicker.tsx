@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronRight, Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
+import { track } from "@/lib/analytics";
 import styles from "./HallPicker.module.css";
 
 export interface HallOption {
@@ -31,7 +32,11 @@ export function HallPicker({ theater, halls }: { theater: { id: string; name: st
               <span className={frameStyles.summaryValue}>{selected.name}</span>
             </div>
             <div className={frameStyles.actions}>
-              <Link href={`/theaters/${theater.id}/${selected.id}`} className={frameStyles.cta}>
+              <Link
+                href={`/theaters/${theater.id}/${selected.id}`}
+                className={frameStyles.cta}
+                onClick={() => track("select_auditorium", { theater_id: theater.id, auditorium_id: selected.id })}
+              >
                 이 관 좌석 보기
               </Link>
             </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { ChevronRight, Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
+import { track } from "@/lib/analytics";
 import { withSubject } from "@/lib/format";
 import { REGIONS, type Region } from "@/lib/regions";
 import styles from "./TheaterPicker.module.css";
@@ -35,6 +36,7 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
 
   const pickChain = (name: string) => {
     setChainName(name);
+    track("select_chain", { chain: name });
     setRegionName(null);
     setPicked(null);
     scrollToTop();
@@ -58,7 +60,11 @@ export function TheaterPicker({ chains }: { chains: ChainOption[] }) {
               <span className={frameStyles.summaryValue}>{selected.name}</span>
             </div>
             <div className={frameStyles.actions}>
-              <Link href={`/theaters/${selected.id}`} className={frameStyles.cta}>
+              <Link
+                href={`/theaters/${selected.id}`}
+                className={frameStyles.cta}
+                onClick={() => track("select_theater", { theater_id: selected.id })}
+              >
                 이 극장으로
               </Link>
             </div>
