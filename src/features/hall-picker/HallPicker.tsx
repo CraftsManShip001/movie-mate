@@ -23,7 +23,7 @@ export function HallPicker({ theater, halls }: { theater: { id: string; name: st
   return (
     <Frame
       fit
-      header={<FrameHeader title={theater.name} backHref="/" />}
+      header={<FrameHeader title={theater.name} backHref="/theaters" />}
       bottom={
         selected ? (
           <>

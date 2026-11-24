@@ -1,0 +1,475 @@
+/* 랜딩(/). 값의 원본은 design/DESIGN.md "랜딩 페이지"와 design/landing/LandingC1.dc.html */
+
+.page {
+  min-height: 100dvh;
+  background: var(--color-bg);
+  word-break: keep-all;
+}
+
+.inner {
+  max-width: var(--frame-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* 헤더: 로고 + 이름 */
+.header {
+  height: var(--header-h);
+}
+
+.header .inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brandName {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+}
+
+/* 다시 온 사람: 이어 보기 줄 */
+.recent {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: var(--frame-max);
+  margin: 0 auto;
+  padding: var(--space-3) var(--gutter);
+  border-bottom: 1px solid var(--color-hair);
+  text-decoration: none;
+}
+
+.recentText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recentTitle {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.recentSub {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 첫 화면 */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 680px);
+  gap: 40px;
+  align-items: center;
+  padding-top: 88px;
+  padding-bottom: 24px;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.heroTitle {
+  font-size: clamp(44px, 4.6vw, 64px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+.heroLine {
+  max-width: 420px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-sub);
+}
+
+.cta {
+  width: 240px;
+  height: var(--cta-h);
+  border-radius: var(--radius-md);
+  background: var(--color-ink);
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  flex: none;
+}
+
+.heroCtaPhone {
+  display: none;
+}
+
+/* 좌석표: 누르면 그 자리 시야로 간다 */
+.seatMapLink {
+  display: block;
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+}
+
+.seatMap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.screen {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.screenLine {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-ink);
+}
+
+.screenLabel {
+  font-size: 12px;
+  color: var(--color-sub);
+}
+
+.seatGrid {
+  width: 100%;
+  display: grid;
+  gap: 3px;
+}
+
+.seat {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: var(--color-seat);
+}
+
+.seatPicked {
+  background: var(--color-accent);
+}
+
+/* 지원 범위 */
+.coverage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 80px;
+  align-items: start;
+  padding-top: 120px;
+}
+
+.coverageTitle {
+  font-size: var(--text-display);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.coverageList {
+  border-top: 1px solid var(--color-hair);
+}
+
+.coverageRow {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-hair);
+  font-size: var(--text-md);
+  color: var(--color-ink);
+}
+
+.coverageRow dt {
+  font-weight: 500;
+}
+
+/* 섹션 머리 */
+.section {
+  padding-top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.sectionTitle {
+  font-size: var(--text-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.sectionNote {
+  font-size: var(--text-md);
+  color: var(--color-sub);
+}
+
+/* 지금 많이 보는 영화 */
+.ranking {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.movie {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.poster {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+  background: var(--color-btn);
+}
+
+.posterLoading {
+  display: block;
+}
+
+.movieInfo {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.rank {
+  font-size: var(--text-title);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+.movieText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.movieTitle {
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+
+.movieMeta {
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.rankingEmpty {
+  font-size: var(--text-md);
+  color: var(--color-sub);
+}
+
+/* 마무리 */
+.closing {
+  margin-top: 120px;
+  padding: 40px 0;
+  border-top: 1px solid var(--color-hair);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.closingTitle {
+  font-size: var(--text-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.footer {
+  padding-top: var(--space-6);
+  padding-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-sub);
+}
+
+.seatMapLink:hover .seat:not(.seatPicked),
+.movie:hover .poster {
+  filter: brightness(0.96);
+}
+
+/* 태블릿·좁은 창: 첫 화면을 위아래로 */
+@media (max-width: 960px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+    padding-top: 48px;
+  }
+
+  .seatMapLink {
+    max-width: 680px;
+  }
+
+  .ranking {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* 휴대폰 */
+@media (max-width: 720px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    padding-top: var(--space-4);
+  }
+
+  .heroText {
+    gap: 14px;
+  }
+
+  .heroTitle {
+    font-size: 36px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  .heroLine {
+    font-size: var(--text-md);
+    line-height: 1.5;
+  }
+
+  .heroCta {
+    display: none;
+  }
+
+  .heroCtaPhone {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .seatGrid {
+    gap: 1px;
+  }
+
+  .coverage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding-top: 48px;
+  }
+
+  .coverageTitle {
+    font-size: var(--text-title);
+  }
+
+  .coverageTail {
+    display: none;
+  }
+
+  .coverageRow {
+    height: 52px;
+  }
+
+  .section {
+    padding-top: 40px;
+    gap: var(--space-4);
+  }
+
+  .sectionTitle {
+    font-size: var(--text-lg);
+  }
+
+  .sectionNote {
+    display: none;
+  }
+
+  /* 옆으로 넘기는 포스터 줄 */
+  .ranking {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 0 var(--gutter);
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .ranking > li {
+    flex: none;
+    width: 132px;
+    scroll-snap-align: start;
+  }
+
+  .movie {
+    gap: 10px;
+  }
+
+  .poster {
+    border-radius: 8px;
+  }
+
+  .rank {
+    font-size: 20px;
+  }
+
+  .movieInfo {
+    gap: var(--space-2);
+  }
+
+  .movieTitle {
+    font-size: 15px;
+  }
+
+  .movieMeta {
+    display: none;
+  }
+
+  .closing {
+    margin-top: 48px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .closingTitle {
+    font-size: var(--text-lg);
+  }
+
+  .closing .cta {
+    width: 100%;
+  }
+}
