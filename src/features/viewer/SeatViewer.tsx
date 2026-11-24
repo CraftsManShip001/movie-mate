@@ -11,6 +11,7 @@ import { SeatGrid } from "@/features/seat-map/SeatGrid";
 import { FROM_PICKER_KEY } from "@/features/seat-picker/SeatPicker";
 import { TicketPoster } from "@/features/ticket/Ticket";
 import { buildTicketInfo } from "@/features/ticket/ticket-info";
+import { track } from "@/lib/analytics";
 import { eyePosition, findSeat } from "@/lib/domain/geometry";
 import type { Auditorium, Seat } from "@/lib/domain/types";
 import { seatName } from "@/lib/format";
@@ -75,7 +76,10 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const [ready, setReady] = useState(false);
   const onReady = useCallback(() => setReady(true), []);
   const [attempt, setAttempt] = useState(0);
-  const onVideoStatus = useCallback((status: ScreenVideoStatus) => setVideoStatus(status), []);
+  const onVideoStatus = useCallback((status: ScreenVideoStatus) => {
+    setVideoStatus(status);
+    if (status !== "loading") track("video_status", { status });
+  }, []);
   const eye = useMemo(() => (seat ? eyePosition(auditorium, seat, stature) : null), [auditorium, seat, stature]);
   // 실제 회차(영화가 있을 때)면 미니 좌석표에도 팔린 자리를 표시한다
   const { sold } = useLiveShow(theaterId, auditorium.id, show.date, show.seq, movie != null);
@@ -83,6 +87,10 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const booking = bookingLink(chain);
   const base = `/theaters/${theaterId}/${auditorium.id}`;
   const backHref = `${base}${showQueryString(show, seat ? { seat: seat.id } : {})}`;
+
+  useEffect(() => {
+    track("view_3d", { chain, theater_id: theaterId, auditorium_id: auditorium.id, seat_id: seatId });
+  }, [chain, theaterId, auditorium.id, seatId]);
 
   // Esc: 뒤로(좌석 화면). 3D 화면은 키보드로 다른 할 일이 없어 바로 돌아간다
   const backRef = useRef<HTMLAnchorElement>(null);
@@ -101,6 +109,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const info = movie && !seatSold && buildTicketInfo({ movie, theaterName, screenName, seat, date: show.date, time: show.time, numbers });
   const pickSeat = (next: Seat) => {
     if (next.id === seat.id) return;
+    track("change_seat", { auditorium_id: auditorium.id, seat_id: next.id });
     router.replace(`${base}/seats/${next.id}${showQueryString(show)}`, { scroll: false });
   };
   const retry = () => {
@@ -116,7 +125,13 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
         <button type="button" className={styles.retry} onClick={retry}>
           다시 시도
         </button>
-        <a href={booking.href} target="_blank" rel="noopener noreferrer" className={styles.errorBooking}>
+        <a
+          href={booking.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.errorBooking}
+          onClick={() => track("booking_click", { chain, from: "viewer_error" })}
+        >
           {booking.label}
         </a>
       </div>
@@ -186,6 +201,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
             rel="noopener noreferrer"
             className={styles.booking}
             aria-label={`${booking.label} (새 창)`}
+            onClick={() => track("booking_click", { chain, from: "viewer" })}
           >
             <span className={styles.bookingLong}>{booking.label}</span>
             <span className={styles.bookingShort}>예매</span>
@@ -262,17 +278,26 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
             ) : null}
             <div className={styles.controls}>
               {turnedAway ? (
-                <button type="button" className={styles.control} onClick={() => setRecenterRequest((n) => n + 1)}>
+                <button type="button" className={styles.control} onClick={() => {
+                    setRecenterRequest((n) => n + 1);
+                    track("recenter_view", {});
+                  }}>
                   스크린 보기
                 </button>
               ) : null}
               {videoStatus === "blocked" ? (
-                <button type="button" className={styles.control} onClick={() => setPlayRequest((n) => n + 1)}>
+                <button type="button" className={styles.control} onClick={() => {
+                    setPlayRequest((n) => n + 1);
+                    track("retry_video", {});
+                  }}>
                   영상 재생
                 </button>
               ) : null}
               <StatureControl />
-              <button type="button" className={styles.control} aria-pressed={!showHeads} onClick={() => setShowHeads((v) => !v)}>
+              <button type="button" className={styles.control} aria-pressed={!showHeads} onClick={() => {
+                  setShowHeads(!showHeads);
+                  track("toggle_heads", { on: !showHeads });
+                }}>
                 {showHeads ? "앞사람 끄기" : "앞사람 켜기"}
               </button>
               <button
@@ -280,7 +305,10 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                 className={styles.control}
                 aria-expanded={panelOpen}
                 aria-controls="seat-ticket-panel"
-                onClick={() => setPanelChoice(!panelOpen)}
+                onClick={() => {
+                  setPanelChoice(!panelOpen);
+                  track("open_seat_map", { open: !panelOpen });
+                }}
               >
                 {panelOpen ? (info ? "좌석·티켓 숨기기" : "좌석표 숨기기") : info ? "좌석·티켓 보기" : "좌석표 보기"}
               </button>

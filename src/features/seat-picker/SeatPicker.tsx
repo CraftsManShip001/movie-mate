@@ -11,6 +11,7 @@ import { SeatGrid, SeatGridSkeleton } from "@/features/seat-map/SeatGrid";
 import { SeatPreview } from "@/features/seat-preview/SeatPreview";
 import { useSeatView } from "@/features/viewer/useSeatView";
 import { SCREEN_VIDEO_ORIGIN } from "@/features/viewer/video-source";
+import { track } from "@/lib/analytics";
 import { findSeat } from "@/lib/domain/geometry";
 import type { Auditorium, Seat } from "@/lib/domain/types";
 import { asOfLabel, formatMonthDay, seatName } from "@/lib/format";
@@ -85,6 +86,7 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
               rel="noopener noreferrer"
               className={frameStyles.secondary}
               aria-label={`${booking.label} (새 창)`}
+              onClick={() => track("booking_click", { chain, from: "seat_picker" })}
             >
               {chain} 예매
             </a>
@@ -92,7 +94,10 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
               <Link
                 href={`${base}/seats/${seat.id}${liveShow.show && !seatSold ? "/ticket" : ""}${showQueryString(show)}`}
                 className={frameStyles.cta}
-                onClick={() => markFromPicker(base)}
+                onClick={() => {
+                  markFromPicker(base);
+                  track("select_seat", { theater_id: theaterId, auditorium_id: auditorium.id, seat_id: seat.id });
+                }}
               >
                 이 자리에서 보기
               </Link>

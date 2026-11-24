@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { track } from "@/lib/analytics";
 import { DEFAULT_STATURE_CM, MAX_STATURE_CM, MIN_STATURE_CM } from "@/lib/domain/anthropometry";
 import styles from "./SeatViewer.module.css";
 import { useStature } from "./useStature";
@@ -12,6 +13,14 @@ export function StatureControl() {
   const popoverId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // 슬라이더를 끄는 동안 쏟아지지 않게, 키를 바꾸고 1초 멈췄을 때 한 번만 남긴다(처음 값은 남기지 않음)
+  const firstStature = useRef(stature);
+  useEffect(() => {
+    if (stature === firstStature.current) return;
+    const timer = window.setTimeout(() => track("change_stature", { stature_cm: stature }), 1000);
+    return () => window.clearTimeout(timer);
+  }, [stature]);
 
   useEffect(() => {
     if (!open) return;
