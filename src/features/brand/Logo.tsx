@@ -6,7 +6,7 @@ const TICKET =
 
 /**
  * movie mate 로고(티켓 반쪽). 원본은 design/logo/, 규칙은 design/DESIGN.md "로고".
- * 32px 이하(브라우저 탭)는 src/app/icon.svg의 작은 판을 쓴다.
+ * 32px 이하(브라우저 탭)는 src/app/icon1.svg의 작은 판을 쓴다.
  */
 export function LogoMark({ size = 28, label = "movie mate" }: { size?: number; label?: string }) {
   const id = useId();
