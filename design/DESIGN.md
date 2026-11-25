@@ -94,7 +94,7 @@
 
 - **크기:** 48px 이상은 큰 판, 32px 이하는 작은 판을 쓴다. 16px 작은 판은 16칸 격자에 맞춰 따로 그렸고, 꼭지까지 버건디 한 색이다(검은 꼭지를 두면 비디오 카메라처럼 보였다).
 - **아이콘 타일:** 모서리 반지름 22.5%, 로고는 타일의 64%.
-- **코드:** `src/features/brand/Logo.tsx`(큰 판), `src/app/icon.svg`·`favicon.ico`(16px 작은 판), `src/app/apple-icon.png`(버건디 타일 180px). 1번 화면 헤더 왼쪽에 28px로 둔다.
+- **코드:** `src/features/brand/Logo.tsx`(큰 판), `src/app/icon1.svg`·`favicon.ico`(16·32·48px 작은 판)·`icon2.png`(192px, 검색 결과용), `src/app/apple-icon.png`(버건디 타일 180px). 1번 화면 헤더 왼쪽에 28px로 둔다.
 - **약점:** 어두운 바탕(다크 브라우저 탭, 시야 화면)에서는 버건디가 가라앉는다.
 - **보드:** `logo/*.png`, 생성기 `tools/gen_logo*.py`(gen_logo_small → gen_logo_e2 → gen_logo_e).
 
