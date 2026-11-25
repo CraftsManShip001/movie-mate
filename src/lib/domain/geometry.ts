@@ -143,11 +143,27 @@ export function seatFloorPosition(
   };
 }
 
-/** 앉은 사람의 눈 위치 (m) */
+/**
+ * 리클라이너 자세. 상체(엉덩이 → 눈)가 수직에서 기운 각도(라디안).
+ * 바로 앉으면 등받이 기본 기울기(약 15°), 끝까지 젖히면 약 50°다(극장 전동 리클라이너는 보통 45~55°, 그 가운데로 추정).
+ * 젖히면 머리를 머리받침에 기대 얼굴이 위를 향한다. 상체가 35° 더 눕는 동안 목은 조금 숙이므로 얼굴은 25°쯤 든다(gazeUpDeg).
+ * 그래서 스크린을 보려고 드는 고개는 gazeUpDeg 만큼 줄어든다.
+ */
+export const RECLINE = { uprightRad: 0.26, reclinedRad: 0.87, gazeUpDeg: 25 } as const;
+
+/** 젖힌 정도(0 = 바로 앉음, 1 = 끝까지)에 따라 눈이 옮겨 가는 거리 (m). 엉덩이를 축으로 상체가 뒤로 눕는다. */
+export function reclineEyeOffset(statureCm: number, recline: number): { dy: number; dz: number } {
+  const h = seatedEyeHeightM(statureCm);
+  const a = RECLINE.uprightRad + (RECLINE.reclinedRad - RECLINE.uprightRad) * recline;
+  return { dy: h * (Math.cos(a) - Math.cos(RECLINE.uprightRad)), dz: h * (Math.sin(a) - Math.sin(RECLINE.uprightRad)) };
+}
+
+/** 앉은 사람의 눈 위치 (m). recline 은 리클라이너를 젖힌 정도(0~1)로, 의자가 리클라이너일 때만 넘긴다. */
 export function eyePosition(
   auditorium: Auditorium,
   seat: SeatPlace,
   statureCm: number,
+  recline = 0,
 ): Vec3 {
   const floor = seatFloorPosition(auditorium, seat);
   const low = seat.furniture ? FURNITURE_EYE[seat.furniture] : undefined;
@@ -156,10 +172,11 @@ export function eyePosition(
     const tall = (seatedEyeHeightM(statureCm) - seatedEyeHeightM(DEFAULT_STATURE_CM)) * 0.5;
     return { x: floor.x, y: floor.y + low.height + tall, z: floor.z + low.back };
   }
+  const { dy, dz } = recline > 0 ? reclineEyeOffset(statureCm, recline) : { dy: 0, dz: 0 };
   return {
     x: floor.x,
-    y: floor.y + mmToM(auditorium.layout.seatHeight.value) + seatedEyeHeightM(statureCm),
-    z: floor.z,
+    y: floor.y + mmToM(auditorium.layout.seatHeight.value) + seatedEyeHeightM(statureCm) + dy,
+    z: floor.z + dz,
   };
 }
 

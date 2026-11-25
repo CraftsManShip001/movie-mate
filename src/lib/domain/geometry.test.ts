@@ -6,6 +6,7 @@ import {
   eyePosition,
   findSeat,
   listSeats,
+  reclineEyeOffset,
   rowCenterZ,
   rowFloorY,
   screenRect,
@@ -152,5 +153,26 @@ describe("boxSeats", () => {
     expect(result?.padLeft).toBeCloseTo(0.3);
     expect(result?.padRight).toBeCloseTo(0.3);
     expect(boxSeats([seat(4)], [0, 2])).toBeNull();
+  });
+});
+
+describe("리클라이너 눕기", () => {
+  it("젖히면 눈이 내려가고 뒤(스크린 반대쪽)로 간다. 0이면 그대로다", () => {
+    const seat = listSeats(hall)[0];
+    const up = eyePosition(hall, seat, DEFAULT_STATURE_CM);
+    const down = eyePosition(hall, seat, DEFAULT_STATURE_CM, 1);
+    expect(eyePosition(hall, seat, DEFAULT_STATURE_CM, 0)).toEqual(up);
+    expect(down.x).toBe(up.x);
+    expect(down.y).toBeLessThan(up.y - 0.1);
+    expect(down.z).toBeGreaterThan(up.z + 0.2);
+  });
+
+  it("반쯤 젖히면 그 사이에 있다", () => {
+    const half = reclineEyeOffset(DEFAULT_STATURE_CM, 0.5);
+    const full = reclineEyeOffset(DEFAULT_STATURE_CM, 1);
+    expect(half.dy).toBeLessThan(0);
+    expect(half.dy).toBeGreaterThan(full.dy);
+    expect(half.dz).toBeGreaterThan(0);
+    expect(half.dz).toBeLessThan(full.dz);
   });
 });

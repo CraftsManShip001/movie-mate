@@ -19,6 +19,9 @@ import { seatName } from "@/lib/format";
 import { bookingLink } from "@/lib/labels";
 import type { Movie } from "@/lib/showtimes/types";
 import { SceneErrorBoundary } from "./SceneErrorBoundary";
+import { createHeadPose } from "./head-pose";
+import { NeckGuide } from "./NeckGuide";
+import { seatReclines } from "./scene-layout";
 import { StatureControl } from "./StatureControl";
 import type { ScreenVideoStatus } from "./screen-texture";
 import styles from "./SeatViewer.module.css";
@@ -62,8 +65,14 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   const searchParams = useSearchParams();
   const show = readShowQuery(searchParams);
   const seat = useMemo(() => findSeat(auditorium, seatId), [auditorium, seatId]);
-  const { stature, numbers } = useSeatView(auditorium, seat);
+  // 리클라이너 좌석이면 "눕기"로 등받이를 젖혀 본다. 다른 좌석으로 옮겨도 리클라이너면 누운 채로 둔다
+  const canRecline = seat ? seatReclines(auditorium, seat) : false;
+  const [reclineChoice, setReclineChoice] = useState(false);
+  const reclined = canRecline && reclineChoice;
+  const { stature, numbers } = useSeatView(auditorium, seat, reclined);
   const [showHeads, setShowHeads] = useState(true);
+  // 3D 카메라가 매 프레임 고개 방향을 써 넣고, 좌하단 목 그림이 읽는다
+  const poseRef = useRef(createHeadPose());
   // null = 아직 직접 고르지 않음: 데스크톱은 펼치고 휴대폰은 접는다
   const [panelChoice, setPanelChoice] = useState<boolean | null>(null);
   const isPhone = useIsPhone();
@@ -82,6 +91,10 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
     if (status !== "loading") track("video_status", { status });
   }, []);
   const eye = useMemo(() => (seat ? eyePosition(auditorium, seat, stature) : null), [auditorium, seat, stature]);
+  const eyeReclined = useMemo(
+    () => (seat && canRecline ? eyePosition(auditorium, seat, stature, 1) : null),
+    [auditorium, seat, stature, canRecline],
+  );
   // 실제 회차(영화가 있을 때)면 미니 좌석표에도 팔린 자리를 표시한다
   const { sold } = useLiveShow(theaterId, auditorium.id, show.date, show.seq, movie != null);
 
@@ -156,6 +169,8 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
               auditorium={auditorium}
               seat={seat}
               eye={eye}
+              eyeReclined={eyeReclined}
+              reclined={reclined}
               showHeads={showHeads}
               videoUrl={SCREEN_VIDEO_URL}
               playRequest={playRequest}
@@ -163,6 +178,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
               recenterRequest={recenterRequest}
               onTurnedAwayChange={setTurnedAway}
               onReady={onReady}
+              poseRef={poseRef}
             />
           </SceneErrorBoundary>
           {ready ? null : (
@@ -220,6 +236,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
       {failed ? null : (
         <div className={styles.bottom}>
           <div className={styles.left}>
+            <NeckGuide poseRef={poseRef} />
             {numbers ? (
               <dl className={styles.numbers}>
                 <div>
@@ -227,7 +244,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                   <dd>{numbers.fov}</dd>
                 </div>
                 <div>
-                  <dt>올려보기</dt>
+                  <dt>{numbers.upLabel}</dt>
                   <dd>{numbers.up}</dd>
                 </div>
                 <div>
@@ -301,6 +318,14 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
                 </button>
               ) : null}
               <StatureControl />
+              {canRecline ? (
+                <button type="button" className={styles.control} aria-pressed={reclined} onClick={() => {
+                    setReclineChoice(!reclined);
+                    track("toggle_recline", { on: !reclined });
+                  }}>
+                  {reclined ? "일어나기" : "눕기"}
+                </button>
+              ) : null}
               <button type="button" className={styles.control} aria-pressed={!showHeads} onClick={() => {
                   setShowHeads(!showHeads);
                   track("toggle_heads", { on: !showHeads });

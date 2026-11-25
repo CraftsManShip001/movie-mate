@@ -12,7 +12,7 @@ import { useSeatView } from "@/features/viewer/useSeatView";
 import { track } from "@/lib/analytics";
 import { findSeat } from "@/lib/domain/geometry";
 import type { Auditorium, Seat } from "@/lib/domain/types";
-import { asOfLabel, formatMonthDay, seatName } from "@/lib/format";
+import { asOfLabel, formatMonthDay, seatName, type ViewNumbers } from "@/lib/format";
 import { bookingLink } from "@/lib/labels";
 import styles from "./SeatPicker.module.css";
 
@@ -174,7 +174,7 @@ function SeatLegend() {
   );
 }
 
-function ViewNumbersRow({ numbers }: { numbers: { fov: string; up: string; dist: string } }) {
+function ViewNumbersRow({ numbers }: { numbers: ViewNumbers }) {
   return (
     <dl className={styles.numbers}>
       <div>
@@ -182,7 +182,7 @@ function ViewNumbersRow({ numbers }: { numbers: { fov: string; up: string; dist:
         <dd>{numbers.fov}</dd>
       </div>
       <div>
-        <dt>올려보기</dt>
+        <dt>{numbers.upLabel}</dt>
         <dd>{numbers.up}</dd>
       </div>
       <div>
