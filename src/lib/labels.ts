@@ -21,7 +21,7 @@ export function aspectLabel(ratio: number): string {
 }
 
 /** 1번 화면에 보여 주는 영화관 브랜드 (순서 고정) */
-export const CHAINS = ["CGV", "메가박스", "롯데시네마"] as const;
+export const CHAINS = ["롯데시네마", "메가박스", "CGV"] as const;
 
 /**
  * 실제 예매는 각 영화관 사이트에 맡긴다. 지금은 극장·상영별 딥링크 없이 브랜드 첫 화면으로 보낸다.
