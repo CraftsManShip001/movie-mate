@@ -17,6 +17,7 @@ import {
 } from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import { RECLINE } from "@/lib/domain/geometry";
 import type { ChairStyle } from "./scene-layout";
 
 export interface ChairSpec {
@@ -36,6 +37,19 @@ export interface ChairGeometries {
   shell: BufferGeometry;
   /** 팔걸이 하나 (x = 0 중심) */
   arm: BufferGeometry;
+  /**
+   * 리클라이너에서 "눕기"로 움직이는 천 부분. 모양은 축(pivot)을 원점으로 만들어 두고,
+   * 그리는 쪽에서 의자 위치 → pivot 으로 옮긴 뒤 x축으로 angle × 젖힌 정도만큼 돌린다.
+   */
+  moving?: MovingPart[];
+}
+
+export interface MovingPart {
+  geometry: BufferGeometry;
+  /** 의자 바닥 중심 기준의 회전축 위치 */
+  pivot: [number, number, number];
+  /** 끝까지 젖혔을 때 x축 회전(라디안). 양수면 위쪽이 뒤(+z)로 간다 */
+  angle: number;
 }
 
 /** 반올림 모서리 상자. 크기 → 중심 이동 → x축 회전(라디안, 아래 끝 기준) 순서 */
@@ -175,6 +189,11 @@ function buildStandardChair({ width, seatHeight, backHeight }: ChairSpec): Chair
   return { upholstery, shell, arm };
 }
 
+/** 끝까지 젖혔을 때 등받이가 더 넘어가는 각도: 상체 각도 변화(RECLINE)와 같다 */
+const RECLINE_BACK_RAD = RECLINE.reclinedRad - RECLINE.uprightRad;
+/** 발받침이 들리는 각도(약 80°, 거의 수평) */
+const RECLINE_FOOT_RAD = 1.4;
+
 /** 리클라이너·프리미엄: 두툼한 가죽 방석과 등받이, 머리받침, 넓은 팔걸이 콘솔, 접힌 발받침 */
 function buildRecliner({ width, seatHeight, backHeight }: ChairSpec): ChairGeometries {
   const armW = Math.min(0.17, width * 0.2);
@@ -183,14 +202,22 @@ function buildRecliner({ width, seatHeight, backHeight }: ChairSpec): ChairGeome
   const backLen = Math.max(0.5, backHeight - seatHeight + 0.12);
   const recline = 0.26;
 
-  const upholstery = merge([
-    roundedBox(inner, 0.2, 0.6, 0.07, [0, seatHeight - 0.1, -0.04], { tilt: 0.04, segments: 3 }),
-    // 접힌 발받침 (방석 앞면 아래)
-    roundedBox(inner - 0.04, seatHeight - 0.12, 0.09, 0.035, [0, (seatHeight - 0.12) / 2 + 0.04, -0.31]),
-    // 등받이와 머리받침
-    roundedBox(inner, backLen, 0.2, 0.08, [0, seatHeight - 0.06, 0.28], { tilt: recline, pivotBottom: true, segments: 3 }),
-    roundedBox(inner * 0.78, 0.17, 0.11, 0.05, [0, seatHeight - 0.06 + (backLen - 0.12) * Math.cos(recline), 0.28 + (backLen - 0.12) * Math.sin(recline) - 0.12]),
+  const upholstery = merge([roundedBox(inner, 0.2, 0.6, 0.07, [0, seatHeight - 0.1, -0.04], { tilt: 0.04, segments: 3 })]);
+
+  // 등받이와 머리받침: 등받이 아래 끝을 축으로 뒤로 넘어간다
+  const backPivot: [number, number, number] = [0, seatHeight - 0.06, 0.28];
+  const back = merge([
+    roundedBox(inner, backLen, 0.2, 0.08, [0, 0, 0], { tilt: recline, pivotBottom: true, segments: 3 }),
+    roundedBox(inner * 0.78, 0.17, 0.11, 0.05, [0, (backLen - 0.12) * Math.cos(recline), (backLen - 0.12) * Math.sin(recline) - 0.12]),
   ]);
+  // 발받침: 방석 앞 끝 아래에 접혀 있다가, 위 끝을 축으로 앞으로 들려 다리를 받친다
+  const footLen = seatHeight - 0.12;
+  const footPivot: [number, number, number] = [0, footLen + 0.04, -0.31];
+  const foot = merge([roundedBox(inner - 0.04, footLen, 0.09, 0.035, [0, -footLen / 2, 0])]);
+  const moving: MovingPart[] = [
+    { geometry: back, pivot: backPivot, angle: RECLINE_BACK_RAD },
+    { geometry: foot, pivot: footPivot, angle: RECLINE_FOOT_RAD },
+  ];
   const shell = merge([
     // 바닥 받침대
     roundedBox(inner - 0.04, 0.07, 0.62, 0.02, [0, 0.035, 0.0], { segments: 1 }),
@@ -201,7 +228,7 @@ function buildRecliner({ width, seatHeight, backHeight }: ChairSpec): ChairGeome
     roundedBox(armW, armTop, 0.78, 0.05, [0, armTop / 2, 0.02], { segments: 3 }),
     cup,
   ]);
-  return { upholstery, shell, arm };
+  return { upholstery, shell, arm, moving };
 }
 
 export interface PersonGeometries {

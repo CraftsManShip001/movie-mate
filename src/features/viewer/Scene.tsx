@@ -2,13 +2,14 @@
 
 import { PerformanceMonitor } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactElement } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactElement, type RefObject } from "react";
 import {
   AdditiveBlending,
   BoxGeometry,
   Color,
   CylinderGeometry,
   DoubleSide,
+  Matrix4,
   Object3D,
   PerspectiveCamera,
   PlaneGeometry,
@@ -18,7 +19,8 @@ import {
   type Texture,
 } from "three";
 import { RectAreaLightUniformsLib } from "three/examples/jsm/lights/RectAreaLightUniformsLib.js";
-import { mmToM, rowCenterZ, screenRect, seatFloorPosition } from "@/lib/domain/geometry";
+import { DEFAULT_STATURE_CM } from "@/lib/domain/anthropometry";
+import { mmToM, RECLINE, reclineEyeOffset, rowCenterZ, screenRect, seatFloorPosition } from "@/lib/domain/geometry";
 import type { Auditorium, Seat, Vec3 } from "@/lib/domain/types";
 import {
   balconyParapets,
@@ -48,7 +50,9 @@ import {
   exitSignTexture,
   fabricBumpTexture,
   glowTexture,
+  type MovingPart,
 } from "./scene-models";
+import type { HeadPose } from "./head-pose";
 import { useScreenTexture, type ScreenVideoStatus } from "./screen-texture";
 
 // 스크린 면광원(RectAreaLight)을 쓰려면 한 번 초기화해야 한다
@@ -58,6 +62,10 @@ export interface SceneProps {
   auditorium: Auditorium;
   seat: Seat;
   eye: Vec3;
+  /** 리클라이너를 끝까지 젖혔을 때 눈 위치. 리클라이너가 아니면 null */
+  eyeReclined: Vec3 | null;
+  /** 눕기: 바뀌면 의자·앞사람·시선이 RECLINE_SECONDS 동안 함께 움직인다 */
+  reclined: boolean;
   showHeads: boolean;
   videoUrl: string;
   playRequest: number;
@@ -68,6 +76,8 @@ export interface SceneProps {
   onTurnedAwayChange: (turnedAway: boolean) => void;
   /** 첫 장면을 그렸을 때 한 번 부른다(불러오는 중 표시를 걷는다) */
   onReady?: () => void;
+  /** 매 프레임 지금 고개 방향을 써 넣는다(좌하단 목 그림용) */
+  poseRef?: RefObject<HeadPose>;
 }
 
 /** 3D 시야 장면. three.js는 브라우저 전용이므로 next/dynamic(ssr: false)으로만 불러온다. */
@@ -94,14 +104,19 @@ function SceneContents({
   auditorium,
   seat,
   eye,
+  eyeReclined,
+  reclined,
   showHeads,
   videoUrl,
   playRequest,
   onVideoStatus,
   recenterRequest,
   onTurnedAwayChange,
+  poseRef,
 }: SceneProps) {
   const screen = screenRect(auditorium);
+  // 젖힌 정도(0~1). 매 프레임 바뀌므로 React 상태가 아니라 ref 로 두고, 움직이는 부분이 useFrame 에서 읽는다
+  const recline = useRef(0);
   const { texture, status } = useScreenTexture(videoUrl, auditorium.screen.aspectRatio.value, playRequest);
 
   useEffect(() => onVideoStatus(status), [status, onVideoStatus]);
@@ -112,8 +127,9 @@ function SceneContents({
       <Lights auditorium={auditorium} />
       <BoxLamp auditorium={auditorium} seat={seat} />
       <Room auditorium={auditorium} />
-      <Chairs auditorium={auditorium} />
-      {showHeads ? <People auditorium={auditorium} seat={seat} /> : null}
+      <ReclineDriver target={reclined && eyeReclined ? 1 : 0} valueRef={recline} />
+      <Chairs auditorium={auditorium} recline={recline} />
+      {showHeads ? <People auditorium={auditorium} seat={seat} recline={recline} /> : null}
 
       <mesh position={[0, screen.centerY, 0]}>
         <planeGeometry args={[screen.width, screen.height]} />
@@ -126,6 +142,9 @@ function SceneContents({
 
       <SeatCamera
         eye={eye}
+        eyeReclined={eyeReclined ?? eye}
+        recline={recline}
+        poseRef={poseRef}
         target={{ x: 0, y: screen.centerY, z: 0 }}
         aimKey={`${seat.id}:${recenterRequest}`}
         onTurnedAwayChange={onTurnedAwayChange}
@@ -361,7 +380,7 @@ const CHAIR_LOOK = {
   },
 } as const satisfies Record<ChairStyle, unknown>;
 
-function Chairs({ auditorium }: { auditorium: Auditorium }) {
+function Chairs({ auditorium, recline }: { auditorium: Auditorium; recline: RefObject<number> }) {
   const groups = useMemo(() => chairGroups(auditorium), [auditorium]);
   const bump = useMemo(() => {
     const t = fabricBumpTexture();
@@ -372,14 +391,24 @@ function Chairs({ auditorium }: { auditorium: Auditorium }) {
   return (
     <>
       {groups.map((group) => (
-        <ChairSet key={group.style} auditorium={auditorium} group={group} bump={bump} />
+        <ChairSet key={group.style} auditorium={auditorium} group={group} bump={bump} recline={recline} />
       ))}
     </>
   );
 }
 
 /** 같은 모양의 의자 묶음. 본 객석과 위층 구역(PRIVATE BOX·SWEETBOX)의 의자 모양이 다를 수 있다. */
-function ChairSet({ auditorium, group, bump }: { auditorium: Auditorium; group: ChairGroup; bump: Texture }) {
+function ChairSet({
+  auditorium,
+  group,
+  bump,
+  recline,
+}: {
+  auditorium: Auditorium;
+  group: ChairGroup;
+  bump: Texture;
+  recline: RefObject<number>;
+}) {
   const { style } = group;
   const { seatWidth, seatHeight, seatBackHeight } = auditorium.layout;
   const geometry = useMemo(
@@ -392,21 +421,27 @@ function ChairSet({ auditorium, group, bump }: { auditorium: Auditorium; group: 
       }),
     [style, seatWidth.value, seatHeight.value, seatBackHeight.value],
   );
-  useEffect(() => () => Object.values(geometry).forEach((g) => g.dispose()), [geometry]);
+  useEffect(
+    () => () => {
+      [geometry.upholstery, geometry.shell, geometry.arm].forEach((g) => g.dispose());
+      geometry.moving?.forEach((part) => part.geometry.dispose());
+    },
+    [geometry],
+  );
   const chairs = useMemo(
     () => group.chairs.map((position, i) => ({ position, scale: [group.widths[i], 1, 1] as Tuple3 })),
     [group],
   );
   const arms = useMemo(() => group.arms.map((position) => ({ position })), [group]);
   const look = CHAIR_LOOK[style];
+  const upholstery = <meshStandardMaterial {...look.upholstery} bumpMap={bump} roughnessMap={bump} />;
 
   return (
     <>
-      <Instanced
-        geometry={geometry.upholstery}
-        items={chairs}
-        material={<meshStandardMaterial {...look.upholstery} bumpMap={bump} roughnessMap={bump} />}
-      />
+      <Instanced geometry={geometry.upholstery} items={chairs} material={upholstery} />
+      {geometry.moving?.map((part, i) => (
+        <ChairPart key={i} part={part} chairs={chairs} material={upholstery} recline={recline} />
+      ))}
       <Instanced geometry={geometry.shell} items={chairs} material={<meshStandardMaterial {...look.shell} />} />
       <Instanced
         geometry={geometry.arm}
@@ -417,44 +452,152 @@ function ChairSet({ auditorium, group, bump }: { auditorium: Auditorium; group: 
   );
 }
 
-function People({ auditorium, seat }: { auditorium: Auditorium; seat: Seat }) {
+/** 리클라이너의 등받이·발받침. 의자마다 축을 중심으로 젖힌 정도만큼 돌린다 */
+function ChairPart({
+  part,
+  chairs,
+  material,
+  recline,
+}: {
+  part: MovingPart;
+  chairs: InstanceItem[];
+  material: ReactElement;
+  recline: RefObject<number>;
+}) {
+  const bases = useMemo(() => {
+    const dummy = new Object3D();
+    return chairs.map((c) => {
+      dummy.position.set(...c.position);
+      dummy.scale.set(...(c.scale ?? [1, 1, 1]));
+      dummy.updateMatrix();
+      return dummy.matrix.clone().multiply(new Matrix4().makeTranslation(...part.pivot));
+    });
+  }, [chairs, part.pivot]);
+  const turn = useMemo(() => new Matrix4(), []);
+  const matrixAt = useCallback(
+    (i: number, t: number, out: Matrix4) => out.multiplyMatrices(bases[i], turn.makeRotationX(part.angle * t)),
+    [bases, turn, part.angle],
+  );
+  return <MovingInstanced geometry={part.geometry} count={chairs.length} material={material} progress={recline} matrixAt={matrixAt} />;
+}
+
+/** 앞사람이 리클라이너에 앉았으면 눕기에 맞춰 같이 기댄다(눈이 내려가고 뒤로 가며 몸이 뒤로 기운다) */
+function People({ auditorium, seat, recline }: { auditorium: Auditorium; seat: Seat; recline: RefObject<number> }) {
   const geometry = useMemo(() => buildPerson(), []);
   useEffect(() => () => Object.values(geometry).forEach((g) => g.dispose()), [geometry]);
   const people = useMemo(() => frontPeople(auditorium, seat), [auditorium, seat]);
-  const { placed, hair, skin, clothes } = useMemo(
+  const { hair, skin, clothes } = useMemo(
     () => ({
-      placed: people.map((p) => ({
-        position: p.position,
-        rotation: [0, p.yaw, p.roll] as Tuple3,
-        scale: [p.scale, p.scale, p.scale] as Tuple3,
-      })),
       hair: people.map((p) => HAIR_COLORS[p.hair]),
       skin: people.map((p) => SKIN_COLORS[p.skin]),
       clothes: people.map((p) => CLOTHES_COLORS[p.clothes]),
     }),
     [people],
   );
+  const matrixAt = useMemo(() => {
+    const dummy = new Object3D();
+    dummy.rotation.order = "YXZ";
+    return (i: number, t: number, out: Matrix4) => {
+      const p = people[i];
+      const lean = p.reclines ? t : 0;
+      const { dy, dz } = lean > 0 ? reclineEyeOffset(DEFAULT_STATURE_CM, lean) : { dy: 0, dz: 0 };
+      dummy.position.set(p.position[0], p.position[1] + dy * p.scale, p.position[2] + dz * p.scale);
+      dummy.rotation.set((RECLINE.reclinedRad - RECLINE.uprightRad) * lean, p.yaw, p.roll);
+      dummy.scale.setScalar(p.scale);
+      dummy.updateMatrix();
+      return out.copy(dummy.matrix);
+    };
+  }, [people]);
+  const parts = [
+    { geometry: geometry.head, colors: hair, roughness: 0.75 },
+    { geometry: geometry.skin, colors: skin, roughness: 0.6 },
+    { geometry: geometry.body, colors: clothes, roughness: 0.92 },
+  ];
   return (
     <>
-      <Instanced
-        geometry={geometry.head}
-        items={placed}
-        colors={hair}
-        material={<meshStandardMaterial roughness={0.75} />}
-      />
-      <Instanced
-        geometry={geometry.skin}
-        items={placed}
-        colors={skin}
-        material={<meshStandardMaterial roughness={0.6} />}
-      />
-      <Instanced
-        geometry={geometry.body}
-        items={placed}
-        colors={clothes}
-        material={<meshStandardMaterial roughness={0.92} />}
-      />
+      {parts.map((part) => (
+        <MovingInstanced
+          key={part.geometry.uuid}
+          geometry={part.geometry}
+          count={people.length}
+          colors={part.colors}
+          material={<meshStandardMaterial roughness={part.roughness} />}
+          progress={recline}
+          matrixAt={matrixAt}
+        />
+      ))}
     </>
+  );
+}
+
+const RECLINE_SECONDS = 1.6;
+// 처음과 끝은 천천히, 가운데는 빠르게(전동 의자가 움직이는 느낌)
+const easeInOut = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2);
+
+/** 눕기 진행값을 target 쪽으로 RECLINE_SECONDS 에 걸쳐 옮긴다 */
+function ReclineDriver({ target, valueRef }: { target: number; valueRef: RefObject<number> }) {
+  // valueRef 와 같이 0(바로 앉음)에서 시작한다
+  const linear = useRef(0);
+  useFrame((_, delta) => {
+    if (linear.current === target) return;
+    const step = Math.min(delta, 0.1) / RECLINE_SECONDS;
+    linear.current = target > linear.current ? Math.min(target, linear.current + step) : Math.max(target, linear.current - step);
+    valueRef.current = easeInOut(linear.current);
+  });
+  return null;
+}
+
+/**
+ * 움직이는 인스턴스. progress 가 바뀐 프레임에만 matrixAt 으로 모든 인스턴스 위치를 다시 잡는다.
+ * 눕기 애니메이션 동안만 계산하고, 멈춰 있으면 아무것도 하지 않는다.
+ */
+function MovingInstanced({
+  geometry,
+  count,
+  material,
+  colors,
+  progress,
+  matrixAt,
+}: {
+  geometry: BufferGeometry;
+  count: number;
+  material: ReactElement;
+  colors?: string[];
+  progress: RefObject<number>;
+  matrixAt: (i: number, t: number, out: Matrix4) => Matrix4;
+}) {
+  const ref = useRef<InstancedMesh>(null);
+  const applied = useRef<number | null>(null);
+  const apply = useCallback(
+    (t: number) => {
+      const mesh = ref.current;
+      if (!mesh) return;
+      const m = new Matrix4();
+      for (let i = 0; i < count; i += 1) mesh.setMatrixAt(i, matrixAt(i, t, m));
+      mesh.instanceMatrix.needsUpdate = true;
+      mesh.computeBoundingSphere();
+      applied.current = t;
+    },
+    [count, matrixAt],
+  );
+  useLayoutEffect(() => {
+    const mesh = ref.current;
+    if (!mesh) return;
+    if (colors) {
+      const color = new Color();
+      colors.forEach((c, i) => mesh.setColorAt(i, color.set(c)));
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    }
+    apply(progress.current);
+  }, [apply, colors, progress]);
+  useFrame(() => {
+    if (progress.current !== applied.current) apply(progress.current);
+  });
+  if (count === 0) return null;
+  return (
+    <instancedMesh ref={ref} args={[geometry, undefined, count]} key={`${geometry.uuid}:${count}`}>
+      {material}
+    </instancedMesh>
   );
 }
 
@@ -521,6 +664,8 @@ function FirstFrame({ onReady }: { onReady: () => void }) {
 }
 
 const MAX_PITCH = (80 * Math.PI) / 180;
+/** 끝까지 누웠을 때 얼굴이 위를 향하는 각도 */
+const GAZE_UP_RAD = (RECLINE.gazeUpDeg * Math.PI) / 180;
 const DRAG_SPEED = 0.005;
 /** 스크린 방향에서 이만큼 넘게 돌리면 "스크린 보기" 버튼을 띄운다(좌우) */
 const TURNED_AWAY = (60 * Math.PI) / 180;
@@ -535,11 +680,18 @@ const MAX_VERTICAL_FOV_DEG = 100;
  */
 function SeatCamera({
   eye,
+  eyeReclined,
+  recline,
+  poseRef,
   target,
   aimKey,
   onTurnedAwayChange,
 }: {
+  poseRef?: RefObject<HeadPose>;
   eye: Vec3;
+  /** 끝까지 젖혔을 때 눈 위치. 눕기 진행값만큼 eye 와 사이를 옮겨 간다 */
+  eyeReclined: Vec3;
+  recline: RefObject<number>;
   target: Vec3;
   aimKey: string;
   onTurnedAwayChange: (turnedAway: boolean) => void;
@@ -559,15 +711,36 @@ function SeatCamera({
     reportTurn.current = onTurnedAwayChange;
   }, [onTurnedAwayChange]);
 
-  // 좌석이 바뀌면 스크린 중심을 바라보게 초기화
+  /** 지금 젖힌 정도에서의 눈 위치 */
+  const poseEye = useCallback(
+    (t: number): Vec3 => ({
+      x: eye.x + (eyeReclined.x - eye.x) * t,
+      y: eye.y + (eyeReclined.y - eye.y) * t,
+      z: eye.z + (eyeReclined.z - eye.z) * t,
+    }),
+    [eye.x, eye.y, eye.z, eyeReclined.x, eyeReclined.y, eyeReclined.z],
+  );
+  const appliedRecline = useRef(recline.current);
+  /**
+   * 고개를 돌리지 않았을 때 보는 방향.
+   * 바로 앉으면 고개를 들어 스크린 중심을 본다. 누우면 목에 힘을 빼고 머리받침에 기대므로,
+   * 얼굴은 스크린과 상관없이 GAZE_UP 만큼 위를 향한다. 그래서 뒷줄은 스크린이 시야 아래로, 앞줄은 가운데로 온다.
+   */
+  const homeAt = useCallback(
+    (t: number) => {
+      const aim = aimAt(poseEye(t), target);
+      return { yaw: aim.yaw, pitch: aim.pitch + (GAZE_UP_RAD - aim.pitch) * t };
+    },
+    [poseEye, target],
+  );
+
+  // 좌석이 바뀌면(또는 "스크린 보기") 고개를 기본 방향으로 되돌린다
   useLayoutEffect(() => {
-    const dx = target.x - eye.x;
-    const dy = target.y - eye.y;
-    const dz = target.z - eye.z;
-    yaw.current = Math.atan2(-dx, -dz);
-    homeYaw.current = yaw.current;
-    pitch.current = Math.atan2(dy, Math.hypot(dx, dz));
-    homePitch.current = pitch.current;
+    const home = homeAt(recline.current);
+    yaw.current = home.yaw;
+    homeYaw.current = home.yaw;
+    pitch.current = home.pitch;
+    homePitch.current = home.pitch;
     camera.rotation.set(pitch.current, yaw.current, 0, "YXZ");
     if (turnedAway.current) {
       turnedAway.current = false;
@@ -578,8 +751,27 @@ function SeatCamera({
   }, [aimKey]);
 
   useLayoutEffect(() => {
-    camera.position.set(eye.x, eye.y, eye.z);
-  }, [camera, eye.x, eye.y, eye.z]);
+    const at = poseEye(recline.current);
+    camera.position.set(at.x, at.y, at.z);
+  }, [camera, poseEye, recline]);
+
+  // 눕기·일어나기: 눈이 젖힌 자리로 옮겨 가고 얼굴이 위로 들린다. 드래그로 돌려 둔 만큼은 그대로 둔다
+  useFrame(() => {
+    const t = recline.current;
+    if (poseRef) {
+      poseRef.current = { pitch: pitch.current, yaw: yaw.current, recline: t, screenPitch: aimAt(poseEye(t), target).pitch };
+    }
+    if (t === appliedRecline.current) return;
+    appliedRecline.current = t;
+    const at = poseEye(t);
+    camera.position.set(at.x, at.y, at.z);
+    const home = homeAt(t);
+    yaw.current = wrapAngle(yaw.current + wrapAngle(home.yaw - homeYaw.current));
+    pitch.current = clamp(pitch.current + home.pitch - homePitch.current, -MAX_PITCH, MAX_PITCH);
+    homeYaw.current = home.yaw;
+    homePitch.current = home.pitch;
+    camera.rotation.set(pitch.current, yaw.current, 0, "YXZ");
+  });
 
   useLayoutEffect(() => {
     // 화면 비율이 바뀔 때 가로 시야각을 유지하도록 세로 fov를 다시 계산 (store에서 직접 꺼내 수정)
@@ -630,6 +822,14 @@ function SeatCamera({
   }, [camera, gl]);
 
   return null;
+}
+
+/** 눈에서 target 을 바라보는 고개 방향 */
+function aimAt(eye: Vec3, target: Vec3): { yaw: number; pitch: number } {
+  const dx = target.x - eye.x;
+  const dy = target.y - eye.y;
+  const dz = target.z - eye.z;
+  return { yaw: Math.atan2(-dx, -dz), pitch: Math.atan2(dy, Math.hypot(dx, dz)) };
 }
 
 function clamp(value: number, min: number, max: number): number {

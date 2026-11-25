@@ -99,8 +99,10 @@ export function nowInSeoul(now: Date): { todayIso: string; minutes: number } {
 export interface ViewNumbers {
   /** 시야각 (스크린 폭이 차지하는 가로 각도) */
   fov: string;
-  /** 올려보기 (스크린 중심을 보는 고개 각도) */
+  /** 스크린 중심을 보는 고개 각도. 크기만 담고, 방향은 upLabel 이 말한다 */
   up: string;
+  /** 고개를 드는지 숙이는지. 위층·누운 자세에서는 내려 볼 수도 있다 */
+  upLabel: "올려보기" | "내려보기";
   /** 스크린까지 거리 */
   dist: string;
 }
@@ -112,7 +114,8 @@ export function formatViewNumbers(metrics: {
 }): ViewNumbers {
   return {
     fov: `${Math.round(metrics.horizontalFovDeg)}°`,
-    up: `${Math.round(metrics.neckElevationDeg)}°`,
+    up: `${Math.abs(Math.round(metrics.neckElevationDeg))}°`,
+    upLabel: Math.round(metrics.neckElevationDeg) < 0 ? "내려보기" : "올려보기",
     dist: `${metrics.distanceToScreenM.toFixed(1)}m`,
   };
 }

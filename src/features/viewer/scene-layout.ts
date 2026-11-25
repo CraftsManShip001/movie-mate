@@ -105,6 +105,11 @@ function seatChairStyle(auditorium: Auditorium, seat: Seat): ChairStyle {
   return chairStyle(auditorium.format);
 }
 
+/** 이 좌석에서 "눕기"(리클라이너 젖히기)를 할 수 있는지. 리클라이너 모양 의자에 앉았을 때만이다. */
+export function seatReclines(auditorium: Auditorium, seat: Seat): boolean {
+  return seatChairStyle(auditorium, seat) === "recliner";
+}
+
 /** 팔걸이가 없는 모양(바닥 좌석) */
 const NO_ARMS: ReadonlySet<ChairStyle> = new Set(["beanbag", "mat", "cabana"]);
 
@@ -206,6 +211,8 @@ export interface PersonPlacement {
   roll: number;
   /** 몸 크기 배율 */
   scale: number;
+  /** 리클라이너에 앉아 "눕기"를 하면 같이 젖히는 사람 */
+  reclines: boolean;
   /** 팔레트 번호 */
   hair: number;
   skin: number;
@@ -241,6 +248,7 @@ export function frontPeople(auditorium: Auditorium, selected: Seat): PersonPlace
         yaw: (r(3) - 0.5) * 0.3,
         roll: (r(4) - 0.5) * 0.12,
         scale: 0.94 + r(5) * 0.12,
+        reclines: seatChairStyle(auditorium, seat) === "recliner",
         hair: Math.floor(r(6) * HAIR_COLORS.length),
         skin: Math.floor(r(7) * SKIN_COLORS.length),
         clothes: Math.floor(r(8) * CLOTHES_COLORS.length),

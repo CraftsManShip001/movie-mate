@@ -6,7 +6,7 @@ const base = {
   theaterName: "CGV 용산아이파크몰",
   screenName: "IMAX관",
   seat: { rowLabel: "J", number: 14, rowIndex: 9 },
-  numbers: { fov: "75°", up: "20°", dist: "15.5m" },
+  numbers: { fov: "75°", up: "20°", upLabel: "올려보기" as const, dist: "15.5m" },
 };
 
 describe("buildTicketInfo", () => {

@@ -54,7 +54,14 @@ describe("formatViewNumbers", () => {
     expect(formatViewNumbers({ horizontalFovDeg: 74.6, neckElevationDeg: 19.5, distanceToScreenM: 15.46 })).toEqual({
       fov: "75°",
       up: "20°",
+      upLabel: "올려보기",
       dist: "15.5m",
     });
+  });
+
+  it("고개를 숙여 보면 내려보기로 크기만 보여 준다", () => {
+    const n = formatViewNumbers({ horizontalFovDeg: 50, neckElevationDeg: -13.2, distanceToScreenM: 16 });
+    expect(n.up).toBe("13°");
+    expect(n.upLabel).toBe("내려보기");
   });
 });

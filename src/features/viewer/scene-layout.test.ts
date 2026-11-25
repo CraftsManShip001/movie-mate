@@ -17,6 +17,7 @@ import {
   riserBoxes,
   roomShape,
   sconcePositions,
+  seatReclines,
   stepLightBoxes,
   WALL_INSET,
 } from "./scene-layout";
@@ -75,6 +76,16 @@ describe("scene-layout", () => {
     for (const { position } of exitSignPositions(hall)) {
       expect(room.width / 2 - Math.abs(position[0])).toBeGreaterThan(WALL_INSET.sideScreen + 0.02);
     }
+  });
+
+  it("리클라이너 관에서만 눕기를 할 수 있고, 앞사람도 같이 젖힌다", () => {
+    const recliner = getAuditorium("megabox-haeundae-jangsan", "hall-1")!;
+    const seat = findSeat(recliner, "E2")!;
+    expect(seatReclines(recliner, seat)).toBe(true);
+    expect(frontPeople(recliner, seat).every((p) => p.reclines)).toBe(true);
+    const standard = findSeat(hall, "H10")!;
+    expect(seatReclines(hall, standard)).toBe(false);
+    expect(frontPeople(hall, standard).some((p) => p.reclines)).toBe(false);
   });
 
   it("리클라이너·프리미엄 관은 리클라이너 의자를 쓴다", () => {

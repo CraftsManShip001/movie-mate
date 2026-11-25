@@ -27,6 +27,7 @@ export type AnalyticsEvent =
   | { name: "booking_click"; params: { chain: string; from: "seat_picker" | "viewer" | "viewer_error" | "showtime" } }
   // 시야 화면 조작
   | { name: "toggle_heads"; params: { on: boolean } }
+  | { name: "toggle_recline"; params: { on: boolean } }
   | { name: "open_seat_map"; params: { open: boolean } }
   | { name: "change_seat"; params: { auditorium_id: string; seat_id: string } }
   | { name: "change_stature"; params: { stature_cm: number } }
