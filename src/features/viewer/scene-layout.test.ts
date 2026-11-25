@@ -18,6 +18,7 @@ import {
   roomShape,
   sconcePositions,
   stepLightBoxes,
+  WALL_INSET,
 } from "./scene-layout";
 
 const hall = getAuditorium("lotte-yeongdeungpo", "hall-1")!;
@@ -66,6 +67,13 @@ describe("scene-layout", () => {
       expect(position[2]).toBeGreaterThan(0);
       expect(position[2]).toBeLessThan(room.depth);
       expect(position[1]).toBeGreaterThan(floorHeightAt(hall, position[2]));
+    }
+  });
+
+  it("비상구 표시등은 SCREENX 옆벽 영상과 같은 평면에 겹치지 않고 그 앞에 있다", () => {
+    const room = roomShape(hall);
+    for (const { position } of exitSignPositions(hall)) {
+      expect(room.width / 2 - Math.abs(position[0])).toBeGreaterThan(WALL_INSET.sideScreen + 0.02);
     }
   });
 

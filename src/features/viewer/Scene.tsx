@@ -26,6 +26,7 @@ import {
   chairGroups,
   downlightPositions,
   exitSignPositions,
+  WALL_INSET,
   frontPeople,
   HAIR_COLORS,
   HORIZONTAL_FOV_DEG,
@@ -301,7 +302,7 @@ function Room({ auditorium }: { auditorium: Auditorium }) {
 function SideScreens({ auditorium, texture, depth }: { auditorium: Auditorium; texture: Texture | null; depth: number }) {
   const screen = screenRect(auditorium);
   const room = roomShape(auditorium);
-  const half = room.width / 2 - 0.03;
+  const half = room.width / 2 - WALL_INSET.sideScreen;
   return (
     <>
       {([-1, 1] as const).map((side) => (
