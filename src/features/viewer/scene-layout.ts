@@ -296,14 +296,21 @@ export function sconcePositions(auditorium: Auditorium): { position: Tuple3; sid
   return out;
 }
 
-/** 비상구 표시등: 앞쪽 양 모서리와 뒤쪽 양 모서리 */
+/**
+ * 옆벽에서 안쪽으로 띄우는 거리 (m). 벽에 붙는 것끼리 같은 평면에 놓이면 서로 번갈아 비쳐 깜빡이므로(z-fighting) 층을 나눈다.
+ * 벽 < SCREENX 옆벽 영상 < 비상구 표시등 순으로 앞에 있다.
+ */
+export const WALL_INSET = { sideScreen: 0.03, exitSign: 0.08 } as const;
+
+/** 비상구 표시등: 앞쪽 양 모서리와 뒤쪽 양 모서리. SCREENX 옆벽 영상보다 앞에 둔다 */
 export function exitSignPositions(auditorium: Auditorium): { position: Tuple3; side: -1 | 1 }[] {
   const room = roomShape(auditorium);
+  const x = room.width / 2 - WALL_INSET.exitSign;
   const backZ = Math.max(2, room.depth - 0.8);
   const out: { position: Tuple3; side: -1 | 1 }[] = [];
   for (const side of [-1, 1] as const) {
-    out.push({ position: [side * (room.width / 2 - 0.03), 2.3, 1.0], side });
-    out.push({ position: [side * (room.width / 2 - 0.03), floorHeightAt(auditorium, backZ) + 2.3, backZ], side });
+    out.push({ position: [side * x, 2.3, 1.0], side });
+    out.push({ position: [side * x, floorHeightAt(auditorium, backZ) + 2.3, backZ], side });
   }
   return out;
 }
