@@ -2,18 +2,19 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { readShowQuery, showQueryString } from "@/features/flow/show-query";
 import { useLiveShow } from "@/features/flow/useLiveShow";
 import { SeatGrid, SeatGridSkeleton } from "@/features/seat-map/SeatGrid";
-import { SeatPreview } from "@/features/seat-preview/SeatPreview";
+import { SCREEN_VIDEO_CREDIT } from "@/features/viewer/video-source";
 import { useSeatView } from "@/features/viewer/useSeatView";
 import { track } from "@/lib/analytics";
 import { findSeat } from "@/lib/domain/geometry";
 import type { Auditorium, Seat } from "@/lib/domain/types";
 import { asOfLabel, formatMonthDay, seatName, type ViewNumbers } from "@/lib/format";
 import { bookingLink } from "@/lib/labels";
+import { LiveSeatPreview } from "./LiveSeatPreview";
 import styles from "./SeatPicker.module.css";
 
 interface SeatPickerProps {
@@ -60,6 +61,14 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
   const base = `/theaters/${theaterId}/${auditorium.id}`;
   // 2번 화면이 이 회차를 다시 골라 두도록 관·날짜·시각·회차를 넘긴다(회차 번호는 관·날짜마다 1부터라 혼자서는 못 찾는다)
   const backHref = `/theaters/${theaterId}${show.seq != null ? showQueryString(show, { hall: auditorium.id }) : ""}`;
+  // 아래 "시야 확인하러 가기"와 미리보기의 전체 보기 아이콘이 같은 곳으로 간다
+  const viewHref = seat ? `${base}/seats/${seat.id}${liveShow.show && !seatSold ? "/ticket" : ""}${showQueryString(show)}` : null;
+  const goView = () => {
+    if (!seat) return;
+    markFromPicker(base);
+    track("select_seat", { theater_id: theaterId, auditorium_id: auditorium.id, seat_id: seat.id });
+  };
+  const isDesktop = useIsDesktop();
 
   return (
     <Frame
@@ -67,39 +76,34 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
       bottom={
         <>
           {seat ? (
-            <div className={frameStyles.summary}>
+            // 데스크톱은 오른쪽 패널에 고른 자리가 크게 있으므로 휴대폰에서만 보인다
+            <div className={`${frameStyles.summary} ${styles.phoneOnly}`}>
               <span className={frameStyles.summaryLabel}>고른 자리</span>
               <span className={frameStyles.summaryValue}>{seatName(seat)}</span>
             </div>
           ) : (
-            <span className={frameStyles.summaryLabel}>자리를 골라 주세요</span>
+            <span className={`${frameStyles.summaryLabel} ${styles.phoneOnly}`}>자리를 골라 주세요</span>
           )}
-          <div className={frameStyles.actions}>
+          <div className={`${frameStyles.actions} ${styles.actions}`}>
             {/* 상영 정보 없이 들어와도(CGV·주소로 바로) 예매는 영화관 사이트로 보낸다 */}
             <a
               href={booking.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={frameStyles.secondary}
+              className={`${frameStyles.secondary} ${styles.booking}`}
               aria-label={`${booking.label} (새 창)`}
               onClick={() => track("booking_click", { chain, from: "seat_picker" })}
             >
-              {chain} 예매
+              {chain}에서 예매
+              <ExternalIcon />
             </a>
-            {seat ? (
-              <Link
-                href={`${base}/seats/${seat.id}${liveShow.show && !seatSold ? "/ticket" : ""}${showQueryString(show)}`}
-                className={frameStyles.cta}
-                onClick={() => {
-                  markFromPicker(base);
-                  track("select_seat", { theater_id: theaterId, auditorium_id: auditorium.id, seat_id: seat.id });
-                }}
-              >
-                이 자리에서 보기
+            {viewHref ? (
+              <Link href={viewHref} className={frameStyles.cta} onClick={goView}>
+                시야 확인하러 가기
               </Link>
             ) : (
               <button type="button" className={frameStyles.cta} disabled>
-                이 자리에서 보기
+                시야 확인하러 가기
               </button>
             )}
           </div>
@@ -121,9 +125,13 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
         <aside className={styles.panel} aria-live="polite">
           <span className={styles.caption}>{caption}</span>
           <p className={styles.seatName}>{seat ? seatName(seat) : "자리를 골라 주세요"}</p>
-          {seat ? (
+          {/* 미리보기는 데스크톱에서만. 휴대폰은 좁은 화면에 3D 를 하나 더 그리기보다 바로 시야 화면으로 보낸다 */}
+          {!isDesktop ? null : seat && viewHref ? (
             <div className={styles.preview}>
-              <SeatPreview auditorium={auditorium} seat={seat} statureCm={stature} />
+              <LiveSeatPreview auditorium={auditorium} seat={seat} statureCm={stature} />
+              <Link href={viewHref} className={styles.expand} onClick={goView} aria-label="시야 확인하러 가기" title="크게 보기">
+                <ExpandIcon />
+              </Link>
             </div>
           ) : (
             <div className={`${styles.preview} ${styles.previewEmpty}`}>
@@ -142,6 +150,7 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
                     : "팔린 자리를 불러오지 못했어요"}
               </p>
             ) : null}
+            {isDesktop && seat ? <p className={styles.note}>{SCREEN_VIDEO_CREDIT}</p> : null}
             {auditorium.sample ? (
               <p className={styles.note}>샘플 상영관이라 실제 치수와 달라요</p>
             ) : auditorium.estimated ? (
@@ -151,6 +160,39 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
         </aside>
       </div>
     </Frame>
+  );
+}
+
+/** 미리보기 우하단의 전체 보기(바깥으로 벌어지는 네 모서리) */
+function ExpandIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+      <path d="M3 7V3h4M11 3h4v4M15 11v4h-4M7 15H3v-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+const DESKTOP_QUERY = "(min-width: 961px)";
+function subscribeDesktop(onChange: () => void) {
+  const query = window.matchMedia(DESKTOP_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+/** 오른쪽 패널이 좌석표 옆에 서는 폭(CSS 의 960px 경계와 같다). 서버에서는 false */
+function useIsDesktop(): boolean {
+  return useSyncExternalStore(
+    subscribeDesktop,
+    () => window.matchMedia(DESKTOP_QUERY).matches,
+    () => false,
+  );
+}
+
+/** 영화관 사이트로 나간다는 표시(새 창) */
+function ExternalIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className={styles.externalIcon}>
+      <path d="M5 2.5h6.5V9M11.5 2.5 3 11" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 
@@ -203,7 +245,7 @@ export function SeatPickerSkeleton({ title, backHref }: { title: string; backHre
           <span className={frameStyles.summaryLabel}>상영관을 불러오고 있어요</span>
           <div className={frameStyles.actions}>
             <button type="button" className={frameStyles.cta} disabled>
-              이 자리에서 보기
+              시야 확인하러 가기
             </button>
           </div>
         </>
