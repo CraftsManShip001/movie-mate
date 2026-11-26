@@ -40,3 +40,13 @@ export const NECK_STRAIN = { up: 25, down: 20, turn: 45 } as const;
 export function neckStrained({ up, turn }: { up: number; turn: number }): boolean {
   return up > NECK_STRAIN.up || up < -NECK_STRAIN.down || Math.abs(turn) > NECK_STRAIN.turn;
 }
+
+/** "목 20° 위로 · 왼쪽 30°" 처럼 꺾은 쪽만 말한다. 거의 안 꺾었으면 "목 편해요" */
+export function neckLabel({ up, turn }: { up: number; turn: number }): string {
+  const u = Math.round(up);
+  const t = Math.round(turn);
+  const parts: string[] = [];
+  if (Math.abs(u) >= 3) parts.push(`${Math.abs(u)}° ${u > 0 ? "위로" : "아래로"}`);
+  if (Math.abs(t) >= 3) parts.push(`${t > 0 ? "왼쪽" : "오른쪽"} ${Math.abs(t)}°`);
+  return parts.length === 0 ? "목 편해요" : `목 ${parts.join(" · ")}`;
+}

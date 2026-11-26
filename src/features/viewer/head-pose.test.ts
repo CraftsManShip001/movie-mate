@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { RECLINE } from "@/lib/domain/geometry";
-import { neckAngles, neckStrained, torsoTiltDeg } from "./head-pose";
-import { neckLabel } from "./NeckGuide";
+import { neckAngles, neckLabel, neckStrained, torsoTiltDeg } from "./head-pose";
 
 const rad = (deg: number) => (deg * Math.PI) / 180;
 

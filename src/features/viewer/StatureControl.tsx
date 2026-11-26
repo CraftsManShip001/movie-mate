@@ -3,11 +3,15 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { track } from "@/lib/analytics";
 import { DEFAULT_STATURE_CM, MAX_STATURE_CM, MIN_STATURE_CM } from "@/lib/domain/anthropometry";
+import { HeightIcon } from "./rail-icons";
 import styles from "./SeatViewer.module.css";
 import { useStature } from "./useStature";
 
-/** 시야 화면의 "키 166cm" 버튼. 누르면 슬라이더가 열리고, 바꾼 값은 저장되어 좌석 화면에도 반영된다. */
-export function StatureControl() {
+/**
+ * 시야 화면의 "키 166cm" 버튼. 누르면 슬라이더가 열리고, 바꾼 값은 저장되어 좌석 화면에도 반영된다.
+ * rail: 휴대폰 오른쪽 레일의 동그란 버튼. 누르면 버튼 위로 세로 슬라이더가 길게 열리고, 그 왼쪽에 지금 키를 크게 띄운다.
+ */
+export function StatureControl({ variant = "pill" }: { variant?: "pill" | "rail" }) {
   const [stature, setStature] = useStature();
   const [open, setOpen] = useState(false);
   const popoverId = useId();
@@ -40,6 +44,48 @@ export function StatureControl() {
       window.removeEventListener("pointerdown", onPointer);
     };
   }, [open]);
+
+  if (variant === "rail") {
+    return (
+      <div ref={rootRef} className={styles.statureRoot}>
+        {open ? (
+          <div id={popoverId} className={styles.statureRail} role="group" aria-label="내 키">
+            <div className={styles.statureRailValue} aria-hidden="true">
+              <strong>{stature}</strong>
+              <span>cm</span>
+              {stature === DEFAULT_STATURE_CM ? null : (
+                <button type="button" className={styles.statureReset} onClick={() => setStature(DEFAULT_STATURE_CM)}>
+                  평균 키로
+                </button>
+              )}
+            </div>
+            <input
+              type="range"
+              className={styles.statureRailRange}
+              min={MIN_STATURE_CM}
+              max={MAX_STATURE_CM}
+              step={1}
+              value={stature}
+              aria-label="내 키"
+              aria-valuetext={`${stature}cm`}
+              onChange={(event) => setStature(Number(event.target.value))}
+            />
+          </div>
+        ) : null}
+        <button
+          ref={buttonRef}
+          type="button"
+          className={styles.railButton}
+          aria-label={`키 ${stature}cm`}
+          aria-expanded={open}
+          aria-controls={popoverId}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <HeightIcon />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div ref={rootRef} className={styles.statureRoot}>
