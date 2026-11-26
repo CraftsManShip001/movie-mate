@@ -20,8 +20,8 @@ import { bookingLink } from "@/lib/labels";
 import type { Movie } from "@/lib/showtimes/types";
 import { SceneErrorBoundary } from "./SceneErrorBoundary";
 import { createHeadPose } from "./head-pose";
-import { NeckGuide } from "./NeckGuide";
 import { seatReclines } from "./scene-layout";
+import { DragIcon, ExternalIcon, HeadsIcon, PlayIcon, RecenterIcon, ReclineIcon, SeatsIcon } from "./rail-icons";
 import { StatureControl } from "./StatureControl";
 import type { ScreenVideoStatus } from "./screen-texture";
 import styles from "./SeatViewer.module.css";
@@ -42,6 +42,9 @@ function useIsPhone(): boolean {
     () => false,
   );
 }
+
+// 좌하단 얼굴·목 홀로그램. three.js 를 써서 3D 장면처럼 브라우저에서만 불러온다
+const NeckHologram = dynamic(() => import("./NeckHologram"), { ssr: false });
 
 const Scene = dynamic(() => import("./Scene"), {
   ssr: false,
@@ -85,6 +88,13 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
   // 3D 첫 장면을 그릴 때까지(큰 관은 몇 초) 검은 화면 대신 불러오는 중 표시를 둔다
   const [ready, setReady] = useState(false);
   const onReady = useCallback(() => setReady(true), []);
+  // 처음 들어오면 끌어서 둘러볼 수 있다고 잠깐 알려 준다. 한 번 끌거나 몇 초 지나면 사라진다
+  const [hintDone, setHintDone] = useState(false);
+  useEffect(() => {
+    if (!ready || hintDone) return;
+    const timer = window.setTimeout(() => setHintDone(true), 4000);
+    return () => window.clearTimeout(timer);
+  }, [ready, hintDone]);
   const [attempt, setAttempt] = useState(0);
   const onVideoStatus = useCallback((status: ScreenVideoStatus) => {
     setVideoStatus(status);
@@ -136,6 +146,27 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
     setFailed(false);
     setAttempt((n) => n + 1);
   };
+  // 휴대폰 레일 버튼들. 데스크톱 글자 버튼과 같은 일을 한다
+  const recenter = () => {
+    setRecenterRequest((n) => n + 1);
+    track("recenter_view", {});
+  };
+  const replay = () => {
+    setPlayRequest((n) => n + 1);
+    track("retry_video", {});
+  };
+  const togglePanel = () => {
+    setPanelChoice(!panelOpen);
+    track("open_seat_map", { open: !panelOpen });
+  };
+  const toggleHeads = () => {
+    setShowHeads(!showHeads);
+    track("toggle_heads", { on: !showHeads });
+  };
+  const toggleRecline = () => {
+    setReclineChoice(!reclined);
+    track("toggle_recline", { on: !reclined });
+  };
 
   const errorView = (
     <div className={styles.error} role="alert">
@@ -163,7 +194,7 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
       {failed ? (
         errorView
       ) : (
-        <div className={styles.canvas}>
+        <div className={styles.canvas} onPointerDown={() => setHintDone(true)}>
           <SceneErrorBoundary key={attempt} fallback={null} onError={() => setFailed(true)}>
             <Scene
               auditorium={auditorium}
@@ -186,6 +217,12 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
               시야를 그리고 있어요
             </div>
           )}
+          {ready && !hintDone ? (
+            <div className={styles.dragHint} aria-hidden="true">
+              <DragIcon />
+              <span>끌어서 둘러보기</span>
+            </div>
+          ) : null}
         </div>
       )}
 
@@ -228,31 +265,98 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
           >
             <span className={styles.bookingLong}>{booking.label}</span>
             <span className={styles.bookingShort}>예매</span>
-            <ChevronRight />
+            {/* 휴대폰은 다른 사이트로 나간다는 화살표, 데스크톱은 그대로 */}
+            {isPhone ? <ExternalIcon /> : <ChevronRight />}
           </a>
         )}
       </div>
 
-      {failed ? null : (
+      {failed ? null : isPhone ? (
+        // 휴대폰: 조작은 오른쪽 레일(동그란 아이콘 버튼), 좌석표는 스크린 아래 객석 자리에 띄운다
+        <>
+          <div className={styles.phoneHolo} data-hidden={panelOpen || undefined}>
+            <NeckHologram poseRef={poseRef} />
+          </div>
+          {panelOpen ? (
+            <section id="seat-ticket-panel" className={`${styles.panel} ${styles.phonePanel}`} aria-label={info ? "내 티켓과 좌석표" : "좌석표"}>
+                {movie && info ? (
+                  <>
+                    <div className={styles.ticketRow}>
+                      <div className={styles.miniTicket}>
+                        <TicketPoster
+                          width={84}
+                          posterUrl={info.posterUrl}
+                          fallbackUrl={info.posterFallbackUrl}
+                          alt={`${movie.title} 티켓`}
+                        />
+                      </div>
+                      <div className={styles.ticketText}>
+                        <span className={styles.ticketNo}>No. {info.ticketNo}</span>
+                        <span className={styles.ticketSeat}>{info.seatCode}</span>
+                        <span className={styles.ticketLine}>
+                          {movie.title}
+                          {show.time ? ` · ${show.time}` : ""}
+                        </span>
+                        <span className={styles.ticketLine}>
+                          {theaterName} {screenName}
+                        </span>
+                      </div>
+                    </div>
+                    <div className={styles.divider} />
+                  </>
+                ) : null}
+                <div className={styles.miniMap}>
+                  <SeatGrid
+                    auditorium={auditorium}
+                    selectedSeatId={seat.id}
+                    onSelect={pickSeat}
+                    tone="dark"
+                    maxSeat={11}
+                    soldSeatIds={sold}
+                  />
+                </div>
+              {auditorium.sample || auditorium.estimated ? (
+                <p className={styles.panelNote}>{auditorium.sample ? "샘플 상영관이라 실제와 달라요" : "좌석표로 추정한 크기예요"}</p>
+              ) : null}
+            </section>
+          ) : null}
+          <div className={styles.rail}>
+            {turnedAway ? (
+              <button type="button" className={styles.railButton} aria-label="스크린 보기" onClick={recenter}>
+                <RecenterIcon />
+              </button>
+            ) : null}
+            {videoStatus === "blocked" ? (
+              <button type="button" className={styles.railButton} aria-label="영상 재생" onClick={replay}>
+                <PlayIcon />
+              </button>
+            ) : null}
+            <StatureControl variant="rail" />
+            <button
+              type="button"
+              className={styles.railButton}
+              aria-label={info ? "좌석·티켓" : "좌석표"}
+              aria-expanded={panelOpen}
+              aria-controls="seat-ticket-panel"
+              onClick={togglePanel}
+            >
+              <SeatsIcon />
+            </button>
+            <button type="button" className={styles.railButton} aria-label="앞사람" aria-pressed={showHeads} onClick={toggleHeads}>
+              <HeadsIcon />
+            </button>
+            {canRecline ? (
+              <button type="button" className={styles.railButton} aria-label="눕기" aria-pressed={reclined} onClick={toggleRecline}>
+                <ReclineIcon />
+              </button>
+            ) : null}
+          </div>
+          <p className={styles.phoneCredit}>{SCREEN_VIDEO_CREDIT}</p>
+        </>
+      ) : (
         <div className={styles.bottom}>
           <div className={styles.left}>
-            <NeckGuide poseRef={poseRef} />
-            {numbers ? (
-              <dl className={styles.numbers}>
-                <div>
-                  <dt>시야각</dt>
-                  <dd>{numbers.fov}</dd>
-                </div>
-                <div>
-                  <dt>{numbers.upLabel}</dt>
-                  <dd>{numbers.up}</dd>
-                </div>
-                <div>
-                  <dt>스크린까지</dt>
-                  <dd>{numbers.dist}</dd>
-                </div>
-              </dl>
-            ) : null}
+            <NeckHologram poseRef={poseRef} />
             <p className={styles.credit}>
               {auditorium.sample ? "샘플 상영관이라 실제와 달라요 · " : auditorium.estimated ? "좌석표로 추정한 크기예요 · " : ""}
               {SCREEN_VIDEO_CREDIT}
