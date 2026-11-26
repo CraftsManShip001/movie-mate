@@ -157,3 +157,97 @@
     font-size: var(--text-title);
   }
 }
+
+/* 오른쪽 시야: 2D 그림을 깔고, 3D 첫 장면이 그려지면 그 위를 덮는다 */
+.live {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #0a0a0b;
+}
+
+.live > svg {
+  position: absolute;
+  inset: 0;
+  height: 100% !important;
+}
+
+.liveCanvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  cursor: grab;
+}
+
+/* 3D 장면은 손가락 끌기를 다 가져가는데(touch-action: none), 이 작은 칸 때문에 휴대폰에서 화면이 안 내려가면 안 되므로 세로 스크롤은 브라우저에 맡긴다 */
+.liveCanvas * {
+  touch-action: pan-y !important;
+}
+
+.liveCanvas:active {
+  cursor: grabbing;
+}
+
+.liveCanvas[data-ready="true"] {
+  opacity: 1;
+}
+
+/* 아래 막대 */
+.actions {
+  margin-left: auto;
+}
+
+/* 예매는 다른 사이트로 나가므로 시야 버튼과 조금 떨어뜨린다 */
+.booking {
+  gap: 6px;
+  margin-right: 6px;
+}
+
+.externalIcon {
+  flex: none;
+  color: var(--color-sub);
+}
+
+/* 데스크톱은 오른쪽 패널에 고른 자리가 크게 있다 */
+@media (min-width: 961px) {
+  .phoneOnly {
+    display: none !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .booking {
+    margin-right: 0;
+  }
+}
+
+/* 미리보기 우하단: 누르면 시야 화면으로 간다 */
+.preview {
+  position: relative;
+}
+
+.expand {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  transition: background 0.15s ease;
+}
+
+.expand:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 960px) {
+  .preview {
+    display: none;
+  }
+}
