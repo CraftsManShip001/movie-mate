@@ -36,7 +36,7 @@ describe("buildLotteSchedule", () => {
       {
         day: 0,
         items: [
-          item({}),
+          item({ CinemaNameKR: "수원" }),
           item({ StartTime: "15:30", EndTime: "17:09", PlaySequence: 4 }),
           item({ RepresentationMovieCode: "10893", MovieNameKR: "라라랜드", ViewGradeNameKR: "12", ScreenID: 302401, ScreenNameKR: "1관" }),
           item({ FilmNameKR: "4D2D", ScreenID: 302499, ScreenNameKR: "샤롯데", StartTime: "00:20", EndTime: "02:00" }),
@@ -44,6 +44,10 @@ describe("buildLotteSchedule", () => {
       },
       { day: 1, items: [item({ StartTime: "10:00", EndTime: "11:39", PlaySequence: 1 })] },
     ],
+  });
+
+  it("예매 주소용으로 극장 키와 롯데시네마 극장 이름을 남긴다", () => {
+    expect(schedule.live?.lotteCinema).toEqual({ key: "1|0002|3024", name: "수원" });
   });
 
   it("영화는 상영 횟수가 많은 순이고, 포스터는 https로 바꾼다", () => {
@@ -71,7 +75,7 @@ describe("buildLotteSchedule", () => {
     expect(first).toMatchObject({ movieId: "25121", seq: "3", seatsLeft: 183, end: "15:09" });
     expect(schedule.showings.find((s) => s.start === "24:20")?.end).toBe("26:00");
     expect(schedule.showings.filter((s) => s.day === 1)).toHaveLength(1);
-    expect(schedule.live).toEqual({ source: "롯데시네마", fetchedAt: "2026-11-19T05:00:00.000Z" });
+    expect(schedule.live).toMatchObject({ source: "롯데시네마", fetchedAt: "2026-11-19T05:00:00.000Z" });
   });
 
   it("같은 회차가 두 번 오면 한 번만 넣는다", () => {

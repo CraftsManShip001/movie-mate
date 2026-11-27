@@ -106,9 +106,9 @@ export function SeatViewer({ theaterId, theaterName, chain, screenName, auditori
     [auditorium, seat, stature, canRecline],
   );
   // 실제 회차(영화가 있을 때)면 미니 좌석표에도 팔린 자리를 표시한다
-  const { sold } = useLiveShow(theaterId, auditorium.id, show.date, show.seq, movie != null);
+  const { sold, show: liveShow } = useLiveShow(theaterId, auditorium.id, show.date, show.seq, movie != null);
 
-  const booking = bookingLink(chain);
+  const booking = bookingLink(chain, liveShow?.bookingUrl);
   const base = `/theaters/${theaterId}/${auditorium.id}`;
   const backHref = `${base}${showQueryString(show, seat ? { seat: seat.id } : {})}`;
 

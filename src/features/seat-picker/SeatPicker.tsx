@@ -38,7 +38,7 @@ export function SeatPicker({ theaterId, title, auditorium, chain, live }: SeatPi
   const liveShow = useLiveShow(theaterId, auditorium.id, show.date, show.seq, live);
   const sold = liveShow.sold;
   const seatSold = seat ? (sold?.has(seat.id) ?? false) : false;
-  const booking = bookingLink(chain);
+  const booking = bookingLink(chain, liveShow.show?.bookingUrl);
 
   // 주소로 미리 고른 자리(뒤로 가기 등)가 좌석표 아래쪽이면 그 자리가 보이게 스크롤한다
   const mapRef = useRef<HTMLDivElement>(null);

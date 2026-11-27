@@ -8,6 +8,7 @@ import { Frame, FrameHeader, frameStyles } from "@/features/flow/Frame";
 import { showQueryString } from "@/features/flow/show-query";
 import { track } from "@/lib/analytics";
 import { asOfLabel, formatMonthDay, withTopic } from "@/lib/format";
+import { lotteBookingUrl, megaboxBookingUrl } from "@/lib/live/booking-url";
 import { bookingLink } from "@/lib/labels";
 import {
   addDays,
@@ -18,7 +19,7 @@ import {
   screenMeta,
 } from "@/lib/showtimes/schedule";
 import { findMovieByTitle } from "@/lib/showtimes/title";
-import type { Movie, Schedule } from "@/lib/showtimes/types";
+import type { Movie, Schedule, Showing } from "@/lib/showtimes/types";
 import styles from "./ShowtimePicker.module.css";
 
 const DAYS = 7;
@@ -109,7 +110,7 @@ export function ShowtimePicker({ theater, movie, schedule, todayIso, nowMinutes 
   const pickedGroup = picked ? groups.find((g) => g.screen.id === picked.screenId) : undefined;
   const pickedShowing = pickedGroup?.showings.find((s) => s.start === picked?.start);
   const dateIso = addDays(todayIso, day);
-  const booking = bookingLink(theater.chain);
+  const booking = bookingLink(theater.chain, pickedShowing ? showingBookingUrl(schedule, pickedShowing, currentMovie, dateIso) : null);
 
   const update = (next: Partial<PickState>) => {
     const merged = { ...state, movieId: movies ? currentMovie.id : null, ...next };
@@ -322,4 +323,19 @@ function EmptyDay({
       ) : null}
     </div>
   );
+}
+
+/** 실제 시간표에서 고른 상영을 영화관 예매 화면에 골라 둔 채로 여는 주소. 샘플 시간표면 null(첫 화면으로 간다). */
+function showingBookingUrl(schedule: Schedule, showing: Showing, movie: Movie, dateIso: string): string | null {
+  const live = schedule.live;
+  if (!live) return null;
+  if (live.source === "메가박스") return showing.seq ? megaboxBookingUrl(showing.seq) : null;
+  if (!live.lotteCinema) return null;
+  return lotteBookingUrl({
+    cinemaKey: live.lotteCinema.key,
+    cinemaName: live.lotteCinema.name,
+    movieCode: movie.id,
+    movieName: movie.title,
+    date: dateIso,
+  });
 }

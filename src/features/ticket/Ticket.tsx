@@ -54,6 +54,17 @@ function seatCodeSize(code: string): number {
 }
 
 /**
+ * 제목이 길면 글자를 줄인다. 두 줄을 넘으면 말줄임표로 자른다(Ticket.module.css).
+ * 아래 바코드까지 티켓 안에 들어가는 높이는 30px 두 줄이 한도다.
+ */
+function titleSize(title: string): number {
+  const length = [...title].length;
+  if (length <= 7) return 30;
+  if (length <= 12) return 26;
+  return 22;
+}
+
+/**
  * 입장권 면. 디자인 문서의 "뒷면" (B-1 블랙 에디션).
  * 영화관·상영관·좌석·일시는 모두 이 면에 둔다.
  */
@@ -87,7 +98,9 @@ export function TicketPaper({ info }: { info: TicketInfo }) {
           <span>MOVIE MATE</span>
           <span>No. {info.ticketNo}</span>
         </div>
-        <div className={styles.paperTitle}>{info.movieTitle}</div>
+        <div className={styles.paperTitle} style={{ fontSize: titleSize(info.movieTitle) }}>
+          {info.movieTitle}
+        </div>
         <div className={styles.paperTitleEn}>{info.movieTitleEn}</div>
         <div className={styles.paperSeat}>
           <span className={styles.paperSeatLabel}>SEAT</span>

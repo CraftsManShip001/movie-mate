@@ -18,6 +18,7 @@ import {
   type MegaboxPlayItem,
   type MegaboxSeatsResponse,
 } from "./megabox-parse";
+import { megaboxBookingUrl } from "./booking-url";
 import type { LiveShow } from "./types";
 
 const BASE = "https://www.megabox.co.kr";
@@ -129,6 +130,7 @@ export async function getMegaboxShow(
       seatsLeft: showing.seatsLeft,
       booked: seats?.booked ?? null,
       fetchedAt: seats?.fetchedAt ?? null,
+      bookingUrl: megaboxBookingUrl(seq),
     };
   } catch (error) {
     console.warn(`[megabox] ${theaterId} 상영 정보를 받지 못했어요`, error);
