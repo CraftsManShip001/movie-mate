@@ -7,6 +7,8 @@ import type { Movie, Schedule, ScreenInfo, Showing } from "@/lib/showtimes/types
 
 /** GetPlaySequence 의 PlaySeqs.Items 한 줄 중 쓰는 필드 */
 export interface LottePlayItem {
+  /** 예: "가산디지털". 예매 주소에 쓴다. */
+  CinemaNameKR?: string | null;
   RepresentationMovieCode: string;
   MovieNameKR: string;
   MovieNameUS?: string | null;
@@ -180,6 +182,7 @@ export function buildLotteSchedule(input: {
       return rest;
     });
   showings.sort((a, b) => a.day - b.day || toMinutes(a.start) - toMinutes(b.start));
+  const cinemaName = days.flatMap((d) => d.items).find((i) => i.CinemaNameKR?.trim())?.CinemaNameKR?.trim();
 
   return {
     schemaVersion: 1,
@@ -190,7 +193,11 @@ export function buildLotteSchedule(input: {
     screens: screenList,
     showings,
     movies: movieList,
-    live: { source: "롯데시네마", fetchedAt },
+    live: {
+      source: "롯데시네마",
+      fetchedAt,
+      ...(cinemaName ? { lotteCinema: { key: mapping.cinema, name: cinemaName } } : {}),
+    },
   };
 }
 

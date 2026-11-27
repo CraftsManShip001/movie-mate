@@ -24,7 +24,8 @@ export function aspectLabel(ratio: number): string {
 export const CHAINS = ["롯데시네마", "메가박스", "CGV"] as const;
 
 /**
- * 실제 예매는 각 영화관 사이트에 맡긴다. 지금은 극장·상영별 딥링크 없이 브랜드 첫 화면으로 보낸다.
+ * 실제 예매는 각 영화관 사이트에 맡긴다. 고른 상영의 예매 주소(href, live/booking-url.ts)가 있으면 그리로,
+ * 없으면(샘플 시간표·CGV·상영을 안 골랐을 때) 브랜드 첫 화면으로 보낸다.
  */
 const BOOKING_URLS: Record<string, string> = {
   CGV: "https://www.cgv.co.kr",
@@ -32,6 +33,6 @@ const BOOKING_URLS: Record<string, string> = {
   롯데시네마: "https://www.lottecinema.co.kr/NLCHS/Ticketing",
 };
 
-export function bookingLink(chain: string): { label: string; href: string } {
-  return { label: `${chain}에서 예매하기`, href: BOOKING_URLS[chain] ?? BOOKING_URLS.CGV };
+export function bookingLink(chain: string, href?: string | null): { label: string; href: string } {
+  return { label: `${chain}에서 예매하기`, href: href || (BOOKING_URLS[chain] ?? BOOKING_URLS.CGV) };
 }

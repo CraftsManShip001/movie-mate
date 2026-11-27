@@ -12,6 +12,7 @@ import { LOTTE_LIVE } from "@/lib/data/lotte.generated";
 import { getSchedule } from "@/lib/data/showtimes";
 import { addDays } from "@/lib/showtimes/schedule";
 import type { Schedule } from "@/lib/showtimes/types";
+import { lotteBookingUrl } from "./booking-url";
 import type { LiveShow } from "./types";
 import { buildLotteSchedule, parseBookedSeats, type LottePlayItem, type LotteSeatsResponse } from "./lotte-parse";
 
@@ -136,6 +137,7 @@ export async function getLotteShow(
         return null;
       });
     }
+    const cinema = schedule.live?.lotteCinema;
     return {
       source: "롯데시네마",
       movie,
@@ -144,6 +146,17 @@ export async function getLotteShow(
       seatsLeft: showing.seatsLeft,
       booked: seats?.booked ?? null,
       fetchedAt: seats?.fetchedAt ?? null,
+      ...(cinema
+        ? {
+            bookingUrl: lotteBookingUrl({
+              cinemaKey: cinema.key,
+              cinemaName: cinema.name,
+              movieCode: movie.id,
+              movieName: movie.title,
+              date: dateIso,
+            }),
+          }
+        : {}),
     };
   } catch (error) {
     console.warn(`[lotte] ${theaterId} 상영 정보를 받지 못했어요`, error);

@@ -77,5 +77,10 @@ export interface Schedule {
    */
   movies?: Movie[];
   /** 실제 시간표에서만: 어디서 언제 받아 왔는지 */
-  live?: { source: "롯데시네마" | "메가박스"; fetchedAt: string };
+  live?: {
+    source: "롯데시네마" | "메가박스";
+    fetchedAt: string;
+    /** 롯데시네마만: 예매 화면에 극장을 골라 두려고 쓰는 극장 키("1|지역|극장")와 이름 */
+    lotteCinema?: { key: string; name: string };
+  };
 }

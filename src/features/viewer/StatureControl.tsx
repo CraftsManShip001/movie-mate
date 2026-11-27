@@ -59,17 +59,7 @@ export function StatureControl({ variant = "pill" }: { variant?: "pill" | "rail"
                 </button>
               )}
             </div>
-            <input
-              type="range"
-              className={styles.statureRailRange}
-              min={MIN_STATURE_CM}
-              max={MAX_STATURE_CM}
-              step={1}
-              value={stature}
-              aria-label="내 키"
-              aria-valuetext={`${stature}cm`}
-              onChange={(event) => setStature(Number(event.target.value))}
-            />
+            <VerticalSlider value={stature} onChange={setStature} />
           </div>
         ) : null}
         <button
@@ -134,6 +124,57 @@ export function StatureControl({ variant = "pill" }: { variant?: "pill" | "rail"
       >
         키 {stature}cm
       </button>
+    </div>
+  );
+}
+
+/**
+ * 휴대폰 레일의 세로 키 슬라이더. 브라우저 기본 슬라이더 모양(회색 막대·흰 상자)이 나오지 않게 직접 그린다.
+ * 위가 큰 키. 끌기·누르기·방향키 모두 된다.
+ */
+function VerticalSlider({ value, onChange }: { value: number; onChange: (cm: number) => void }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const span = MAX_STATURE_CM - MIN_STATURE_CM;
+  const ratio = (value - MIN_STATURE_CM) / span;
+
+  const clamp = (cm: number) => Math.min(MAX_STATURE_CM, Math.max(MIN_STATURE_CM, Math.round(cm)));
+  const fromPointer = (clientY: number) => {
+    const rect = trackRef.current?.getBoundingClientRect();
+    if (!rect || rect.height === 0) return;
+    const t = 1 - (clientY - rect.top) / rect.height;
+    onChange(clamp(MIN_STATURE_CM + t * span));
+  };
+
+  return (
+    <div
+      ref={trackRef}
+      className={styles.statureRailRange}
+      role="slider"
+      tabIndex={0}
+      aria-label="내 키"
+      aria-orientation="vertical"
+      aria-valuemin={MIN_STATURE_CM}
+      aria-valuemax={MAX_STATURE_CM}
+      aria-valuenow={value}
+      aria-valuetext={`${value}cm`}
+      onPointerDown={(event) => {
+        event.currentTarget.setPointerCapture(event.pointerId);
+        fromPointer(event.clientY);
+      }}
+      onPointerMove={(event) => {
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) fromPointer(event.clientY);
+      }}
+      onKeyDown={(event) => {
+        const step = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 10, PageDown: -10 }[event.key];
+        if (step !== undefined) onChange(clamp(value + step));
+        else if (event.key === "Home") onChange(MIN_STATURE_CM);
+        else if (event.key === "End") onChange(MAX_STATURE_CM);
+        else return;
+        event.preventDefault();
+      }}
+    >
+      <span className={styles.statureRailFill} style={{ height: `${ratio * 100}%` }} />
+      <span className={styles.statureRailThumb} style={{ bottom: `${ratio * 100}%` }} />
     </div>
   );
 }

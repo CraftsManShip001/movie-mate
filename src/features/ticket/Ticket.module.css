@@ -48,6 +48,15 @@
   letter-spacing: -0.5px;
   font-size: 30px;
   line-height: 1.1;
+  /* 낱말 중간에서 줄을 바꾸지 않고, 두 줄을 넘으면 자른다(넘치면 바코드가 티켓 밖으로 나간다) */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .paperTitleEn {
@@ -56,6 +65,10 @@
   font-size: 9px;
   letter-spacing: 3px;
   color: var(--color-paper-sub);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
 }
 
 .paperSeat {

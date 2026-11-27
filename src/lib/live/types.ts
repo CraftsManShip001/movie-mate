@@ -14,4 +14,6 @@ export interface LiveShow {
   booked: string[] | null;
   /** 팔린 좌석을 받아 온 시각(ISO) */
   fetchedAt: string | null;
+  /** 이 상영을 골라 둔 채로 여는 영화관 예매 주소(booking-url.ts). 만들 수 없으면 없다. */
+  bookingUrl?: string;
 }
